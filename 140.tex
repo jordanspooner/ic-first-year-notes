@@ -1,0 +1,769 @@
+\documentclass[10pt,twoside,twocolumn]{article}
+\usepackage[latin9]{inputenc}
+\usepackage[landscape]{geometry}
+\geometry{verbose,tmargin=0.5in,bmargin=0.75in,lmargin=0.5in,rmargin=0.5in}
+\setlength{\parskip}{\smallskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{amsbsy}
+
+\makeatletter
+
+\providecommand{\tabularnewline}{\\}
+
+\usepackage{amsmath,amssymb,amsthm,mathrsfs,amsfonts,dsfont} 
+
+\setlength{\columnsep}{0.25in}
+
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\R}[0]{\mathds{R}} % real numbers
+\newcommand{\Z}[0]{\mathds{Z}} % integers
+\newcommand{\N}[0]{\mathds{N}} % natural numbers
+\newcommand{\nat}[0]{\mathds{N}} % natural numbers
+\newcommand{\Q}[0]{\mathds{Q}} % rational numbers
+
+\makeatother
+
+\begin{document}
+
+\title{Reference Sheet for CO140 Logic}
+
+
+\date{Autumn 2016}
+
+\maketitle
+
+\section{Definitions}
+
+
+\subsection{Propositional Logic}
+
+
+\paragraph{Binding Conventions}
+
+(Strongest) $\lnot,\land,\lor,\rightarrow,\leftrightarrow$ (Weakest).
+
+
+\paragraph{Propositional Formula}
+\begin{enumerate}
+\item A propositional atom is a formula.
+\item $\top$ and $\bot$ are formulas.
+\item If $A$ is a formula then so is $(\lnot A)$.
+\item If \textbf{$A,B$} are formulas then so are $(A\land B),(A\lor B),(A\rightarrow B),(A\leftrightarrow B)$.
+\end{enumerate}
+
+\paragraph{Principle Connective}
+
+Connective at the root (top) of a formation tree. A formula with principle
+connective $\leftrightarrow$ is said to have the \textbf{logical
+form $A\leftrightarrow B$}.
+
+
+\paragraph{Subformulas}
+
+Correspond to the subtrees of a formation tree.
+
+
+\paragraph{Atomic}
+
+Formula of the form \textbf{$\top,\bot,p$ }for an atom $p$.
+
+
+\paragraph{Negated Formula, Conjunction, Disjunction, Implication}
+
+Formula whose logical form is $\lnot A,A\land B,A\lor B,A\rightarrow B$
+respectively.
+
+
+\paragraph{Literal}
+
+Formula that is atomic or negated-atomic.
+
+
+\paragraph{Clause}
+
+Disjunction of one or more literals.
+
+
+\paragraph{Situation}
+
+Determines whether each propositional atom is true or false.
+
+
+\paragraph{Evaluation}
+\begin{enumerate}
+\item $\top$ is true, $\bot$ is false.
+\item $\lnot A$ has the opposite truth value to $A$.
+\item $A\land B$ is true if $A$ and $B$ are both true.
+\item $A\lor B$ is true if one or both of $A$ and $B$ are true.
+\item $A\rightarrow B$ is true if $A$ is false or $B$ is true (or both).
+\item $A\leftrightarrow B$ is true if $A$ and \textbf{$B$} have the same
+truth value.
+\end{enumerate}
+
+\paragraph{Valid Argument}
+
+Given formulas $A_{1},A_{2},\dots,A_{n},B$ an argument $A_{1},A_{2},\dots,A_{n}\vDash B$
+is valid if $B$ is true in any situation in which $A_{1},A_{2},\dots,A_{n}$
+are all true. Here $\vDash$ denotes logical entailment.
+
+
+\paragraph{Valid Formula}
+
+A formula $A$ is valid if it is true in every situation, i.e. $\vDash A$.
+A \textbf{tautology} is a valid propositional formula.
+
+
+\paragraph{Satisfiable Formula}
+
+True in at least one situation.
+
+
+\paragraph{Equivalent Formulas}
+
+True in exactly the same situations, i.e. $A\equiv B$.
+
+
+\paragraph{Disjunctive Normal Form}
+
+Formula as a disjunction of conjunctions of literals, not further
+simplifiable.
+
+
+\paragraph{Conjunctive Normal Form}
+
+Formula as a conjunction of disjunction of literals, not further simplifiable.
+
+
+\paragraph{Normal Form}
+\begin{enumerate}
+\item Get rid of $\rightarrow,\leftrightarrow$ using equivalences.
+\item Use De Morgan laws to push negations down to atoms. Delete any double
+negations.
+\item Rearrange using distributivity into the required normal form.
+\item Use equivalences to simplify as far as possible (e.g. using absorption,
+idempotence, equivalences involving $\top$ and $\bot$).
+\end{enumerate}
+
+\paragraph{Theorem}
+
+Formula that can be established by a given proof system, i.e. any
+$A$ such that $\vdash A$. (Note that $\vdash$ is syntactic whilst
+$\vDash$ is semantic - $A_{1},A_{2},\dots,A_{n}\vDash B$ means there
+is a proof of $B$ starting with $A_{1},A_{2},\dots,A_{n}$ as givens).
+
+
+\paragraph{Soundness}
+
+Any provable formula is valid, i.e. if $A_{1},A_{2},\dots,A_{n}\vdash B$
+then $A_{1},A_{2},\dots,A_{n}\vDash B$.
+
+
+\paragraph{Completeness}
+
+Any valid formula can be proved, i.e. if $A_{1},A_{2},\dots,A_{n}\vDash B$
+then $A_{1},A_{2},\dots,A_{n}\vdash B$.
+
+
+\paragraph{Consistency}
+
+A formula is consistent if $\not\vdash\lnot A$. So a formula is consistent
+if and only if it is satisfiable.
+
+
+\subsection{Predicate Logic}
+
+
+\paragraph{Binding Conventions}
+
+(Strongest) $(\lnot,\forall x,\exists x),\land,\lor,\rightarrow,\leftrightarrow$ (Weakest).
+
+
+\paragraph{Signature}
+
+Collection of constants and relation symbols and function symbols
+with specified arities.
+
+\paragraph{Term}
+
+For a signature $L$:
+\begin{enumerate}
+\item Any constant in $L$ is an $L$-term.
+\item Any variable is an $L$-term.
+\item For an $n$-ary function symbol $f$ in $L$ and $L$-terms $t_{1},t_{2},\dots,t_{n}$,
+$f\left(t_{1},t_{2},\dots,t_{n}\right)$ is an $L$-term.
+\end{enumerate}
+
+\paragraph{Closed / Ground Term}
+
+Does not involve a variable.
+
+
+\paragraph{Bound Variable}
+
+For a formula $A$ and variable $x$, $x$ is bound if it lies under
+a quantifier $\forall x$ or $\exists x$ in the formation tree of
+$A$.
+
+
+\paragraph{Free Variable}
+
+Variable which is not bound (this includes variables which do not
+appear in $A$!).
+
+
+\paragraph{Sentence}
+
+Formula with no free variables. (Does not require an assignment for
+evaluation).
+
+
+\paragraph{Structure}
+
+For a signature $L$, and $L$-structure $M$:
+\begin{enumerate}
+\item Identifies a non-empty collection of objects that $M$ `knows about',
+i.e. the \textbf{domain} of $M$, $\mbox{dom}\left(M\right)$.
+\item Specifies what the symbols of $L$ mean in terms of these objects
+(constants specify objects in $\mbox{dom}\left(M\right)$ and relations
+specify relations between objects in $\mbox{dom}\left(M\right)$).
+\item For an $n$-ary function symbol $f$ in $L$, specifies which object
+$f$ associates with each sequence of objects $\left(a_{1},a_{2},\dots,a_{n}\right)$
+in $\mbox{dom}\left(M\right)$.
+\end{enumerate}
+For a constant $c$, $c^{M}$ denotes the object $\mbox{dom}\left(M\right)$
+that $c$ names in $M$.
+
+For a function $f$, $f^{M}\left(a_{1},a_{2},\dots,a_{n}\right)$
+denotes the object $\mbox{dom}\left(M\right)$ that $f\left(a_{1},a_{2},\dots,a_{n}\right)$
+names in $M$.
+
+If a formula $A$ is true in $M$, we say $M\vDash A$.
+
+
+\paragraph{Assignment}
+
+For a structure $M$, allocates an object in $\mbox{dom}\left(M\right)$
+to each variable.
+
+If a formula $A$ is true in $M$ under $h$, we say $M,h\vDash A$.
+
+
+\paragraph{Value of Term}
+
+For a signature $L$, an $L$-structure $M$ and an assignment $h$,
+for any $L$-term $t$, the value of $t$ in $M$ under $h$ is the
+object in $\mbox{dom}\left(M\right)$ allocated to $t$ by:
+\begin{enumerate}
+\item $M$ if $t$ is a constant, i.e. the object $t^{M}$.
+\item $h$ if $t$ is a variable, i.e. the object $h\left(t\right)$.
+\item $f^{M}$ if $t$ is a function on terms, i.e. $f\left(t_{1},t_{2},\dots,t_{n}\right)$
+is the object $f^{M}\left(a_{1},a_{2},\dots,a_{n}\right)$ where $a_{i}$
+is the value of $t_{i}$ in $M$ under $h$.
+\end{enumerate}
+
+\paragraph{Predicate Formula}
+
+For an $L$-structure $M$ and an assignment $h$:
+\begin{enumerate}
+\item For an $n$-ary relation symbol in $L$, and $L$-terms $t_{1},t_{2},\dots,t_{n}$,
+$R\left(t_{1},t_{2},\dots,t_{n}\right)$ is an atomic $L$-formula.\\
+$M,h\vDash R\left(t_{1},t_{2},\dots,t_{n}\right)$ if $M$ says the
+sequence $\left(a_{1},a_{2},\dots,a_{n}\right)$ is in the relation
+$R$, where $a_{i}$ is the value of $t_{i}$ in $M$ under $h$.
+\item For $L$-terms $t_{1},t_{2}$, $t_{1}=t_{2}$ is an atomic $L$-formula.\\
+$M,h\vDash t_{1}=t_{2}$ if $t_{1}$ and $t_{2}$ have the same value
+in $M$ under $h$.
+\item $\top,\bot$ are atomic $L$-formulas.\\
+$M,h\vDash\top$ and $M,h\not\vDash\bot$.
+\item For $L$-formulas $A,B$, $\left(\lnot A\right),\left(A\land B\right),\left(A\lor B\right),\left(A\rightarrow B\right),\left(A\leftrightarrow B\right)$
+are $L$-formulas.\\
+$M,h\vDash A\land B$ if $M,h\vDash A$ and $M,h\vDash B$, etc.
+\item For an $L$-formula $A$ and a variable $x$, $\left(\forall xA\right)$
+and $\left(\exists xA\right)$ are $L$-formulas.\\
+$M,h\vDash\forall xA$ if $M,g\vDash A$ for every assignment $g$
+into $M$ with $g=_{x}h$ and $M,h\vDash\exists xA$ if $M,g\vDash A$
+for some assignment $g$ into $M$ with $g=_{x}h$. (The notation
+$g=_{x}h$ here means $g$ agrees with $h$ except perhaps on $x$).
+\end{enumerate}
+
+\paragraph{Some Translation Advice}
+
+Note that:
+\begin{enumerate}
+\item $\forall x\left(\mbox{lecturer}\left(x\right)\land\mbox{human}\left(x\right)\right)$
+says everything is a lecturer and a human.
+\item $\forall x\left(\mbox{lecturer}\left(x\right)\rightarrow\mbox{human}\left(x\right)\right)$
+says every lecturer is a human.
+\item $\exists x\left(\mbox{lecturer}\left(x\right)\land\mbox{human}\left(x\right)\right)$
+says there is a lecturer that is also a human.
+\item $\exists x\left(\mbox{lecturer}\left(x\right)\rightarrow\mbox{human}\left(x\right)\right)$
+says there is a non-lecturer, or there is a lecturer that is also
+a human.
+\end{enumerate}
+Counting:
+\begin{enumerate}
+\item No lecturers: $\lnot\exists x\left(\mbox{lecturer}\left(x\right)\right)$.
+\item At least one lecturer: $\exists x\left(\mbox{lecturer}\left(x\right)\right)$.
+\item At least two lecturers: $\exists x\exists y\left(\mbox{lecturer}\left(x\right)\land\mbox{lecturer}\left(y\right)\land x\neq y\right)$
+or $\forall x\exists y\left(\mbox{lecturer}\left(y\right)\land y\neq x\right)$.
+\item At least three lecturers: similar to above, e.g. $\forall x\forall y\exists z\left(\mbox{lecturer}\left(z\right)\land z\neq x\land z\neq y\right)$.
+\item At most one lecturer: $\lnot\exists x\exists y\left(\mbox{lecturer}\left(x\right)\land\mbox{lecturer}\left(y\right)\land z\neq y\right)$
+or $\forall x\forall y\left(\mbox{lecturer}\left(x\right)\land\mbox{lecturer}\left(y\right)\rightarrow x=y\right)$
+or $\exists x\forall y\left(\mbox{lecturer}\left(y\right)\rightarrow y=x\right)$.
+\item Exactly one lecturer: at least one lecturer$\land$at most one lecturer
+or $\exists x\forall y\left(\mbox{lecturer}\left(y\right)\leftrightarrow y=x\right)$.
+\end{enumerate}
+Remember:
+\begin{enumerate}
+\item Always consider the vacuous case when using $\forall$.
+\item The order of quantifiers is very important!
+\end{enumerate}
+
+
+\paragraph{Valid Argument}
+
+For a signature $L$, and $L$-formulas $A_{1},A_{2},\dots,A_{n},B$,
+the argument $A_{1},A_{2},\dots,A_{n}\vDash B$ is valid if for any
+$L$-structure $M$ and assignment $h$ into $M$, if $M,h\vDash B$
+given $M,h\vDash A_{1},M,h\vDash A_{2},\dots,M,h\vDash A_{n}$.
+
+
+\paragraph{Valid Formula}
+
+The $L$-formula $A$ is valid if for for all $L$-structures $M$
+and assignment $h$ into $M$, $M,h\vDash A$. We say $\vDash A$.
+
+
+\paragraph{Satisfiable Formula}
+
+The $L$-formula $A$ is satisfiable if for for some $L$-structure
+$M$ and assignment $h$ into $M$, $M,h\vDash A$.
+
+
+\paragraph{Equivalent Formulas}
+
+The $L$-formulas $A$ and $B$ are equivalent if for for every $L$-structure
+$M$ and assignment $h$ into $M$, $M,h\vDash A$ if and only if
+$M,h\vDash B$.
+
+
+\subsection{Many-Sorted Predicate Logic}
+
+
+\paragraph{Term}
+
+Redefined such that:
+\begin{enumerate}
+\item Each variable and constant comes with a sort $\mbox{s}$. We indicate
+this as $x:\mbox{s}$ and $c:\mbox{s}$.
+\item Each $n$-ary function symbol $f$ comes with a template $f:\left(\mbox{s}_{1},\mbox{s}_{2},\dots,\mbox{s}_{n}\right)\rightarrow\mbox{s}$.
+\end{enumerate}
+
+\paragraph{Formula}
+
+Redefined such that:
+\begin{enumerate}
+\item Each $n$-ary relation symbol $R$ comes with a template $R\left(\mbox{s}_{1},\mbox{s}_{2},\dots,\mbox{s}_{n}\right)$.
+\item $t_{1}=t_{2}$ is a term if $t_{1},t_{2}$ have the same sort.
+\end{enumerate}
+It is polite to indicate the sort of a variable in $\forall,\exists$,
+e.g. $\forall x:\mbox{lecturer}\exists y:\mbox{Sun}\left(\mbox{bough\ensuremath{t_{lecturer,Sun}}}\left(x,y\right)\right)$.
+
+
+\subsection{Formal Specification of Programs}
+
+
+\paragraph{Pre-condition}
+
+Formula $A\left(x_{1},x_{2},\dots,x_{n}\right)$ such that any arguments
+$\left(a_{1},a_{2},\dots,a_{n}\right)$ satisfy the pre-condition
+if $A\left(a_{1},a_{2},\dots,a_{n}\right)$ is true. If there is no
+restrictions on arguments beyond type information, we write 'none'
+or $\top$.
+
+
+\paragraph{Post-condition}
+
+Formula expressing intended value of a funtion in terms of arguments.
+
+
+\paragraph{Lists}
+
+We can define a signature suitable for lists of type {[}Nat{]}:
+
+Constants:
+\begin{itemize}
+\item $\underbar{0},\underbar{1},\dots:\mbox{Nat}$
+\end{itemize}
+Relations:
+\begin{itemize}
+\item $<,\leq,>,\geq:\mbox{(Nat,Nat)}$
+\end{itemize}
+Functions:
+\begin{itemize}
+\item $+,-,\times:\mbox{(Nat,Nat)\ensuremath{\rightarrow}Nat}$
+\item $[]:\mbox{[Nat]}$
+\item $\mbox{cons}(:):\mbox{(Nat,[Nat])\ensuremath{\rightarrow}[Nat]}$
+\item $++:\mbox{([Nat],[Nat])\ensuremath{\rightarrow}[Nat]}$
+\item $\mbox{head}:\mbox{[Nat]\ensuremath{\rightarrow}Nat}$
+\item $\mbox{head}:\mbox{[Nat]\ensuremath{\rightarrow}[Nat]}$
+\item $\#:\mbox{[Nat]\ensuremath{\rightarrow}Nat}$
+\item $!!:\mbox{([Nat],Nat)\ensuremath{\rightarrow}Nat}$
+\end{itemize}
+
+Pre-conditions for functions on lists are usually $\top$ or sometimes involve checking the list is non-empty ($\#xs > 0$).
+
+Post-conditions for functions on lists often involve:
+\begin{enumerate}
+\item Checking a property of a list and its length compared to the given list (e.g. $\#xs = \#ys \land \forall i \left(i < \#xs \rightarrow P\left(ys!!i\right)\right)$ where $ys = f(x)$).
+\item Checking a property of an item and its presence in the given list (e.g. $\exists i \left(i < \#xs \land xs!!i = y\right) \land P\left(y\right)$ where $y = f(x)$).
+\end{enumerate}
+
+\section{Checking Validity}
+
+We can use:
+\begin{enumerate}
+\item Truth tables - but not for predicate logic
+\item Direct argument
+\item Equivalences
+\item Proof systems - e.g. natural deduction
+\end{enumerate}
+
+\subsection{Direct Argument}
+
+
+\paragraph{Propositional Logic}
+\begin{enumerate}
+\item Take an arbitrary situation.
+\item Prove that the formula is true in this situation. (Often this will
+require the law of excluded middle - argument by cases).
+\end{enumerate}
+
+\paragraph{Predicate Logic}
+
+To show the argument $A_{1},A_{2},\dots,A_{n}\vDash B$ is valid:
+\begin{enumerate}
+\item Consider any $M$ such that $M\vDash A_{1},M\vDash A_{2},\dots,M\vDash A_{n}$.
+\item Show $M\vDash B$, e.g.:
+
+\begin{enumerate}
+\item $M\vDash\boldsymbol{\forall}x\left(B\left(x\right)\right)$: Consider
+an arbitrary object $a$ in $\mbox{dom}\left(M\right)$. Show $M\vDash B\left(a\right)$.
+\item $M\vDash\boldsymbol{\exists}x\left(B\left(x\right)\right)$: Consider
+any object $b$ in $\mbox{dom}\left(M\right)$. Show $M\vDash B\left(b\right)$.
+\end{enumerate}
+\end{enumerate}
+
+\subsection{Equivalences}
+
+When using equivalences, you \emph{must} justify every step by stating
+the equivalence you used. Remember you can work from either direction. Note that distributivity is often very helpful when applied backwards.
+
+Be especially careful with $\land$ and $\lor$!
+
+
+\paragraph{$\boldsymbol{\lnot}$}
+\begin{enumerate}
+\item $\lnot\top\equiv\bot$
+\item $\lnot\bot\equiv\top$
+\item $\lnot\lnot A\equiv A$
+\item $\lnot\left(A\land B\right)\equiv\lnot A\lor\lnot B$ (De Morgan)
+\item $\lnot\left(A\lor B\right)\equiv\lnot A\land\lnot B$ (De Morgan)
+\end{enumerate}
+
+\paragraph{$\boldsymbol{\land}$}
+\begin{enumerate}
+\item $A\land B\equiv B\land A$ (Commutativity)
+\item $A\land A\equiv A$ (Idempotence)
+\item $A\land\top\equiv A$
+\item $\bot\land A\equiv\lnot A\land A\equiv\bot$
+\item $\left(A\land B\right)\land C\equiv A\land\left(B\land C\right)$
+(Associativity)
+\item $A\land\left(B\lor C\right)\equiv\left(A\land B\right)\lor\left(A\land C\right)$
+(Distributivity)
+\item $A\land\left(A\lor B\right)\equiv A$ (Absorption)
+\end{enumerate}
+
+\paragraph{$\boldsymbol{\lor}$}
+\begin{enumerate}
+\item $A\lor B\equiv B\lor A$ (Commutativity)
+\item $A\lor A\equiv A$ (Idempotence)
+\item $\bot\lor A\equiv\lnot A\lor A\equiv\top$
+\item $A\lor\top\equiv A$
+\item $\left(A\lor B\right)\lor C\equiv A\lor\left(B\lor C\right)$ (Associativity)
+\item $A\lor\left(B\land C\right)\equiv\left(A\lor B\right)\land\left(A\lor C\right)$
+(Distributivity)
+\item $A\lor\left(A\land B\right)\equiv A$ (Absorption)
+\end{enumerate}
+
+\paragraph{$\boldsymbol{\rightarrow}$}
+\begin{enumerate}
+\item $A\rightarrow A\equiv\top$
+\item $\top\rightarrow A\equiv A$
+\item $A\rightarrow\top\equiv\top$
+\item $\bot\rightarrow A\equiv\top$
+\item $A\rightarrow\bot\equiv\lnot A$
+\item $A\rightarrow B\equiv\lnot A\lor B\equiv\lnot\left(A\land\lnot B\right)$
+\item $\lnot$$\left(A\rightarrow B\right)\equiv A\land\lnot B$
+\end{enumerate}
+
+\paragraph{$\boldsymbol{\leftrightarrow}$}
+\begin{enumerate}
+\item $A\leftrightarrow B\equiv\left(A\rightarrow B\right)\land\left(B\rightarrow A\right)\equiv\left(A\land B\right)\lor\left(\lnot A\land\lnot B\right)\equiv\lnot A\leftrightarrow\lnot B$
+\item $\lnot\left(A\leftrightarrow B\right)\equiv A\leftrightarrow\lnot B\equiv\lnot A\leftrightarrow B\equiv\left(A\land\lnot B\right)\lor\left(\lnot A\land B\right)$
+\end{enumerate}
+
+\paragraph{$\boldsymbol{\forall,\exists}$}
+\begin{enumerate}
+\item $\forall x\forall yA\equiv\forall y\forall xA$
+\item $\exists x\exists yA\equiv\exists y\exists xA$
+\item $\lnot\forall xA\equiv\exists x\lnot A$
+\item $\lnot xA\equiv\forall x\lnot A$
+\item $\forall x\left(A\land B\right)\equiv\forall xA\land\forall xB$
+\item $\exists x\left(A\lor B\right)\equiv\exists xA\lor\exists xB$
+\end{enumerate}
+For $\boldsymbol{A}$ in which $\boldsymbol{x}$ does not Occur Free:
+\begin{enumerate}
+\item $A\equiv\forall xA\equiv\exists xA$
+\item $\exists x\left(A\land B\right)\equiv A\land\exists xB$
+\item $\forall x\left(A\lor B\right)\equiv A\lor\forall xB$
+\item $\exists x\left(A\rightarrow B\right)\equiv A\rightarrow\exists xB$
+\item $\forall x\left(A\rightarrow B\right)\equiv A\rightarrow\forall xB$
+\item $\exists x\left(B\rightarrow A\right)\equiv\forall xB\rightarrow A${*}
+\item $\forall x\left(B\rightarrow A\right)\equiv\exists xB\rightarrow A${*}
+\end{enumerate}
+{*} Watch out for these two cases!
+
+
+\paragraph{$\boldsymbol{=}$}
+\begin{enumerate}
+\item $t=t\equiv\top$
+\item $t=u\equiv u=t$
+\item \textbf{Leibniz Principle} If $A$ is a formula in which $x$ occurs
+free and $y$ does not occur and $B$ is the formula obtained from
+$A$ by replacing one or more free occurences of $x$ by $y$, then
+$x=y\rightarrow\left(A\leftrightarrow B\right)\equiv\top$.
+\end{enumerate}
+
+\paragraph{Renaming Bound Variables}
+
+The formula in which all bound occurrences of a variable and the respective
+quantifiers are changed to a new variable is equivalent to the original
+formula.
+
+
+\subsection{Natural Deduction}
+
+When using natural deduction, remember line numbers and reasoning
+are required for \emph{every} step. You should take time to check
+your answers.
+
+
+\paragraph{$\boldsymbol{\land}$-Introduction}
+
+\begin{tabular}{llr}
+1 & $A$ & \tabularnewline
+2 & $B$ & \tabularnewline
+3 & $A\land B$ & $\land I\left(1,2\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\land}$-Elimination}
+
+\begin{tabular}{llr}
+1 & $A\land B$ & \tabularnewline
+2 & $A$ & $\land E\left(1\right)$\tabularnewline
+3 & $B$ & $\land E\left(1\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\lor}$-Introduction}
+
+\begin{tabular}{llr}
+1 & $A$ & \tabularnewline
+2 & $A\lor B$ & $\land I\left(1\right)$\tabularnewline
+3 & $B\lor A$ & $\land I\left(1\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\lor}$-Elimination}
+
+\begin{tabular}{|llr|llr|}
+\multicolumn{1}{l}{1} & \multicolumn{5}{l}{$A\lor B$}\tabularnewline
+\hline 
+2 & $A$ & ass & 4 & $B$ & ass\tabularnewline
+3 & $C$ &  & 5 & $C$ & \tabularnewline
+\hline 
+\multicolumn{1}{l}{6} & $C$ & \multicolumn{4}{r}{$\lor E\left(1,2,3,4,5\right)$}\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\rightarrow}$-Introduction}
+
+\begin{tabular}{|llr|}
+\hline 
+1 & $A$ & ass\tabularnewline
+2 & $B$ & \tabularnewline
+\hline 
+\multicolumn{1}{l}{3} & $A\rightarrow B$ & \multicolumn{1}{r}{$\rightarrow I\left(1,2\right)$}\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\rightarrow}$-Elimination}
+
+\begin{tabular}{llr}
+1 & $A\rightarrow B$ & \tabularnewline
+2 & $A$ & \tabularnewline
+3 & $B$ & $\rightarrow E\left(1,2\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\leftrightarrow}$-Introduction}
+
+\begin{tabular}{llr}
+1 & $A\rightarrow B$ & \tabularnewline
+2 & $B\rightarrow A$ & \tabularnewline
+3 & $A\leftrightarrow B$ & $\leftrightarrow I\left(1,2\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\leftrightarrow}$-Elimination}
+
+\begin{tabular}{llr}
+1 & $A\leftrightarrow B$ & \tabularnewline
+2 & $A$ & \tabularnewline
+3 & $B$ & $\leftrightarrow E\left(1,2\right)$\tabularnewline
+\end{tabular} or %
+\begin{tabular}{llr}
+1 & $A\leftrightarrow B$ & \tabularnewline
+2 & $B$ & \tabularnewline
+3 & $A$ & $\leftrightarrow E\left(1,2\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\lnot}$-Introduction}
+
+\begin{tabular}{|llr|}
+\hline 
+1 & $A$ & ass\tabularnewline
+2 & $\bot$ & \tabularnewline
+\hline 
+\multicolumn{1}{l}{3} & $\lnot A$ & \multicolumn{1}{r}{$\lnot I\left(1,2\right)$}\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\lnot}$-Elimination /$\boldsymbol{\bot}$-Introduction}
+
+\begin{tabular}{llr}
+1 & $A$ & \tabularnewline
+2 & $\lnot A$ & \tabularnewline
+3 & $\bot$ & $\lnot E\left(1,2\right)$ or $\bot I\left(1,2\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\bot}$-Elimination}
+
+\begin{tabular}{llr}
+1 & $\bot$ & \tabularnewline
+2 & $A$ & $\bot E\left(1\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\lnot\lnot}$-Elimination}
+
+\begin{tabular}{llr}
+1 & $\lnot\lnot A$ & \tabularnewline
+2 & $A$ & $\lnot\lnot E\left(1\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{Excluded Middle}
+
+\begin{tabular}{llr}
+1 & $A\lor\lnot A$ & lemma\tabularnewline
+\end{tabular}
+
+
+\paragraph{Proof by Contradiction}
+
+\begin{tabular}{|llr|}
+\hline 
+1 & $\lnot A$ & ass\tabularnewline
+2 & $\bot$ & \tabularnewline
+\hline 
+\multicolumn{1}{l}{3} & $A$ & \multicolumn{1}{r}{$PC\left(1,2\right)$}\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\exists}$-Introduction}
+
+\begin{tabular}{llr}
+1 & $A\left(t/x\right)$ & \tabularnewline
+2 & $\exists xA$ & $\exists I\left(1\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\exists}$-Elimination}
+
+\begin{tabular}{|llr|}
+\multicolumn{1}{l}{1} & $\exists xA$ & \multicolumn{1}{r}{}\tabularnewline
+\hline 
+2 & $A\left(c/x\right)$ & ass\tabularnewline
+3 & $B$ & \tabularnewline
+\hline 
+\multicolumn{1}{l}{4} & $B$ & \multicolumn{1}{r}{$\exists E\left(1,2,3\right)$}\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\forall}$-Introduction}
+
+\begin{tabular}{|llr|}
+\hline 
+2 & $c$ & $\forall I$ const\tabularnewline
+3 & $A\left(c/x\right)$ & \tabularnewline
+\hline 
+\multicolumn{1}{l}{4} & $\forall xA$ & \multicolumn{1}{r}{$\forall I\left(1,2\right)$}\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\forall}$-Elimination}
+
+\begin{tabular}{llr}
+1 & $\forall xA$ & \tabularnewline
+2 & $A\left(t/x\right)$ & $\forall E\left(1\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{$\boldsymbol{\forall}\rightarrow$-Elimination}
+
+\begin{tabular}{llr}
+1 & $\forall x\left(A\left(x\right)\rightarrow B\left(x\right)\right)$ & \tabularnewline
+2 & $A\left(t/x\right)$ & \tabularnewline
+3 & $B\left(t/x\right)$ & $\forall\rightarrow E\left(1,2\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{Reflexivity}
+
+\begin{tabular}{llr}
+1 & $t=t$ & refl\tabularnewline
+\end{tabular}
+
+
+\paragraph{Substitution}
+
+\begin{tabular}{llr}
+1 & $A\left(t/x\right)$ & \tabularnewline
+2 & $t=u$ & \tabularnewline
+3 & $A\left(u/x\right)$ & sub$\left(1,2\right)$\tabularnewline
+\end{tabular}
+
+
+\paragraph{Symmetry}
+
+\begin{tabular}{llr}
+1 & $c=d$ & \tabularnewline
+2 & $d=c$ & sym$\left(1\right)$\tabularnewline
+\end{tabular}
+\end{document}

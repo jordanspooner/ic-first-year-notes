@@ -1,0 +1,448 @@
+\documentclass[10pt,twoside,twocolumn]{article}
+\usepackage[latin9]{inputenc}
+\usepackage[landscape]{geometry}
+\geometry{verbose,tmargin=0.5in,bmargin=0.75in,lmargin=0.5in,rmargin=0.5in}
+\setlength{\parskip}{\smallskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\makeatletter
+
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{dsfont}
+
+
+\setlength{\columnsep}{0.25in}
+
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\R}[0]{\mathds{R}} % real numbers
+\newcommand{\Z}[0]{\mathds{Z}} % integers
+\newcommand{\N}[0]{\mathds{N}} % natural numbers
+\newcommand{\nat}[0]{\mathds{N}} % natural numbers
+\newcommand{\Q}[0]{\mathds{Q}} % rational numbers
+
+\makeatother
+
+\begin{document}
+
+\title{Reference Sheet for CO142.1 Discrete Mathematics I}
+
+
+\date{Autumn 2016}
+
+\maketitle
+
+\paragraph{Proofs in Discrete Mathematics}
+\begin{enumerate}
+\item Use Venn diagrams, directed graphs, or another visual representation
+to gain an intuition of what needs to be shown.
+\item Use definitions to create a logical statement.
+\item Use logical arguments to prove the statement.
+
+\begin{enumerate}
+\item In general, equivalences from CO140 should be sufficient.
+\item If something is false, try to find a simple counterexample.
+\item If under a for-all quantifier, consider an arbitrary object.
+\item For an if-then statement, assume the antecedent and prove the consequent.
+\item For an equality or if-and-only-if, ensure your argument is bidirectional.
+\end{enumerate}
+\item Use definitions to return to set notation.
+\end{enumerate}
+
+\section{Sets}
+
+A \emph{set} is a collection of definite and separate objects.
+
+
+\paragraph{Russel's Paradox}
+
+The collection $R\triangleq\left\{ X\mbox{ is a set}|X\notin X\right\} $
+is not a set. Can be proven by contradiction when considering a set
+$R$ (consider the cases $R\in R$ and $R\notin R$).
+
+
+\paragraph{Comparing Sets}
+\begin{enumerate}
+\item \emph{Subset}: $A\subseteq B\triangleq\forall x\in A\left(x\in B\right)$.
+\item \emph{Equality}: $A=B\triangleq A\subseteq B\land B\subseteq A$.
+\end{enumerate}
+If $A\subseteq B$ and $B\subseteq C$, then $A\subseteq C$.
+
+
+\paragraph{Basic Operators}
+\begin{enumerate}
+\item Union: $A\cup B\triangleq\left\{ x|x\in A\lor x\in B\right\} $.
+\item Intersection: $A\cap B\triangleq\left\{ x|x\in A\land x\in B\right\} $.
+\item Difference: $A\backslash B\triangleq\left\{ x|x\in A\land x\notin B\right\} $.
+\item Symmetric Difference: $A\triangle B\triangleq\left(A\backslash B\right)\cup\left(B\backslash A\right)$.
+\end{enumerate}
+$A,B\mbox{ are \emph{disjoint}}\triangleq A\cap B=\emptyset$.
+
+To make any union $A\cup B$ disjoint, consider $A\cup\left(B\backslash A\right)$.
+
+
+\paragraph{Properties of Basic Operators}
+\begin{enumerate}
+\item \emph{Idempotence}
+
+\begin{enumerate}
+\item $A\cup A=A$
+\item $A\cap A=A$
+\end{enumerate}
+\item \emph{Commutativity}
+
+\begin{enumerate}
+\item $A\cup B=B\cup A$
+\item $A\cap B=B\cap A$
+\item $A\triangle B=B\triangle A$
+\end{enumerate}
+\item \emph{Associativity}
+
+\begin{enumerate}
+\item $A\cup\left(B\cup C\right)=\left(A\cup B\right)\cup C$
+\item $A\cap\left(B\cap C\right)=\left(A\cap B\right)\cap C$
+\end{enumerate}
+\item \emph{Empty Set}
+
+\begin{enumerate}
+\item $A\cup\emptyset=A$
+\item $A\cap\emptyset=\emptyset$
+\item $A\triangle A=\emptyset$
+\end{enumerate}
+\item \emph{Distributivity}
+
+\begin{enumerate}
+\item $A\cup\left(B\cap C\right)=\left(A\cup B\right)\cap\left(A\cup C\right)$
+\item $A\cap\left(B\cup C\right)=\left(A\cap B\right)\cup\left(A\cap C\right)$
+\end{enumerate}
+\item \emph{Absorption}
+
+\begin{enumerate}
+\item $A\cup\left(A\cap B\right)=A$
+\item $A\cap\left(A\cup B\right)=A$
+\end{enumerate}
+\end{enumerate}
+
+\paragraph{Cardinality}
+\begin{enumerate}
+\item \emph{Cardinality}: $\left|A\right|$ is defined as the number of
+distinct elements contained in $A$.
+\item \emph{Principle of Inclusion-Exclusion} (for two sets): $\left|A\cup B\right|=\left|A\right|+\left|B\right|-\left|A\cap B\right|$.
+\end{enumerate}
+
+\paragraph{Power Set}
+\begin{enumerate}
+\item \emph{Power set}: ${\cal P}A\triangleq\left\{ X|X\subseteq A\right\} $.
+\item For a finite set $A$ with $\left|A\right|=n$, $\left|{\cal P}A\right|=2^{n}$.
+\end{enumerate}
+
+\paragraph{Products}
+
+For arbitrary sets $A$ and $B$:
+\begin{enumerate}
+\item Ordered pair of elements of $A$ and $B$ is written as $\left\langle a,b\right\rangle $.
+\item Cartesian product: $A\times B\triangleq\left\{ \left\langle a,b\right\rangle |a\in A\land b\in B\right\} $.
+\item For a finite sets $A$ and $B$, $\left|A\times B\right|=\left|A\right|\times\left|B\right|$.
+\item $n$-ary product: $A_{1}\times A_{2}\times\dots\times A_{n}\triangleq\left\{ \left\langle a_{1},a_{2},\dots,a_{n}\right\rangle |\forall1\leq i\leq n\left(a_{i}\in A_{i}\right)\right\} $.
+\end{enumerate}
+
+\paragraph{Partitions}
+
+A partition of $S$ is a family $A_{1},A_{2},\dots,A_{n}$ of subsets
+$S$ such that:
+\begin{enumerate}
+\item \noindent $A_{i}$ is not empty: $\forall1\leq i\leq n\left(A_{i}\neq\emptyset\right)$.
+\item The $A_{i}$ cover $S$: $S=\cup_{i=1}^{n}A_{i}$.
+\item The $A_{i}$ are pairwise disjoint: $\forall1\leq i,j\leq n\left(A_{i}\cap A_{j}=\emptyset\implies i=j\right)$
+(or the contrapositive).
+\end{enumerate}
+
+\paragraph{Pigeonhole Principle}
+
+If a set of $n$ distinct objects is partitioned into $k$ subsets,
+where $0<k<n$, then at least one subset must contain at least two
+elements.
+
+
+\section{Relations}
+\begin{enumerate}
+\item A \emph{relation} $R$ satisfies $R\subseteq A\times B$. It has \emph{type}
+$A\times B$. 
+\item A \emph{binary relation} on $A$ has type $A^{2}$. 
+\end{enumerate}
+Relations can be represented as: 
+\begin{enumerate}
+\item A subset of a product set. 
+\item A diagram with arrows between elements in two sets. 
+\item A directed graph, for a binary relation. 
+\item A matrix: for $R\subseteq A\times B$, rows are based on $A$ and
+columns on $B$. 
+\item Special representations, e.g. area on the plane for binary relations
+on $\R$. 
+\end{enumerate}
+
+\paragraph{Basic Operators}
+
+For $R,S\subseteq A\times B$: 
+\begin{enumerate}
+\item \emph{Union}: $R\cup S\triangleq\left\{ \left\langle a,b\right\rangle \in A\times B|\left\langle a,b\right\rangle \in R\lor\left\langle a,b\right\rangle \in S\right\} $. 
+\item \emph{Intersection}: $R\cap S\triangleq\left\{ \left\langle a,b\right\rangle \in A\times B|\left\langle a,b\right\rangle \in R\land\left\langle a,b\right\rangle \in S\right\} $. 
+\item \emph{Complement}: $\overline{R}\triangleq\left\{ \left\langle a,b\right\rangle \in A\times B|\left\langle a,b\right\rangle \not\in R\right\} $. 
+\item \emph{Inverse}: $R\cap S\triangleq\left\{ \left\langle b,a\right\rangle \in A\times B|a\:R\:b\right\} $. 
+\end{enumerate}
+
+\paragraph{Identity}
+
+$\mbox{id}_{A}=\left\{ \left\langle x,y\right\rangle \in A^{2}|x=y\right\} $.
+
+
+\paragraph{Composition}
+
+For $R\subseteq A\times B,S\subseteq B\times C$:
+
+$R\circ S\triangleq\left\{ \left\langle a,c\right\rangle \in A\times C|\exists b\in B\left(a\:R\:b\land b\:R\:c\right)\right\} $.
+
+
+\paragraph{Equivalence Relations}
+
+The binary relation $R$ on $A$ is an \emph{equivalence relation}
+when $R$ is reflexive, symmetric, and transitive.
+\begin{enumerate}
+\item $R\mbox{ is \emph{reflexive}}\triangleq\forall x\in A\left(x\:R\:x\right)$. 
+\item $R\mbox{ is \emph{symmetric}}\triangleq\forall x\in A\left(x\:R\:y\implies y\:R\:x\right)$. 
+\item $R\mbox{ is \emph{transitive}}\triangleq\forall x,z\in A\left(\exists y\in A\left(x\:R\:y\land y\:R\:z\right)\implies x\:R\:z\right)$. 
+\end{enumerate}
+For a binary relation $R$ on $A$, this is equivalent to: 
+\begin{enumerate}
+\item $R\mbox{ is \emph{reflexive}}\iff\mbox{id}_{A}\subseteq R$. 
+\item $R\mbox{ is \emph{symmetric}}\iff R=R^{-1}$. 
+\item $R\mbox{ is \emph{transitive}}\iff R\circ R\subseteq R$.
+\end{enumerate}
+
+\paragraph{Equivalence Classes}
+\begin{enumerate}
+\item For an equivalence relation $R$ on $A$, for any $a\in A$, the \emph{equivalence
+class} of $a$ with respect to $R$ is $\left[a\right]_{R}\triangleq\left\{ x\in A|a\sim_{R}x\right\} $.
+\item For an equivalence relation $R$ on $A$, the set $\left\{ \left[a\right]{}_{R}|a\in A\right\} $
+forms a partition of $A$.
+\end{enumerate}
+
+\paragraph{Transitive Closure}
+
+\emph{Transitive closure}: $a\:R^{+}\:b=\exists n\geq1\left(a\:R^{n}\:b\right)$,
+i.e. $R^{+}=\cup_{i\geq1}R^{i}$. Contains at `paths' in $A$ through
+$R$. This is the smallest transitive relation containing $R$.
+
+
+\section{Functions}
+\begin{enumerate}
+\item A \emph{function} $f$ from a set $A$ to a set \textbf{$B$, $f:A\rightarrow B$}
+is a relation $f\subseteq A\times B$ such that every element of $A$
+is related to one element in $B$.
+\item $A$ is the \emph{domain} of $f$.
+\item $B$ is the \emph{co-domain} of $f$.
+\item Consider $f\left(a\right)=b$: $a$ is the \emph{pre-image} of $b$
+under $f$ and $b$ is the \emph{image} of $a$ under $f$. Every
+element of the domain has a single image but elements of the co-domain
+can have any number of pre-images.
+\item An $n$-ary function is written $f\left(a_{1},a_{2},\dots,a_{n}\right)$.
+\item $B^{A}$ denotes the set of all functions from $A$ to \textbf{$B$}.
+\item If $\left|A\right|=m$ and $\left|B\right|=n$, then $\left|B^{A}\right|=n^{m}$ or $\left(n+1\right)^{m}$ including partial functions.
+\end{enumerate}
+
+\paragraph{Formal Definition of a Function $\boldsymbol{\dagger}$}
+
+$f$ is a function if it satisfies:
+\begin{enumerate}
+\item $f\left(a\right)=b_{1}\land f\left(a\right)=b_{2}\implies b_{1}=b_{2}$.
+\item $\forall a\in A\exists b\in B\left(f\left(a\right)=b\right)$.
+\end{enumerate}
+
+\paragraph{Equality}
+
+$f=g\triangleq\forall x\in A\left(f\left(x\right)=g\left(x\right)\right)$.
+
+
+\paragraph{Image Set}
+\begin{enumerate}
+\item For $X\subseteq A$, $f\left[X\right]\triangleq\left\{ f\left(a\right)\in B|a\in X\right\} $.
+\item The \emph{image set} of $f$ is defined as $f\left[A\right]\subseteq B$.
+\end{enumerate}
+
+\paragraph{Characteristic Functions}
+\begin{enumerate}
+\item For sets $A,B\subseteq A$, the \emph{characteristic function} of
+$B\subseteq A$ is the function $\chi_{B}:A\rightarrow\{0,1\}$ is
+defined as $\chi_{B}\left(a\right)\begin{cases}
+1 & \left(a\in B\right)\\
+0 & \left(a\in A\backslash B\right)
+\end{cases}$.
+\item For a relation $R\subseteq A_{1}\times A_{2}\times\dots\times A_{n}$,
+the \emph{characteristic function} of $R$ is the function $\chi_{R}:A_{1}\times A_{2}\times\dots\times A_{n}\rightarrow\{0,1\}$
+is defined as $\chi_{B}\left(a_{1},a_{2},\dots.,a_{n}\right)\begin{cases}
+1 & \left(\left\langle a_{1},a_{2},\dots,a_{n}\right\rangle \in R\right)\\
+0 & \left(\left\langle a_{1},a_{2},\dots,a_{n}\right\rangle \notin R\right)
+\end{cases}$.
+\end{enumerate}
+
+\paragraph{Partial Functions}
+
+A \emph{partial function} need not satisfy clause 2 of $\dagger$
+(and so assigns each element in the domain to at most one element
+in the range). Functions that satisfy clause 2 are \emph{total functions}.
+
+
+\paragraph{Properties of Functions}
+
+For a function $f:A\rightarrow B$:
+\begin{enumerate}
+\item $f\mbox{ is \emph{surjective} (onto)}\triangleq\forall b\in B\exists a\in A\left(f\left(a\right)=b\right)$
+(every element of $B$ is in the image of $f$).
+\item $f\mbox{ is \emph{injective} (one-to-one)}\triangleq\forall a_{1},a_{2}\in A\left(f\left(a_{1}\right)=f\left(a_{2}\right)\implies a_{1}=a_{2}\right)$
+(for each $b\in B$ there exists at most one $a\in A$ with $f\left(a\right)=b$).
+\item $f\mbox{ is \emph{bijective}}\triangleq f\mbox{ is both one-to-one and onto}$.
+\end{enumerate}
+Considering the cardinality of the sets $A$ and $B$:
+\begin{enumerate}
+\item If $f$ is onto, then $\left|A\right|\geq\left|B\right|$.
+\item If $f$ is one-to-one, then $\left|A\right|\leq\left|B\right|$.
+\item If $f$ is a bijection, then $\left|A\right|=\left|B\right|$.
+\end{enumerate}
+
+\paragraph{The Pigeonhole Principle Applied to Functions}
+
+For $f:A\rightarrow B$ and $X\subseteq A$, $\left|f\left[X\right]\right|\leq\left|X\right|$.
+
+
+\paragraph{Cantor-Bernstein Theorem $\boldsymbol{\ddagger}$}
+
+If there exists functions $f:A\rightarrow B$ and $g:B\rightarrow A$,
+both injective or both surjective, then there exists a bijection $h:A\rightarrow B$.
+
+
+\paragraph{Operations on Functions}
+
+For functions $f:A\rightarrow B$ and $g:B\rightarrow C$.
+\begin{enumerate}
+\item \emph{Composition}: $g\circ f\left(a\right)=g\left(f\left(a\right)\right)$,
+i.e. $g\circ f\left(a\right)=c\triangleq\exists b\in B\left(f\left(a\right)=b\land g\left(b\right)=c\right)$.
+Note that composition is associative. If $f$ and $g$ are bijections,
+then so is $g\circ f$.
+\item \emph{Identity}: The function $\mbox{id}_{A}:A\rightarrow A$ is defined
+as $\mbox{id}_{A}\left(a\right)=a$.
+\item \emph{Inverse}: The function $f':B\rightarrow A$ is an inverse of
+$f$ whenever: $\forall a\in A\left(f'\circ f\left(a\right)=a\right)$
+and $\forall b\in B\left(f\circ f'\left(b\right)=b\right)$, i.e.
+$f'\circ f=id_{A}$ and $f\circ f'=id_{B}$. For $f$ to have an inverse,
+$f$ must be a bijection, and the inverse is unique.
+\end{enumerate}
+
+\paragraph{Cardinality of Sets}
+\begin{enumerate}
+\item $A\sim B\triangleq\exists f:A\rightarrow B$ ($f$ is a bijection).
+The relation $\sim$ is an equivalence relation.
+\item Hence if there exist functions $f:A\rightarrow B$ and $g:B\rightarrow A$,
+both injective or both surjective, then $A\sim B$ (by $\ddagger$).
+\item We say $A$ and $B$ have the same \emph{cardinality}, whenever $A\sim B$.
+\end{enumerate}
+
+\paragraph{Cantor's Theorem}
+
+For any set $A$, $A\not\sim{\cal P}A$. To prove, assume a bijection
+$f:A\rightarrow{\cal P}A$ exists. Consider $B=\left\{ a\in A|a\notin f\left(a\right)\right\} $.
+Since $f$ is a bijection, there exists some $b\in A$ such that $f\left(b\right)=B$.
+Then consider individually the cases $b\in B$ and $b\notin B$ to
+generate a contradiction.
+
+
+\section{Infinity}
+
+
+\paragraph{Countability}
+
+A set $A$ is \emph{countable} if $A$ is finite or $A\sim\N$. This
+is equivalent to:
+\begin{enumerate}
+\item $B$ is countable and $A\subseteq B$.
+\item There exists a surjection $f:\N\rightarrow A$.
+\end{enumerate}
+
+\paragraph{Uncountability}
+
+Cantor's diagonal argument produces an object that does not exist
+in any list. Hence any list is incomplete and so the set is uncountable.
+
+
+\section{Orderings}
+
+For a binary relation $R$ on $A$:
+\begin{enumerate}
+\item $R$ is a \emph{pre-order}:$R$ is reflexive and transitive.
+\item $R$ is \emph{anti-symmetric}: $\forall a,b\in A\left(x\:R\:y\land y\:R\:x\implies x=y\right)$.
+\item $R$ is a \emph{partial order relation}: R is reflexive, transitive
+and anti-symmetric. Usually denoted by $\leq_{A}$.
+\item $R$ is \emph{irreflexive}: $\forall a\in A\left(\lnot\left(a\:R\:a\right)\right)$.
+\item $R$ is a \emph{strict partial order relation}: $R$ is irreflexive
+and transitive. Usually denoted by $<_{A}$.
+\item R is a \emph{total} (\emph{linear}) \emph{order}: $R$ is a partial
+order that also satisfies $\forall a,b\in A\left(a\:R\:b\lor b\:R\:a\right)$.
+\end{enumerate}
+
+\paragraph{Ordering of Products}
+\begin{enumerate}
+\item Product order: $\left\langle a_{1},b_{1}\right\rangle \leq_{P}\left\langle a_{2},b_{2}\right\rangle \triangleq a_{1}\leq_{A}a_{2}\land b_{1}\leq_{B}b_{2}$
+\item Lexicographic order: First compare $a_{i}$s, then $b_{i}$s.
+\end{enumerate}
+
+\paragraph{Hasse Diagrams}
+
+Definitions:
+\begin{enumerate}
+\item If $R$ is a partial order on set $A$ and $a\:R\:b$ for $a\neq b$,
+$a$ is a \emph{predecessor} of $b$ and $b$ is a \emph{successor}
+of $a$.
+\item If $a$ is a predecessor of $b$ and there exists no $c\neq a,b$
+with $a\:R\:c$ and $c\:R\:b$ then $a$ is the \emph{immediate predecessor}
+of $b$.
+\end{enumerate}
+Hasse diagrams:
+\begin{enumerate}
+\item Record only immediate predecessors.
+\item Direction of lines omitted, lines are directed `up the page'.
+\end{enumerate}
+
+\paragraph{Properties of Partial Orders}
+
+For the partial order $\leq_{A}$ and $a\in A$:
+\begin{enumerate}
+\item $a\mbox{ is minimal}\triangleq\forall b\in A\left(b\leq a\implies b=a\right)$.
+\item $a\mbox{ is least}\triangleq\forall b\in A\left(a\leq b\right)$.
+\item $a\mbox{ is maximal}\triangleq\forall b\in A\left(a\leq b\implies a=b\right)$.
+\item $a\mbox{ is greatest}\triangleq\forall b\in A\left(b\leq a\right)$.
+\end{enumerate}
+Note that:
+\begin{enumerate}
+\item Any least / greatest element is a minimal / maximal element respectively.
+\item Any least / greatest element is unique.
+\item If $A$ is finite and non-empty, then $\leq_{A}$ must have a minimal,
+maximal element.
+\item If $\leq_{A}$ is a total order, where $A$ is finite and non-empty,
+then it has a least, greatest element.
+\end{enumerate}
+
+\paragraph{Well-Founded Partial Orders}
+\begin{enumerate}
+\item A partial order is \emph{well-founded} if it has no infinite decreasing
+chain of elements, i.e. for every infinite sequence $a_{1},a_{2},a_{3},\dots$
+of elements in $A$ with $a_{1}\geq a_{2}\geq a_{3}\geq\dots$, there
+exists $m\in\N$ such that $m\geq1$ and $a_{n}=a_{m}$ for every
+$n\geq m$.
+\item If two partial orders $\leq_{A}$ and $\leq_{B}$ are well-founded,
+then the lexicographical order $\leq_{L}$on $A\times B$ is also
+well-founded.\end{enumerate}
+
+\end{document}

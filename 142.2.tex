@@ -1,0 +1,543 @@
+\documentclass[twocolumn,english]{article}
+\usepackage[latin9]{inputenc}
+\usepackage[landscape]{geometry}
+\geometry{verbose,tmargin=0.5in,bmargin=0.75in,lmargin=0.5in,rmargin=0.5in}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{amsbsy}
+\usepackage{amssymb}
+
+\makeatletter
+
+\setlength{\columnsep}{0.25in}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{listings}
+\lstset{
+  language=python,
+  tabsize=2,
+  frame=single,
+  basicstyle=\small\ttfamily,
+}
+
+\makeatother
+
+\usepackage{babel}
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Listing}
+
+\begin{document}
+
+\title{Reference Sheet for CO142.2 Discrete Mathematics II}
+
+
+\date{Spring 2017}
+
+\maketitle
+
+\section{Graphs}
+
+
+\paragraph{Defintions}
+\begin{enumerate}
+\item \emph{Graph}: set of $N$ nodes and $A$ arcs such that each $a\in A$
+is associated with an unordered pair of nodes.
+\item \emph{Simple graph}: no parallel arcs and no loops.
+\item \emph{Degree}: number of arcs incident on given node.
+
+\begin{enumerate}
+\item Sum of degrees of all nodes in a graph is even.
+\item Number of nodes with odd degree is even.
+\end{enumerate}
+\item \emph{Subgraph}: $G_{S}$ is a subgraph of $G$ iff $\mbox{nodes}\left(G_{S}\right)\subseteq\mbox{nodes}\left(G\right)$
+and $\mbox{arcs}\left(G_{S}\right)\subseteq\mbox{arcs}\left(G\right)$.
+\item \emph{Full (induced) subgraph}: contains all arcs of $G$ which join
+nodes present in $G_{S}$.
+\item \emph{Spanning subgraph}: $\mbox{nodes}\left(G_{S}\right)=\mbox{nodes}\left(G\right)$.
+\end{enumerate}
+
+\paragraph{Representation}
+\begin{enumerate}
+\item \emph{Adjacency matrix}: symmetric matrix with number of arcs between
+nodes, count each loop twice.
+\item \emph{Adjacency list}: array of linked lists, if multiple arcs then
+multiple entries, count loops once.
+\item An adjacency matrix has size $n^{2}$, an adjacency list has size
+$\leq n+2a$ (better for sparse graphs).
+\end{enumerate}
+
+\paragraph{Isomorphisms}
+\begin{enumerate}
+\item \emph{Isomorphism}: bijection $f$ on nodes together with bijection
+$g$ on arcs such that each arc $a$ between nodes $n_{1}$ and $n_{2}$
+maps to the node $g\left(a\right)$ between nodes $f\left(n_{1}\right)$
+and $f\left(n_{2}\right)$. Same adjacency matrix (possibly reordered).
+\item \emph{Automorphism}: isomorphism from a graph to itself.
+\end{enumerate}
+\emph{Testing for isomorphisms}:
+\begin{enumerate}
+\item Check number of nodes, arcs and loops. Check degrees of nodes.
+\item Attempt to find a bijection on nodes. Check using adjacency matrices.
+\end{enumerate}
+\emph{Finding the number of automorphisms}: find number of possibilities
+for each node in turn. Then multiply together.
+
+
+\paragraph{Planar Graphs}
+\begin{enumerate}
+\item \emph{Planar}: can be drawn so that no arcs cross.
+\item \emph{Kuratowski's thm}: a graph is planar iff it does not contain
+a subgraph homeomorphic to $K_{5}$ or $K_{3,3}$.\emph{ Homeomorphic}:
+can be obtained from the graph by replacing the arc $x-y$ by $x-z-y$
+where required.
+\item For a planar graph, $F=A-N+2$.
+\end{enumerate}
+
+\paragraph{Graph Colouring}
+\begin{enumerate}
+\item \emph{$k$-colourable}: nodes can be coloured using no more than $k$
+colours.
+\item \emph{Four colour thm}: every simple planar graph can be coloured
+with at most four colours.
+\item \emph{Bipartite}: nodes can be partitioned into two sets such that
+no two nodes from the same set are joined. Bipartite is equivalent
+to 2-colourable.
+\end{enumerate}
+
+\paragraph{Paths and Connectedness}
+\begin{enumerate}
+\item \emph{Path}: sequence of adjacent arcs.
+\item \emph{Connected}: there is a path joining any two nodes.
+\item $x\sim y$ iff there is a path from $x$ to $y$. The equivalence
+classes of $\sim$ are the \emph{connected components}.
+\item \emph{Cycle}: path which finishes where it starts, has at least one
+arc, does not use the same arc twice.
+\item \emph{Acyclic}: graph with no cycles.
+\item \emph{Euler path:} path which uses each arc exactly once. Exists iff
+number of odd nodes is 0 or 2.
+\item \emph{Euler circuit:} cycle which uses each arc exactly once. Exists
+iff every node is even.
+\item \emph{Hamiltonian path}: path which visits every node exactly once.
+\item \emph{Hamiltonian circuit}: HP which returns to start node.
+\end{enumerate}
+
+\paragraph{Trees}
+\begin{enumerate}
+\item \emph{Tree}: acyclic, connected, rooted (has distinguished / root
+node) graph.
+
+\begin{enumerate}
+\item Exists a unique non-repeating path between any two nodes.
+\item A tree with $n$ nodes has $n-1$ arcs.
+\end{enumerate}
+\item \emph{Depth}: distance of node (along unique path) from root.
+\item \emph{Spanning tree}: spanning subgraph which is a non-rooted tree
+(lowest-cost network which still connects the nodes). All connected
+graphs have spanning trees, not necessarily unique.
+\item \emph{Minimum spanning tree}: spanning tree, no other spanning tree
+has smaller weight. \emph{Weight} of spanning tree is sum of weights
+of arcs.
+\end{enumerate}
+
+\paragraph{Directed Graphs}
+\begin{enumerate}
+\item \emph{Graph}: set of $N$ nodes and $A$ arcs such that each $a\in A$
+is associated with an \emph{ordered} pair of nodes.
+\item \emph{Indegree}: number of arcs entering given node.
+\item \emph{Outdegree}: number of arcs leaving given node.
+\item Sum of indegrees = sum of outdegrees = number of arcs.
+\end{enumerate}
+
+\paragraph{Weighted Graphs}
+
+\emph{Weighted graph}: simple graph $G$ together with a weight function
+$W:\mbox{arcs}\left(G\right)\rightarrow\mathbb{R}^{+}$.
+
+
+\section{Graph Algorithms}
+
+
+\subsection{Traversing a Graph}
+
+
+\subsubsection{Depth First Search}
+
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily}]
+#### Depth First Search ####
+
+visited[x] = true
+print x
+for y in adj[x]:        # Follow first available arc
+  if not visited[y]:
+    parent[y] = x
+    dfs(y)              # Repeat from the discovered node
+                        # Once all arcs followed, backtrack
+\end{lstlisting}
+
+
+
+\subsubsection{Breadth First Search}
+
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily}]
+#### Breadth First Search ####
+
+visited[x] = true
+print x
+enqueue(x,Q)
+while not isEmpty(Q):
+  y = front(Q)
+  for z in adj[y]:         # Follow all available arcs
+    if not visited[z]:
+      visited[z] = true
+      print z
+      parent[z] = y
+         enqueue (z,Q)     # Repeat for each discovered node
+  dequeue(Q)
+\end{lstlisting}
+
+
+For both methods, each node is processed once, each adjacency is list
+processed once, giving running time of $O\left(n+a\right)$.
+
+
+\paragraph{Applications}
+\begin{enumerate}
+\item Find if a graph is connected.
+\item Find if a graph is cyclic: use DFS, if we find a node that we have
+already visited (except by backtracking) there is a cycle.
+\item Find distance from start node: BFS with a counter.
+\end{enumerate}
+
+\subsection{Finding Minimum Spanning Trees}
+
+
+\subsubsection{Prim's Algorithm}
+
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily}]
+#### Prim's Algorithm ####
+
+                                  # Choose any node as start
+tree[start] = true                # Initialise tree as start
+for x in adj[start]:              # and fringe as adjacent nodes
+  fringe[x] = true
+  parent[x] = start
+  weight[x] = W[start,x]
+while fringe nonempty:
+  f = argmin(weight)              # Select node f from fringe 
+                                  # s.t. weight is minimum
+  tree[f] = true                  # Add f to tree
+  fringe[f] = false               # and remove from fringe
+  for y in adj[f]:
+    if not tree[y]:
+      if fringe[y]:               # Update min weights
+                                  # for nodes already in fringe
+        if W[f,y] < weight[y]:
+          weight[y] = W[f,y]
+          parent[y] = f
+      else:                       # and add any unseen nodes 
+                                  # adjacent to f to fringe
+        fringe[y] = true
+        weight[y] = W[f,y]
+        parent[y] = f
+\end{lstlisting}
+
+
+Method takes $O\left(n^{2}\right)$ time. For each node, we check
+at most $n$ nodes to find $f$.
+
+
+\paragraph{Correctness of Prim's}
+
+\emph{Inductive step}: Assume that $T_{k}\subseteq T'$ where $T'$
+is some MST of a graph $G$. Suppose we choose $a_{k+1}\notin\mbox{arcs}\left(T'\right)$,
+between nodes $x$ and $y$. There must be another path from $x$
+to $y$. So this path uses another arc $a$ that crosses the fringe
+- but $W\left(a_{k+1}\right)\leq W\left(a\right)$ so $T_{k+1}\subseteq T'$.
+
+
+\paragraph{Implementation of Prim's with Priority Queues}
+
+Using binary heap implementation, operations are $O\left(\log n\right)$
+except isEmpty and getMin which are $O\left(1\right)$. This gives
+$O\left(m\log n\right)$ overall - better for sparse graphs.
+
+
+\subsubsection{Kruskal's Algorithm}
+
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},showstringspaces=false]
+#### Kruskal's Algorithm ####
+
+                         # Assign nodes of G numbers 1..n
+Q = ...                  # Build a PQ of arcs with weights as keys
+sets = UFcreate(n)       # Initialise Union-Find with singletons
+F = {}                   # Initialise empty forest
+while not isEmpty(Q):
+  (x,y) = getMin(Q)      # Choose the arc of least weight
+  deleteMin(Q)
+  x' = find(sets,x)      # Find which components it connects
+  y' = find(sets,y)
+  if x' != y':           # If components are different/no cycle made
+    add (x,y) to F       # add arc to forest
+    union(sets,x',y')    # and merge two components
+\end{lstlisting}
+
+
+
+\paragraph{Implementation of Kruskal's with Non-binary Trees}
+\begin{enumerate}
+\item Each set stored as non-binary tree, where root node represents leader
+of set.
+\item Merge sets by appending one tree to another. We want to limit depth,
+so always append tree of lower size to one of greater size.
+\item Depth of a tree of size $k$ is then $\leq\left\lfloor \log k\right\rfloor $.
+\end{enumerate}
+Gives $O\left(m\log m\right)$ which, since $m$ is bounded by $n^{2}$,
+is equivalent to $O\left(m\log n\right)$. Better for sparse graphs.
+
+
+\paragraph{Improvements for Kruskal's with Path Compression}
+\begin{enumerate}
+\item When finding root/leader of component containing the node $x$, if
+it is not $\mbox{parent}\left[x\right]$, then we make $\mbox{parent}\left[y\right]=\mbox{root}$
+for all $y$ on the path from $x$ to the root.
+\item This gives $O\left(\left(n+m\right)\log^{*}n\right)$ where $\log^{*}n$
+is a very slowly growing function.
+\end{enumerate}
+
+\subsection{Shortest Path Problem}
+
+
+\subsubsection{Dijkstra's Algorithm}
+
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},showstringspaces=false]
+#### Dijkstra's Algorithm ####
+
+tree[start] = true                    # Init tree as start node
+for x in adj[start]:                  # Init fringe as adj nodes
+  fringe[x] = true
+  parent[x] = start
+  distance[x] = W[start,x]
+while not tree[finish] and fringe nonempty:
+  f = argmin(distance)                # Choose node with min distance
+  fringe[f] = false                   # remove from fringe
+  tree[f] = true                      # and add to tree
+  for y in adj[f]:                    # For adj nodes
+    if not tree[y]:                   # if in fringe, update distance
+      if fringe[y]:
+        if distance[f] + W[f,y] < distance[y]:
+          distance[y] = distance[f] + W[f,y]
+          parent[y] = f
+      else:                           # otherwise, add to fringe
+        fringe[y] = true
+        distance[y] = distance[f] + W[f,y]
+        parent[y] = f
+return distance[finish]
+\end{lstlisting}
+
+
+Requires $O\left(n^{2}\right)$ steps (or $O\left(m\log n\right)$
+with PQ).
+
+
+\paragraph{Correctness}
+
+Prove by the following invariant:
+\begin{enumerate}
+\item If $x$ is a tree or fringe node, then $\mbox{parent}\left[x\right]$
+is a tree node.
+\item If $x$ is a tree node, then $\mbox{distance}\left[x\right]$ is the
+length of the shortest path and $\mbox{parent}\left[x\right]$ is
+its predecessor along that path.
+\item If $f$ is a fringe node then $\mbox{distance}\left[f\right]$ is
+the length of the shortest path where all nodes except $f$ are tree
+nodes.
+\end{enumerate}
+
+\subsubsection{Floyd's Algorithm}
+
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},showstringspaces=false]
+#### Floyd's Algorithm ####
+
+A                                  # Input adj matrix
+B[i,j]
+  if i = j     : 0
+  if A[i,j] > 0: A[i,j]
+  otherwise    : INFINITY          # Init shortest paths via no nodes
+for k = 1 to n:
+  for i = 1 to n:
+    for j = 1 to n:
+      B[i,j] = min(B[i,j],         # New shortest path is direct
+               B[i,k] + B[k,j])    # or concat shortest paths via k
+return B
+\end{lstlisting}
+
+
+\emph{Warshall's algorithm} is the same but uses Boolean values (determines
+whether a path exists). Both have complexity $O\left(n^{3}\right)$.
+
+
+\paragraph{Correctness}
+
+We discuss the \emph{inductive step}: Suppose there is a shortest
+path $p$ from $i$ to $j$ using nodes with identifiers $<k$, of
+length $d$. Either:
+\begin{enumerate}
+\item $k$ is not an intermediate node of $p$. Then $B_{k-1}\left[i,j\right]=d$
+already.
+\item $k$ is an intermediate node of $p$. Then $B_{k-1}\left[i,j\right]=B_{k-1}\left[i,k\right]+B_{k-1}\left[k,j\right]$
+since these give shortest paths to and from $k$.
+\end{enumerate}
+
+\paragraph{Dynamic Programming}
+
+Both algorithms are examples of dynamic programming:
+\begin{enumerate}
+\item Break down the main problem into sub-problems.
+\item Sub-problems are ordered and culminate in the main problem.
+\end{enumerate}
+
+\subsection{The Travelling Salesman Problem}
+
+
+\paragraph{Problem}
+
+Given a \emph{complete} weighted graph, find a minimum weight tour
+of the graph visiting each node exactly once.
+
+
+\subsubsection{Bellman-Held-Karp Algorithm}
+
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},showstringspaces=false]
+#### Bellman-Held-Karp Algorithm ####
+
+start = ...                           # Choose some start node
+for x in Nodes \ {start}:             # Set costs on empty set
+  C[{},x] = W[start,x]                # as direct weight from start
+for S in subsets(Nodes \ {start}):    # For sets S of increasing size
+  for x in Nodes \ (S union {start}): # for each node x out of set
+    c[S,x] = INFINITY
+    for y in S:
+      C[S,x]                          # update the cost to minimum
+        = min(C[S \ {y},y] + W[y,x],  # that visits all nodes in S
+          C[S,x])                     # and then x
+opt = INFINITY
+for x in Nodes \ {start}:             # Then choose the min value
+  opt = min(C[Nodes \ {start,x},x]    # for an S without x plus
+        + W[x,start],opt)             # weight of x from start
+return opt
+\end{lstlisting}
+
+
+Dynamic programming approach that requires $O\left(n^{2}2^{n}\right)$
+steps.
+
+
+\subsubsection{Nearest Neighbour Algorithm}
+
+Always choose the the shortest available arc. Not optimal but has
+$O\left(n^{2}\right)$ complexity.
+
+
+\section{Algorithm Analysis}
+
+
+\subsection{Searching Algorithms}
+
+
+\subsubsection{Searching an Unordered List $\boldsymbol{L}$}
+
+For an element $x$:
+\begin{enumerate}
+\item If $x$ in $L$ return $k$ s.t. $L\left[k\right]=x$.
+\item Otherwise return ``not found''.
+\end{enumerate}
+
+\paragraph{Optimal Algorithm: Linear Search}
+
+Inspect elements in turn. With input size $n$ we have time complexity
+of $n$ in worst case.
+
+Linear search is optimal. Consider any algorithm $A$ which solves
+the search problem:
+\begin{enumerate}
+\item \emph{Claim:} if $A$ returns ``not found'' then it must have inspected
+every entry of $L$.
+\item \emph{Proof:} suppose for contradiction that $A$ did not inspect
+some $L\left[k\right]$. On an input $L'$ where $L'\left[k\right]=x$,
+$A$ will return ``not found'', which is wrong. So in worst case
+$n$ comparisons are needed.
+\end{enumerate}
+
+\subsubsection{Searching an Ordered List $\boldsymbol{L}$}
+
+
+\paragraph{Optimal Algorithm: Binary Search}
+
+Where $W\left(n\right)$ is the number of inspections required for
+a list of length $n$, $W\left(1\right)=1$ and $W\left(n\right)=1+W\left(\left\lfloor n/2\right\rfloor \right)$.
+Gives $W(n)=1+\left\lfloor \log_{2}n\right\rfloor $.
+\begin{enumerate}
+\item \emph{Proposition}: if a binary tree has depth $d$, then it has $\leq2^{d+1}-1$
+nodes.
+\item \emph{Base Case}: depth 0 has less than or equal to $2-1=1$ node.
+True.
+\item \emph{Inductive Step}: assume true for $d$. Suppose tree has depth
+$d+1$. Children have depth $\leq d$ and so $\leq2^{d+1}-1$ nodes.
+Total number of nodes $\leq1+2\times\left(2^{d+1}-1\right)=2^{(d+1)+1}-1$.
+\item \emph{Claim}: any algorithm $A$ must do as many comparisons as binary
+search.
+\item \emph{Proof}: the tree for algorithm $A$ has $n$ nodes. If depth
+is $d$ then $n\leq2^{d+1}-1$. Hence $d+1\geq\left\lceil \log\left(n+1\right)\right\rceil $.
+For binary search, $W(n)=1+\left\lfloor \log n\right\rfloor $ which
+is equivalent to $\left\lceil \log\left(n+1\right)\right\rceil $.
+\end{enumerate}
+
+\subsection{Orders}
+\begin{enumerate}
+\item $f$ is $O\left(g\right)$ if $\exists m\in\mathbb{N}\exists c\in\mathbb{R}^{+}.\left[\forall n\geq m.\left(f\left(n\right)\leq c\times g\left(n\right)\right)\right]$.
+\item $f$ is $\Theta\left(g\right)$ iff $f$ is $O\left(g\right)$ and
+$g$ is $O\left(f\right)$.
+\end{enumerate}
+
+\subsection{Divide and Conquer}
+\begin{enumerate}
+\item Dvidie problem into $b$ subproblems of size $n/c$.
+\item Solve each subproblem recursively.
+\item Combine to get the result.
+\end{enumerate}
+
+\paragraph{E.g. Strassen's Algorithm for Matrix Multiplication}
+\begin{enumerate}
+\item Add extra row and or column to keep dimension even.
+\item Divide up matrices into four quadrants, each $n/2\times n/2$.
+\item Compute each quadrant result with just 7 multiplications (instead
+of 8).
+\end{enumerate}
+
+\subsection{Sorting Algorithms}
+
+
+\subsubsection{Insertion Sort}
+\begin{enumerate}
+\item Insert $L\left[i\right]$ into $L\left[0..i-1\right]$ in the correct
+position. Then $L\left[0..i\right]$ is sorted.
+\item This takes between 1 and $i$ comparisons.
+\item Worst case: $W\left(n\right)=\sum_{i=1}^{n-1}i=\frac{n(n-1)}{2}$
+(occurs when in reverse order). Order $\Theta\left(n^{2}\right)$.
+\end{enumerate}
+
+\subsubsection{Lower Bound}
+
+We express the sorting algorithm as a \emph{decision tree}. Internal
+nodes are \emph{comparisons}. Leaves are \emph{results}. The worst
+case number of comparisons is given by depth.
+\begin{enumerate}
+\item There are $n!$ permutations so we require $n!$ leaves.
+\item \emph{Proposition}: if a binary tree had depth $d$ then it has $\leq2^{d}$
+leaves.
+\item \emph{Proof}: simple proof by induction.
+\item \emph{Lower bound}: $2^{d}\geq n!$ so $d\geq\left\lceil \log\left(n!\right)\right\rceil $.
+\item \emph{Average case}: must peform at least $\left\lfloor \log\left(n!\right)\right\rfloor $
+calculations (since total path length is minimum for balanced trees).\end{enumerate}
+
+\end{document}

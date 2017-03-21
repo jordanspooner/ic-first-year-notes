@@ -1,0 +1,101 @@
+\documentclass[10pt,twoside,twocolumn]{article}
+\usepackage[latin9]{inputenc}
+\usepackage[landscape]{geometry}
+\geometry{verbose,tmargin=0.5in,bmargin=0.75in,lmargin=0.5in,rmargin=0.5in}
+\setlength{\parskip}{\smallskipamount}
+\setlength{\parindent}{0pt}
+
+\makeatletter
+
+\usepackage{amsmath,amssymb,amsthm,mathrsfs,amsfonts,dsfont} 
+
+\setlength{\columnsep}{0.25in}
+
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\R}[0]{\mathds{R}} % real numbers
+\newcommand{\Z}[0]{\mathds{Z}} % integers
+\newcommand{\N}[0]{\mathds{N}} % natural numbers
+\newcommand{\nat}[0]{\mathds{N}} % natural numbers
+\newcommand{\Q}[0]{\mathds{Q}} % rational numbers
+
+\makeatother
+
+\begin{document}
+
+\title{Reference Sheet for CO141 Reasoning about Programs}
+
+
+\date{Spring 2017}
+
+\maketitle
+
+\paragraph{Stylised Proofs for Reasoning}
+\begin{enumerate}
+\item Write out and name each given formula.
+\item Write out and name each formula to be shown.
+\item Plan out the proof and name intermediate results.
+\item Justify each step of the proof.
+\end{enumerate}
+We use the following methods to plan out a proof for $P$:
+\begin{enumerate}
+\item \emph{Contradiction} i.e. show $\lnot P\rightarrow\mbox{false}$.
+\item If $P=Q\land R$ show both $Q$ and $R$.
+\item If $P=Q\lor R$ show either $Q$ or $R$.
+\item If $P=Q\rightarrow R$ assume $Q$ and show $R$.
+\item If $P=\lnot Q$ show $Q\rightarrow\mbox{false}$.
+\item If $P=\forall xQ\left(x\right)$ take arbitrary $c$ and show $Q\left(c\right)$.
+\item If $P=\exists xQ\left(x\right)$ find some $c$ and show $Q\left(c\right)$.
+\end{enumerate}
+We use the following methods to justify our proof:
+\begin{enumerate}
+\item If false holds then $P$ holds.
+\item If $P\land Q$ holds then $Q$ and $R$ both hold.
+\item If $P\lor Q$ holds we do case analysis assuming each in turn.
+\item If $P\rightarrow Q$ holds and $P$ holds then $Q$ holds.
+\item If $P=\forall xQ\left(x\right)$ holds then $P\left(c\right)$ holds
+for any $c$.
+\item If $P=\exists xQ\left(x\right)$ holds then $P\left(c\right)$ holds
+for some $c$.
+\item We can apply any lemma / equivalence given or proven earlier.
+\end{enumerate}
+
+\section{Reasoning about Haskell Programs}
+
+
+\subsection{Mathematical Induction}
+
+
+\paragraph{Principle of Mathematical Induction}
+
+For any $P\subseteq\mathbb{N}$:
+
+\[
+P\left(0\right)\land\forall k:\mathbb{N}.\left[P\left(k\right)\rightarrow P\left(k+1\right)\right]
+\]
+
+
+
+\subsection{Strong Induction}
+
+
+\subsection{Structural Induction over Haskell Data Types}
+
+
+\subsection{Induction over Recursively Defined Structures}
+
+
+\section{Reasoning about Java Programs}
+
+
+\subsection{Program Specifications}
+
+
+\subsection{Conditional Branches}
+
+
+\subsection{Recursion}
+
+
+\subsection{Iteration}
+\end{document}

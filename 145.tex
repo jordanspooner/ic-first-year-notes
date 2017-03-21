@@ -1,0 +1,966 @@
+\documentclass[10pt,twoside,twocolumn]{article}
+\usepackage[latin9]{inputenc}
+\usepackage[landscape]{geometry}
+\geometry{verbose,tmargin=0.5in,bmargin=0.75in,lmargin=0.5in,rmargin=0.5in}
+\setlength{\parskip}{\smallskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{esint}
+
+\makeatletter
+
+\usepackage{calc}
+
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{dsfont}
+
+\setlength{\columnsep}{0.25in}
+
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\R}[0]{\mathds{R}} % real numbers
+\newcommand{\Z}[0]{\mathds{Z}} % integers
+\newcommand{\N}[0]{\mathds{N}} % natural numbers
+\newcommand{\nat}[0]{\mathds{N}} % natural numbers
+\newcommand{\Q}[0]{\mathds{Q}} % rational numbers
+
+\makeatother
+
+\begin{document}
+
+\title{Reference Sheet for CO145 Mathematical Methods}
+
+
+\date{Autumn 2016}
+
+\maketitle
+
+\part{Analysis}
+
+
+\section{Sets}
+
+For a set $S$ of real numbers: 
+\begin{enumerate}
+\item $u$ is an upper bound if $u\geq s\:\forall\:s\in S$. If such a $u$
+exists, $S$ is bounded above. 
+\item $l$ is an lower bound if $l\leq s\:\forall\:s\in S$. If such a $l$
+exists, $S$ is bounded below. 
+\end{enumerate}
+Every set, $S$ has a supremum and infimum: 
+\begin{enumerate}
+\item $\sup(S)$ is the least upper bound of $S$. 
+\item $\inf(S)$ is the greatest lower bound of $S$. 
+\end{enumerate}
+
+\paragraph{Proving the Convergence of a Bounded Sequence.}
+
+Every \emph{increasing} sequence of real numbers that is \emph{bounded
+above} must converge (this is especially useful when combined with
+proof by induction).
+
+
+\section{Sequences}
+
+
+\subsection{Given Results}
+
+
+\subsubsection{Absolute Values}
+\begin{enumerate}
+\item $\left|xy\right|=\left|x\right|\times\left|y\right|$ 
+\item $\left|\frac{x}{y}\right|=\frac{\left|x\right|}{\left|y\right|}$ 
+\end{enumerate}
+
+\subsubsection{Converging Sequences}
+\begin{enumerate}
+\item $\lim_{n\rightarrow\infty}\frac{1}{n^{c}}=0$ for all $c>0$ 
+\item $\lim_{n\rightarrow\infty}\frac{1}{c^{n}}=0$ for all $\left|c\right|>0$ 
+\item $\lim_{n\rightarrow\infty}\frac{1}{n!}=0$ 
+\item $\lim_{n\rightarrow\infty}\frac{1}{\log n}=0$ for $n>1$ 
+\end{enumerate}
+
+\subsubsection{Combinations of Sequences}
+\begin{enumerate}
+\item $\lim_{n\rightarrow\infty}\left(\lambda a_{n}\right)=\lambda\lim_{n\rightarrow\infty}a_{n}$ 
+\item $\lim_{n\rightarrow\infty}\left(a_{n}+b_{n}\right)=\lim_{n\rightarrow\infty}a_{n}+\lim_{n\rightarrow\infty}b_{n}$ 
+\item $\lim_{n\rightarrow\infty}\left(a_{n}-b_{n}\right)=\lim_{n\rightarrow\infty}a_{n}-\lim_{n\rightarrow\infty}b_{n}$ 
+\item $\lim_{n\rightarrow\infty}\left(a_{n}\times b_{n}\right)=\lim_{n\rightarrow\infty}a_{n}\times\lim_{n\rightarrow\infty}b_{n}$ 
+\item $\lim_{n\rightarrow\infty}\frac{a_{n}}{b_{n}}=\frac{\lim_{n\rightarrow\infty}a_{n}}{\lim_{n\rightarrow\infty}b_{n}}$ 
+\end{enumerate}
+
+\subsection{Proving Convergence}
+
+
+\subsubsection{Direct Proof}
+\begin{enumerate}
+\item Apply the definition of convergence:\\
+ %
+\fbox{\begin{minipage}[t]{1\linewidth - 2\fboxsep - 2\fboxrule}Suppose
+$a_{n}$ converges to $L$. Then there must exist an $N\left(\epsilon\right)\in\R$
+such that for all $n\geq N\left(\epsilon\right)$ and for all $\epsilon>0$,
+$*$ holds: 
+\begin{align*}
+\left|a_{n}-L\right|<\epsilon & *
+\end{align*}
+\end{minipage}} 
+\item Rearrange $*$ such that $n$ is the subject, ensuring that you show
+implications in the correct direction. 
+\item Propose an $N(\epsilon)$ such that $*$ holds (the ceiling function
+applied to the previous result is sufficient). 
+\item Check that this result is sensible. 
+\end{enumerate}
+
+\subsubsection{Sandwich Theorem}
+\begin{enumerate}
+\item Show that $\lim_{n\rightarrow\infty}l_{n}=L$. 
+\item Show that $\lim_{n\rightarrow\infty}u_{n}=L$. 
+\item Show that $l_{n}\leq a_{n}$ and $u_{n}\geq a_{n}$ for all $n\geq N$
+for some $N\in\R$. 
+\item Apply the sandwich theorem to show that $\lim_{n\rightarrow\infty}a_{n}=L$. 
+\end{enumerate}
+
+\subsubsection{Ratio Test}
+\begin{enumerate}
+\item Determine the value of $\lim_{n\rightarrow\infty}\left|\frac{a_{n+1}}{a_{n}}\right|$. 
+\item Conclude appropriately.
+
+\begin{enumerate}
+\item If $r<1$ then $a_{n}$ converges to 0. 
+\item If $r>1$ then $a_{n}$ diverges. 
+\end{enumerate}
+\end{enumerate}
+
+\paragraph{Proving the convergence of a sequence $b_{n}$ to $L\protect\neq0$}
+
+Consider the ratio of the modified sequence $a_{n}=b_{n}-L$.
+
+
+\section{Series}
+
+
+\subsection{Given Results}
+
+
+\subsubsection{Converging Series}
+\begin{enumerate}
+\item $\sum_{n=1}^{\infty}x^{n}$ converges to $\frac{x}{1-x}$ for $\left|x\right|<1$.
+{[}Geometric Series{]} 
+\item $\sum_{n=1}^{\infty}\frac{1}{n^{2}}$ converges to $\frac{\pi}{6}$.
+{[}Inverse Square Series{]} 
+\item $\sum_{n=1}^{\infty}\frac{1}{n^{c}}$ converges for $c>1$. 
+\end{enumerate}
+
+\subsubsection{Diverging Series}
+\begin{enumerate}
+\item $\sum_{n=1}^{\infty}x^{n}$ diverges for $\left|x\right|>1$. {[}Geometric
+Series{]} 
+\item $\sum_{n=1}^{\infty}\frac{1}{n}$ diverges. {[}Harmonic Series{]} 
+\item $\sum_{p:\text{prime}}\frac{1}{p}$ diverges. {[}Harmonic Primes{]} 
+\end{enumerate}
+
+\subsection{Proving Convergence}
+
+
+\subsubsection{Using Partial Sums}
+\begin{enumerate}
+\item Construct the partial sum, $S_{n}=\sum_{i=1}^{n}a_{i}$. 
+\item Prove the convergence or divergence of the partial sum. 
+\end{enumerate}
+
+\subsubsection{Comparison Test}
+
+
+\paragraph{Standard Comparison Test}
+\begin{enumerate}
+\item Show that $\sum_{i=1}^{\infty}c_{i}$ converges or that $\sum_{i=1}^{\infty}d_{i}$
+diverges. 
+\item Make a comparison and conclude appropriately.
+
+\begin{enumerate}
+\item Show that $a_{i}\leq\lambda c_{i}$ for some $\lambda>0$ and for
+all $i>N\in\R$ and conclude $\sum_{n=1}^{\infty}a_{i}$ converges. 
+\item Show that $a_{i}\geq\lambda d_{i}$ for some $\lambda>0$ and for
+all $i>N\in\R$ and conclude $\sum_{n=1}^{\infty}a_{i}$ diverges. 
+\end{enumerate}
+\end{enumerate}
+
+\paragraph{Limit Comparison Test}
+\begin{enumerate}
+\item Show that $\sum_{i=1}^{\infty}c_{i}$ converges or that $\sum_{i=1}^{\infty}d_{i}$
+diverges. 
+\item State the appropriate limit and conclusion.
+
+\begin{enumerate}
+\item Show that $\lim_{i\rightarrow\infty}\frac{a_{i}}{c_{i}}$ exists and
+conclude $\sum_{n=1}^{\infty}a_{i}$ converges. 
+\item Show that $\lim_{i\rightarrow\infty}\frac{d_{i}}{a_{i}}$ exists and
+conclude $\sum_{n=1}^{\infty}a_{i}$ diverges. 
+\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Ratio Test}
+\begin{enumerate}
+\item Determine $\lim_{n\rightarrow\infty}\frac{a_{i+1}}{a_{i}}$. 
+\item Conclude appropriately.
+
+\begin{enumerate}
+\item If $\lim_{n\rightarrow\infty}\frac{a_{i+1}}{a_{i}}<1$ then $\sum_{i=1}^{\infty}a_{i}$
+converges. 
+\item If $\lim_{n\rightarrow\infty}\frac{a_{i+1}}{a_{i}}>1$ then $\sum_{i=1}^{\infty}a_{i}$
+diverges. 
+\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Integral Test}
+
+Where $f\left(n\right)=a_{n}$ is a continuous, positive, and decreasing
+function: 
+\begin{enumerate}
+\item Determine $\int_{N}^{\infty}f\left(x\right)\text{d}x$. 
+\item Conclude appropriately.
+
+\begin{enumerate}
+\item If $\int_{N}^{\infty}f\left(x\right)\text{d}x$ converges, so does
+$\sum_{n=N}^{\infty}a_{n}$. 
+\item If $\int_{N}^{\infty}f\left(x\right)\text{d}x$ diverges, so does
+$\sum_{n=N}^{\infty}a_{n}$. 
+\end{enumerate}
+\end{enumerate}
+
+\section{Power Series}
+
+
+\subsection{Given Results}
+\begin{enumerate}
+\item $e^{x}=1+x+\frac{x^{2}}{2!}+\frac{x^{3}}{3!}+\dots+\frac{x^{r}}{r!}+\dots$
+for all $x$ 
+\item $\ln\left(1+x\right)=x-\frac{x^{2}}{2}+\frac{x^{3}}{3}-\dots+\left(-1\right)^{r+1}\frac{x^{r}}{r}+\dots$
+for $-1<x\leq1$ 
+\item $\sin x=x-\frac{x^{3}}{3!}+\frac{x^{5}}{5!}-\dots+\left(-1\right)^{r}\frac{x^{2r+1}}{\left(2r+1\right)!}+\dots$
+for all $x$ 
+\item $\cos x=1-\frac{x^{2}}{2!}+\frac{x^{4}}{4!}-\dots+\left(-1\right)^{r}\frac{x^{2r}}{\left(2r\right)!}+\dots$
+for all $x$ 
+\end{enumerate}
+
+\paragraph{Combinations of Functions}
+
+Note that you can add, subtract, multiply, divide, differentiate and
+integrate power series term-wise.
+
+
+\subsection{Determining a Maclaurin Series}
+\begin{enumerate}
+\item Repeatedly differentiate $f\left(x\right)$ and set $x$ to 0. Use
+these results to propose a value for $f^{\left(n\right)}0$. 
+\item The Maclaurin series expansion for $f\left(x\right)$ is then given
+by $\sum_{n=0}^{\infty}f^{\left(n\right)}\left(0\right)\frac{x^{n}}{n!}$. 
+\end{enumerate}
+
+\subsection{Determining a Taylor Series}
+\begin{enumerate}
+\item Repeatedly differentiate $f\left(x\right)$ and set $x$ to $a$.
+Use these results to propose a value for $f^{\left(n\right)}a$. 
+\item The Taylor series expansion at $a$ for $f\left(x\right)$ is then
+given by $\sum_{n=0}^{\infty}\frac{f^{\left(n\right)}\left(a\right)}{n!}\left(x-a\right)^{n}$. 
+\end{enumerate}
+
+\subsection{Finding the Radius of Convergence}
+\begin{enumerate}
+\item Apply a ratio test using absolute values. 
+\item Set $\left|r\right|<1$ to show the region of convergence. 
+\item If the series converges for $\left|x-a\right|<R$, the series has
+a radius of convergence of $R$ (about $a$). 
+\end{enumerate}
+
+\subsection{Error Terms}
+
+Where $c$ is a constant that lies between $x$ and $a$:
+
+
+\subsubsection{Lagrange Error Term}
+
+\begin{align*}
+f\left(x\right) & =\sum_{n=0}^{\infty}\frac{f^{\left(n\right)}\left(a\right)}{n!}\left(x-a\right)^{n}\\
+ & =\sum_{n=0}^{k}\frac{f^{\left(n\right)}\left(a\right)}{n!}\left(x-a\right)^{n}+\underbrace{\frac{f^{\left(k+1\right)}\left(c\right)}{\left(k+1\right)!}\left(x-a\right)^{k+1}}_{\text{Lagrange Error Term}}
+\end{align*}
+
+
+This result follows from the mean value theorem.
+
+
+\subsubsection{Cauchy Error Term}
+
+\begin{align*}
+f\left(x\right) & =\sum_{n=0}^{k}\frac{f^{\left(n\right)}\left(a\right)}{n!}\left(x-a\right)^{n}+\underbrace{\frac{f^{\left(k+1\right)}\left(c\right)}{k!}\left(x-c\right)^{k}\left(x-a\right)}_{\text{Cauchy Error Term}}
+\end{align*}
+
+
+
+\subsection{Using Power Series to Solve ODEs}
+
+\textbf{Example:} Given the differential equation, $\frac{\text{d}y}{\text{d}x}=ky$: 
+\begin{enumerate}
+\item Express $y$ as the power series, $\sum_{i=0}^{\infty}a_{i}x^{i}$. 
+\item Differentiate $y$ to give $\frac{\text{d}y}{\text{d}x}=\sum_{i=0}^{\infty}ia_{i}x^{i-1}$. 
+\item Compare coefficients to give $a_{i}=\frac{k}{i}a_{i-1}$. 
+\item Deduce that $a_{i}=\frac{k^{i}}{i!}a_{0}$. Hence $y=a_{0}e^{kx}$
+(where $a_{0}$ is the value of $x$ at $y=0$). 
+\end{enumerate}
+\pagebreak{}
+
+
+\part{Linear Algebra}
+
+
+\section{Groups}
+
+For $\left(G,\cdot\right)$ to be called a group, it must have the
+properties: 
+\begin{enumerate}
+\item \textbf{Closure:} $\forall\:x,y\in G$, $x\cdot y\in G$ 
+\item \textbf{Associativity:} $\forall\:x,y,z\in G$, $\left(x\cdot y\right)\cdot z=x\cdot\left(y\cdot z\right)$ 
+\item \textbf{Identity:} $\exists\;e\in G$ s.t. $\forall\:x\in G$, $x\cdot e=e\cdot x=x$ 
+\item \textbf{Inverse:} $\forall\:x\in G\:\exists\:x^{-1}\in G$ s.t. $x\cdot x^{-1}=x^{x-1}\cdot x=e$ 
+\end{enumerate}
+For the group to be \emph{abelian} it must also have the additional
+property: 
+\begin{enumerate}
+\item \textbf{Commutativity:} $\forall\:x,y\in G$, $x\cdot y=y\cdot x$ 
+\end{enumerate}
+
+\section{Methods on Matrices}
+
+
+\subsection{Multiplication by a Scalar}
+
+Has the properties: 
+\begin{enumerate}
+\item Associativity 
+\item Distributivity 
+\item $\left(\lambda\mathbf{C}\right)^{\top}=\lambda\mathbf{C}^{\top}$ 
+\end{enumerate}
+
+\subsection{Matrix Multiplication}
+
+Matrix multiplication is defined for $\mathbf{A}\in\R^{m\times n},\mathbf{B}\in\R^{n\times p}$,
+giving the product, $\mathbf{C}=\mathbf{AB}\in\R^{m\times p}$. It
+has the properties: 
+\begin{enumerate}
+\item Associativity 
+\item Distributivity 
+\item $\forall\:\mathbf{A}\in\R^{m\times n}$, $\mathbf{I}_{m}\mathbf{A}=\mathbf{A}\mathbf{I}_{n}=\mathbf{A}$. 
+\item Note that $\mathbf{AB}\neq\mathbf{BA}$. 
+\end{enumerate}
+
+\subsection{Inverse and Transpose}
+
+
+\subsubsection{Further Properties of Matrix Arithmetic}
+\begin{enumerate}
+\item $\mathbf{A}\mathbf{A}^{-1}=\mathbf{A}^{-1}\mathbf{A}=\mathbf{I}$ 
+\item Note $\left(\mathbf{A}+\mathbf{B}\right)^{-1}\neq\mathbf{A}^{-1}+\mathbf{B}^{-1}$ 
+\item $\left(\mathbf{A}\mathbf{B}\right)^{-1}=\mathbf{B}^{-1}\mathbf{A}^{-1}$\\
+ 
+\item $\left(\mathbf{A}^{\top}\right)^{\top}=\mathbf{A}$ 
+\item $\left(\mathbf{A}+\mathbf{B}\right)^{\top}=\mathbf{A}^{\top}+\mathbf{B}^{\top}$ 
+\item $\left(\mathbf{A}\mathbf{B}\right)^{\top}=\mathbf{B}^{\top}\mathbf{A}^{\top}$\\
+ 
+\item $\left(\mathbf{A}^{-1}\right)^{\top}=\left(\mathbf{A}^{\top}\right)^{-1}$ 
+\end{enumerate}
+
+\subsubsection{Determining the Inverse of a Matrix}
+\begin{enumerate}
+\item Recall that $\mathbf{A}\mathbf{A}^{-1}=\mathbf{I}$. We therefore
+wish to solve $\mathbf{A}\mathbf{X}=\mathbf{I}$. 
+\item Starting with $\left[\mathbf{A}|\mathbf{I}_{n}\right]$, use Gaussian
+elimination to reach reduced row echelon form. 
+\item $\mathbf{A}^{-1}$ can be read off from the result $\left[\mathbf{I}_{n}|\mathbf{A}^{-1}\right]$. 
+\end{enumerate}
+
+\subsection{Gaussian Elimination}
+
+
+\subsubsection{Elementary Transformations}
+
+We are allowed to: 
+\begin{enumerate}
+\item Swap two rows. 
+\item Multiply a row by a constant $\lambda\neq0$. 
+\item Add a row to another row. 
+\end{enumerate}
+We use these transformations to reach (reduced) row echelon form.
+
+
+\subsubsection{Row Echelon Form}
+\begin{enumerate}
+\item The pivot of a non-zero row is strictly to the right of a pivot of
+the row above it. 
+\item Any rows containing only zeros are at the bottom of the matrix. 
+\end{enumerate}
+Columns with pivots define \emph{basic variables}, other columns give
+\emph{free variables}.
+
+
+\subsubsection{Reduced Row Echelon Form}
+\begin{enumerate}
+\item The system is in row echelon form. 
+\item Every pivot is 1. 
+\item The pivot is the only non-zero entry in its column. 
+\end{enumerate}
+
+\subsection{Rank and Determinant}
+
+
+\subsubsection{Finding the Rank of a Matrix}
+\begin{enumerate}
+\item Apply Gaussian elimination to reach RREF. 
+\item The rank is given by the number of pivots (linearly independent cols
+/ rows). 
+\end{enumerate}
+
+\paragraph{Points to Note}
+\begin{enumerate}
+\item Column rank is equal to row rank. 
+\item $\mathbf{A}$ is regular (invertible) $\iff$ $\mbox{rk}\left(\mathbf{A}\right)=n$. 
+\item A matrix has full rank if its rank is equal to the lesser of the number
+of rows and columns, or is rank-deficient otherwise. 
+\end{enumerate}
+
+\subsubsection{Finding the Determinant of a Matrix}
+\begin{enumerate}
+\item By the given transformations, bring the matrix into triangular form
+(all 0 above or below the leading diagonal) or into a $2\times2$
+form. 
+\item The determinant is given the product of the leading diagonal of a
+triangular matrix, or the product of the leading diagonal minus the
+product of the other elements in a $2\times2$ matrix. 
+\end{enumerate}
+
+\paragraph{Transformations}
+\begin{enumerate}
+\item Adding and subtracting multiples of cols or rows does not change the
+determinant. 
+\item Multiplying a col or row by by a constant scales the determinant by
+that constant. 
+\item Swapping rows or cols changes the sign. 
+\item \textbf{Laplace expansion} can be used to reduce no. of rows and cols
+by one. Best used when there is a row or col with only one non-zero
+entry. 
+\end{enumerate}
+
+\paragraph{Points to Note}
+\begin{enumerate}
+\item $\det\left(\mathbf{A}\mathbf{B}\right)=\det\left(\mathbf{A}\right)\times\det\left(\mathbf{B}\right)$ 
+\item $\det\left(\mathbf{A}\right)=0\iff\mathbf{A}\mbox{ is singular}$ 
+\item $\det\left(\mathbf{A}\right)=\det\left(\mathbf{A}^{\top}\right)$ 
+\item $\det\left(\mathbf{A}^{-1}\right)=1/\det\left(\mathbf{A}\right)$ 
+\item Similar matrices have the same determinant. 
+\end{enumerate}
+
+\section{Linear Equation Systems}
+
+
+\subsection{Solving Inhomogeneous Linear Equation Systems}
+
+For $\mathbf{A}\mathbf{x}=\mathbf{b}$: 
+\begin{enumerate}
+\item Build an augmented matrix from the system of equations. 
+\item Use elementary transformations to reach row echelon form (you \emph{must}
+justify every step). 
+\item By reading from the resulting rows and setting free variables = 0,
+find a particular solution. 
+\item Solve the homogeneous linear equation system $\mathbf{A}\mathbf{x}=\mathbf{0}$,
+using the row echelon form derived in 2. 
+\item Combine the solutions from 3 and 4 to form the general solution. 
+\end{enumerate}
+
+\subsection{Solving Homogeneous Linear Equation Systems}
+
+For $\mathbf{A}\mathbf{x}=\mathbf{0}$: 
+\begin{enumerate}
+\item Use elementary transformations to reach row echelon form as before. 
+\item For each free variable (non-pivot col), equate it to a sum of basic
+variables (pivot cols). 
+\item Rearrange the equations formed in 1 so that they are of the form something
+= 0. 
+\item The solutions are given by the column vector of the coefficients of
+the variables, multiplied by any real scalar value. 
+\end{enumerate}
+
+\subsubsection{The Minus-1 Trick}
+\begin{enumerate}
+\item Use Guassian elimination to reach reduced row echelon form. 
+\item Extend the matrix from 1 by adding rows of the form $\left[0\:\dots\:0\;1\;0\;\dots\;0\right]$
+such that the leading diagonal is made up entirely of 1 (pivots) or
+-1 (from the introduced rows). 
+\item The columns containing -1 in the diagonal form the solutions. 
+\end{enumerate}
+
+\section{Vector Spaces}
+
+
+\subsection{Defining Vector Spaces}
+
+
+\subsubsection{Vector Spaces}
+
+A vector space is a set $V$ with two operations: 
+\begin{enumerate}
+\item $V+V\rightarrow V$ (inner operation) 
+\item $\R\cdot V\rightarrow V$ (outer operation) 
+\end{enumerate}
+where: 
+\begin{enumerate}
+\item $\left(V,+\right)$ is an Abelian group and has the distributivity
+property. 
+\item The outer operation has distributivity and associativity properties
+and has a neutral element of 1. 
+\end{enumerate}
+
+\subsubsection{Vector Subspaces and Generating Sets}
+
+For a vector space, $V$: 
+\begin{enumerate}
+\item If every vector in $V$ can be expressed as a linear combination of
+$A\left\{ \mathbf{x}_{1},\mathbf{x}_{2},\dots,\mathbf{x}_{n}\right\} $,
+then $A$ is a generating set for $V$. 
+\item For $U\subset V$ and $U\neq\emptyset$, $U$ is a vector subspace
+of $V$ if $U$ is a vector space. 
+\end{enumerate}
+
+\paragraph{Proving a Set is a Vector Subspace}
+
+For a vector subspace $U$, we need to show: 
+\begin{enumerate}
+\item $U\neq\emptyset$. Equivalently, $0\in U$. 
+\item Closure of $U$ with respect to the inner operation: $\forall\mathbf{x},\mathbf{y}\in U\left(\mathbf{x}+\mathbf{y}\in U\right)$. 
+\item Closure of $U$ with respect to the outer operation: $\forall\lambda\in\R\forall\mathbf{x}\in U\left(\lambda\mathbf{x}\in U\right)$. 
+\end{enumerate}
+
+\subsection{Determining Linear Dependence or Independence}
+
+To prove $\mathbf{x}_{1},\dots,\mathbf{x}_{k}$ are linearly independent: 
+\begin{enumerate}
+\item Write the vectors as columns of a matrix. 
+\item Apply Gaussian elimination to reach RREF. 
+\item Conclude appropriately:
+
+\begin{enumerate}
+\item Pivot columns are linearly independent of the previous vectors. 
+\item Non-pivot columns can be expressed as linear combinations of previous
+pivot columns. 
+\end{enumerate}
+\end{enumerate}
+
+\paragraph{Points to Note}
+\begin{enumerate}
+\item If at least one of the vectors is $\mathbf{0}$ or at least two of
+the vectors are identical then they are linearly dependent. 
+\item The set of vectors, $\mathbf{x}_{1}=\sum_{i=1}^{k}\lambda_{i1}\mathbf{b}_{i},\dots,\mathbf{x}_{m}=\sum_{i=1}^{k}\lambda_{im}\mathbf{b}_{i}$
+(where $\mathbf{b}_{1},\dots,\mathbf{b}_{k}$ are linearly independent)
+are linearly independent if and only if $\lambda_{1},\dots,\lambda_{m}$
+are linearly independent. 
+\end{enumerate}
+
+\subsection{Determining Bases and Dimensions}
+
+
+\subsubsection{Determining a Basis and Dimension}
+
+A basis is a minimal (linearly independent) generating set for $V$.
+It can be determined as follows: 
+\begin{enumerate}
+\item Write the spanning vectors as columns of a matrix. 
+\item Apply Gaussian elimination to reach RREF. 
+\item The original values of the pivot columns form a basis. 
+\item The dimension is the number of basis vectors. 
+\end{enumerate}
+
+\subsubsection{Determining a Simple Basis}
+\begin{enumerate}
+\item Write the spanning vectors as rows of a matrix. 
+\item Apply Gaussian elimination to reach RREF. 
+\item The rows with leading ones form a simple basis. 
+\end{enumerate}
+
+\subsubsection{Determining a Basis of the Intersection of Subspaces}
+
+For $U_{1}=\left[\mathbf{b}_{1},\dots,\mathbf{b}_{k}\right]$ and
+$U_{2}=\left[\mathbf{c}_{1},\dots,\mathbf{c}_{l}\right]$: 
+\begin{enumerate}
+\item Find the respective bases of $U_{1}$ and $U_{2}$.
+\item We want to solve $\sum_{i=1}^{k}\lambda_{i}\mathbf{b}_{i}=\sum_{j=1}^{l}\mu_{j}\mathbf{c}_{j}$,
+i.e. $\sum_{i=1}^{k}\lambda_{i}\mathbf{b}_{i}-\sum_{j=1}^{l}\mu_{j}\mathbf{c}_{j}=\mathbf{0}$. 
+\item This can be solved by the method for homogeneous linear equations,
+where $\mathbf{b}_{1},\dots,\mathbf{b}_{k},-\mathbf{c}_{1},\dots,-\mathbf{c}_{l}$
+form the columns of the augmented matrix. 
+\item Solve for either $\lambda_{1},\dots,\lambda_{k}$ or $\mu_{1},\dots,\mu_{l}$
+and determine the basis accordingly. 
+\end{enumerate}
+
+\subsection{Affine Spaces}
+
+
+\subsubsection{Defining Affine Spaces}
+
+Affine spaces can be defined as: 
+\begin{enumerate}
+\item $L=\mathbf{x}_{0}+U$ 
+\item Parametric Equation: $\exists\lambda_{1}\dots\lambda_{k}\forall\mathbf{x}\in L$
+such that $\mathbf{x}=\mathbf{x}_{0}+\lambda_{1}\mathbf{b}_{1}+\dots+\lambda_{k}\mathbf{b}_{k}$ 
+\end{enumerate}
+
+\subsubsection{Finding the Intersection of Affine Spaces}
+\begin{enumerate}
+\item Recall that for $\mathbf{x}\in L_{1}$ and $\mathbf{x}\in L_{2}$,
+$\mathbf{x}_{1}+\sum_{i=1}^{k}\lambda_{i}\mathbf{b}_{i}=\mathbf{x}=\mathbf{x}_{2}+\sum_{j=1}^{l}\mu_{j}\mathbf{c}_{j}$.
+Hence $\sum_{i=1}^{k}\lambda_{i}\mathbf{b}_{i}-\sum_{j=1}^{l}\mu_{j}\mathbf{c}_{j}=\mathbf{x}_{2}-\mathbf{x}_{1}$.
+This can be solved by the method for inhomogeneous linear equations,
+where the basis vectors $\mathbf{b}_{1},\dots,\mathbf{b}_{k},-\mathbf{c}_{1},\dots,-\mathbf{c}_{l}$
+form the columns of the augmented matrix.
+\item Determine the basis vectors.
+\item Solve the resulting inhomogeneous LEQS.
+\item Use the solution to determine a value for $\mathbf{x}$ using one
+of the original equations.
+\item You can check your answer with the other equation.
+\end{enumerate}
+
+\subsubsection{Determining Parallelism}
+
+For $L_{1}=\mathbf{x}_{1}+U_{1}$ and $L_{2}=\mathbf{x}_{2}+U_{2}$,
+$L_{1}||L_{2}$ if $U_{1}\subseteq U_{2}$ or $U_{2}\subseteq U_{1}$.
+
+
+\section{Linear Mappings}
+
+
+\subsection{Defining Linear Mappings}
+
+To prove a mapping is linear (a homomorphism), we must show that: 
+\begin{enumerate}
+\item $\Phi\left(\mathbf{x}+\mathbf{y}\right)=\Phi\left(\mathbf{x}\right)+\Phi\left(\mathbf{y}\right)$ 
+\item $\Phi\left(\lambda\mathbf{y}\right)=\lambda\Phi\left(\mathbf{x}\right)$ 
+\end{enumerate}
+
+\paragraph{Special Cases}
+\begin{enumerate}
+\item \textbf{Isomorphism:} bijective 
+\item \textbf{Endomorphism:} maps from $V$ to $V$ 
+\item \textbf{Automorphism:} maps from $V$ to $V$ and bijective 
+\end{enumerate}
+
+\paragraph{Points to Note}
+\begin{enumerate}
+\item For linear mappings $\Phi:V\rightarrow W$ and $\Psi:W\rightarrow X$,
+the mapping $\Psi\circ\Phi:V\rightarrow X$ is also linear. 
+\item If $\Phi$ is an isomorphism, then so is $\Phi^{-1}$. 
+\item If $\Phi$ and $\Psi$ are linear, then so are $\Phi+\Psi$ and $\lambda\Phi$. 
+\end{enumerate}
+
+\subsection{Image and Kernel (Null Space)}
+
+For a mapping $\Phi:\mathbf{x}\rightarrow\mathbf{A}\mathbf{x}$:
+
+
+\paragraph{Determining the Image}
+
+Return the column space of $\mathbf{A}$ (find its basis).
+
+
+\paragraph{Determining the Kernel}
+
+Return the solution to the LEQS $\mathbf{A}\mathbf{x}=\mathbf{0}$.
+
+
+\paragraph{Rank-Nullity Theorem}
+
+For $\Phi:V\rightarrow W$, $\dim\left(\mbox{Im}\left(\Phi\right)\right)=\dim\left(V\right)-\dim\left(\ker\left(\Phi\right)\right)$.
+
+
+\subsection{Matrix Representation}
+
+For the mapping $\Phi:V\rightarrow W$, and ordered bases $B\subseteq V$
+and $C\subseteq W$, the transformation matrix $\mathbf{A}_{\Phi}$
+is defined such that for the coordinates $\mathbf{\hat{x}}$ of $\mathbf{x}\in V$
+with respect to $B$ and $\mathbf{\hat{y}}$ of $\Phi\left(\mathbf{x}\right)\in W$
+with respect to $C$: $\mathbf{\hat{y}}=\mathbf{A}_{\Phi}\mathbf{\hat{x}}$.
+
+
+\subsection{Basis Change}
+
+Given an $\mathbf{A}_{\Phi}$ with respect to bases $B$ and $C$,
+we want an $\mathbf{\tilde{A}_{\Phi}}$ w.r.t. $\tilde{B}$ and $\tilde{C}$: 
+\begin{enumerate}
+\item Write the vectors of $\tilde{B}$ as a linear combination of the vectors
+of $B$. These form the columns of the matrix $\mathbf{S}$. 
+\item Write the vectors of $\tilde{C}$ as a linear combination of the vectors
+of $C$. These form the columns of the matrix $\mathbf{T}$. 
+\item $\mathbf{\tilde{A}_{\Phi}}$ can be calculated by $\mathbf{\tilde{A}_{\Phi}}=\mathbf{T}^{-1}\mathbf{A}_{\Phi}\mathbf{S}$. 
+\end{enumerate}
+This can be derived by considering the composition of the required
+linear mappings.
+
+
+\paragraph{Points to Note}
+\begin{enumerate}
+\item $\mathbf{A}$ and $\mathbf{\tilde{A}}$ are \emph{equivalent} if $\mathbf{\tilde{A}}$
+can be expressed as $\mathbf{\tilde{A}}=\mathbf{T}^{-1}\mathbf{A}\mathbf{S}$. 
+\item $\mathbf{A}$ and $\mathbf{\tilde{A}}$ are \emph{similar} if $\mathbf{\tilde{A}}$
+can be expressed as $\mathbf{\tilde{A}}=\mathbf{S}^{-1}\mathbf{A}\mathbf{S}$. 
+\end{enumerate}
+
+\subsection{Eigenvalues}
+
+For a transformation matrix \textbf{$\mathbf{A}$:}
+
+
+\subsubsection{Determining the Spectrum (Eigenvalues)}
+\begin{enumerate}
+\item Calculate the determinant, $\left|\mathbf{A}-\lambda\mathbf{I}\right|$. 
+\item Solve (equal to 0) the resulting characteristic polynomial for $\lambda$. 
+\item The eigenvalues of $\mathbf{A}$ are given by the solutions. 
+\end{enumerate}
+
+\subsubsection{Determining the Corresponding Eigenspaces}
+\begin{enumerate}
+\item For each eigenvalue $\lambda$, find the solutions to the LEQS $\left(\mathbf{A}-\lambda\mathbf{I}\right)\mathbf{x}=\mathbf{0}$. 
+\end{enumerate}
+
+\subsection{Diagonalization}
+
+
+\subsubsection{Determining Diagonalizability}
+\begin{enumerate}
+\item The characteristic polynomial must decompose into linear factors (and
+the sign must be correct). 
+\item The dimension of each eigenspace must be equal to the power (algebraic
+multiplicity) of its respective factor in the characteristic polynomial.
+\end{enumerate}
+
+\subsubsection{Diagonalization}
+\begin{enumerate}
+\item Determine the eigenspaces of the given matrix $\mathbf{A}$.
+\item Collect the eigenvectors in a single matrix $\mathbf{S}$.
+\item The diagonalization of $\mathbf{A}$ is given by $\mathbf{D}=\mathbf{S}^{-1}\mathbf{A}\mathbf{S}$.
+This corresponds to a matrix with the eigenvalues of $\mathbf{A}$
+along the diagonal.
+\end{enumerate}
+
+\subsection{Projections}
+
+
+\subsubsection{Projection onto a Line}
+
+An arbitrary point $\mathbf{x}$ onto a line with basis vector $\mathbf{b}$
+is projected onto the point $\mathbf{p}$: 
+\begin{enumerate}
+\item Find a $\lambda$ such that $\mathbf{p}=\lambda\mathbf{b}$ and $\mathbf{x}-\mathbf{p}\bot\mathbf{b}$.
+Hence $\left(\mathbf{x}-\lambda\mathbf{b}\right)\cdot\mathbf{b}=0\iff\mathbf{x}\cdot\mathbf{b}-\lambda\mathbf{b}\cdot\mathbf{b}=0\iff\boxed{\lambda=\frac{\mathbf{x}\cdot\mathbf{b}}{\mathbf{b}\cdot\mathbf{b}}}$. 
+\item Find the projection point, $\boxed{\mathbf{p}=\lambda\mathbf{b}}=\mathbf{b}\frac{\mathbf{x}\cdot\mathbf{b}}{\mathbf{b}\cdot\mathbf{b}}=\mathbf{b}\frac{\mathbf{b}^{\top}\mathbf{x}}{\mathbf{b}^{\top}\mathbf{b}}$. 
+\item Conclude that the projection matrix $\boxed{\mathbf{P}_{\pi}=\frac{\mathbf{b}\mathbf{b}^{\top}}{\mathbf{b}^{\top}\mathbf{b}}}$. 
+\end{enumerate}
+
+\subsubsection{Projection onto a Subspace}
+
+An arbitrary point $\mathbf{x}$ onto a subspace with ordered basis
+$\mathbf{B}=\left(\mathbf{b}_{1}|\dots|\mathbf{b}_{n}\right)$ is
+projected onto the point $\mathbf{p}$: 
+\begin{enumerate}
+\item Find a $\lambda$ such that $\mathbf{p}=\sum_{i=1}^{n}\lambda_{i}\mathbf{b}_{i}=\mathbf{B}\mathbf{\lambda}$
+and $\mathbf{x}-\mathbf{p}\bot\mathbf{b}_{i}$. Hence $\left(\mathbf{x}-\mathbf{B}\mathbf{\lambda}\right)\cdot\mathbf{b}_{i}=0\iff\mathbf{B}^{\top}\left(\mathbf{x}-\mathbf{B}\mathbf{\mathbf{\lambda}}\right)=\boldsymbol{0}\iff\mathbf{B}^{\top}\mathbf{B}\mathbf{\mathbf{\lambda}}=\mathbf{B}^{\top}\mathbf{x}$.
+Hence $\mathbf{\lambda}$ can be found by $\boxed{\mathbf{\mathbf{\lambda}}=\left(\mathbf{B}^{\top}\mathbf{B}\right)^{-1}\mathbf{B}^{\top}\mathbf{x}}$.
+\item Find the projection point, $\boxed{\mathbf{p}=\mathbf{B}\mathbf{\lambda}}=\mathbf{B}\left(\mathbf{B}^{\top}\mathbf{B}\right)^{-1}\mathbf{B}^{\top}\mathbf{x}$. 
+\item Conclude that the projection matrix $\boxed{\mathbf{P}_{\pi}=\mathbf{B}\left(\mathbf{B}^{\top}\mathbf{B}\right)^{-1}\mathbf{B}^{\top}}$.
+\item To check your answer, ensure that:
+
+\begin{enumerate}
+\item \textbf{$\mathbf{p}-\mathbf{x}\bot\mathbf{b}$} for each $\mathbf{b}$
+in $\mathbf{B}$.
+\item $\mathbf{P}_{\pi}=\mathbf{P}_{\pi}^{2}$.
+\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Projection Error}
+
+$d\left(\mathbf{x},U\right)$ for a point $\mathbf{x}$ projected
+onto the basis $U$.
+\begin{enumerate}
+\item Calculate the value $\left\Vert \mathbf{x}-\mathbf{p}\right\Vert $.
+\end{enumerate}
+
+\subsection{Rotations}
+
+
+\subsubsection{In Two Dimensions}
+
+\[
+\mathbf{R}\left(\theta\right)=\left[\begin{array}{cc}
+\cos\theta & -\sin\theta\\
+\sin\theta & \cos\theta
+\end{array}\right]
+\]
+(for a counter-clockwise rotation by $\theta$)
+
+
+\subsubsection{In Three Dimensions}
+
+We keep one axis constant and view this axis ``from the end towards
+the origin''. A counter-clockwise rotation is then given by:
+
+\[
+\mathbf{R}_{1}\left(\theta\right)=\left[\begin{array}{ccc}
+1 & 0 & 0\\
+0 & \cos\theta & -\sin\theta\\
+0 & \sin\theta & \cos\theta
+\end{array}\right]
+\]
+
+
+\[
+\mathbf{R}_{2}\left(\theta\right)=\left[\begin{array}{ccc}
+\cos\theta & 0 & \sin\theta\\
+1 & 1 & 0\\
+-\sin\theta & 0 & \cos\theta
+\end{array}\right]
+\]
+\[
+\mathbf{R}_{3}\left(\theta\right)=\left[\begin{array}{ccc}
+\cos\theta & -\sin\theta & 0\\
+\sin\theta & \cos\theta & 0\\
+0 & 0 & 1
+\end{array}\right]
+\]
+
+
+
+\subsubsection{In $n$ Dimensions}
+
+We keep all but two axes the same:
+
+\[
+\mathbf{R}_{ij}\left(\theta\right)=\left[\begin{array}{ccccc}
+\mathbf{I}_{i-1} & \mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0}\\
+\mathbf{0} & \cos\theta & \mathbf{0} & -\sin\theta & \mathbf{0}\\
+\mathbf{0} & \mathbf{0} & \mathbf{I}_{j-i} & \mathbf{0} & \mathbf{0}\\
+\mathbf{0} & \sin\theta & \mathbf{0} & \cos\theta & \mathbf{0}\\
+\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{I}_{n-j}
+\end{array}\right]
+\]
+
+
+
+\subsubsection{Properties}
+\begin{enumerate}
+\item Composition of rotations is $\mathbf{R}\left(\phi\right)\mathbf{R}\left(\theta\right)=\mathbf{R}\left(\phi+\theta\right)$
+\item Preserves lengths and distances, i.e. $\left\Vert \mathbf{x}\right\Vert =\left\Vert \mathbf{R}\left(\theta\right)\mathbf{x}\right\Vert $
+and $\left\Vert \mathbf{x}-\mathbf{y}\right\Vert =\left\Vert \mathbf{R}\left(\theta\right)\mathbf{x}-\mathbf{R}\left(\theta\right)\mathbf{y}\right\Vert $
+\item Not commutative (except in two dimensions)
+\end{enumerate}
+
+\subsection{Cayley-Hamilton Theorem}
+
+Useful for ``Find an expression for $\mathbf{A}^{m}$ in terms of
+$\mathbf{I},\mathbf{A},\mathbf{A}^{2},\dots$'':
+
+For an endomorphism with transformation matrix $\mathbf{A}_{\Phi}$
+with characteristic polynomial $p$: 
+\[
+p\left(\mathbf{A}_{\Phi}\right)=\mathbf{0}
+\]
+
+
+
+\subsection{Affine Mappings}
+
+
+\subsubsection{Definition}
+
+An affine mapping is defined as $x\rightarrow a+\Phi\left(x\right)$
+where $\Phi$ is a linear mapping.
+
+
+\paragraph{Points to Note}
+\begin{enumerate}
+\item The composition of affine mappings is an affine mapping (same as for
+linear mappings). 
+\item Affine mappings preserve distances and parallelism. 
+\end{enumerate}
+
+\section{Scalar Products}
+
+
+\subsection{Proving a Mapping is a Scalar Product}
+
+For a mapping $\left\langle \mathbf{x},\mathbf{y}\right\rangle :V\times V\rightarrow\R$: 
+\begin{enumerate}
+\item Prove the mapping is linear in both arguments. 
+\item Prove the mapping is symmetric: $\left\langle \mathbf{x},\mathbf{y}\right\rangle =\left\langle \mathbf{y},\mathbf{x}\right\rangle $
+for all $\mathbf{x},\mathbf{y}\in V$. 
+\item Prove the mapping is positive definite: $\left\langle \mathbf{x},\mathbf{x}\right\rangle >0$
+except for $\left\langle \mathbf{0},\mathbf{0}\right\rangle =0$. 
+\end{enumerate}
+The standard scalar product is $\left\langle \mathbf{x},\mathbf{y}\right\rangle =\mathbf{x}^{\top}\mathbf{y}$.
+
+
+\subsection{Useful Geometric Properties}
+
+
+\subsubsection{Finding the Length of a Vector}
+
+\[
+\left\Vert \mathbf{x}\right\Vert =\sqrt{\left\langle \mathbf{x},\mathbf{x}\right\rangle }
+\]
+
+
+A \emph{norm} has the properties: 
+\begin{enumerate}
+\item $\left\Vert \mathbf{x}\right\Vert >0$ except for $\left\Vert \mathbf{0}\right\Vert =0$ 
+\item $\left\Vert \lambda\mathbf{x}\right\Vert =\left|\lambda\right|\cdot\left\Vert \mathbf{x}\right\Vert $ 
+\item $\left\Vert \mathbf{x}+\mathbf{y}\right\Vert \leq\left\Vert \mathbf{x}\right\Vert +\left\Vert \mathbf{y}\right\Vert $ 
+\end{enumerate}
+
+\subsubsection{Finding the Distance between two Vectors}
+
+\[
+d\left(\mathbf{x},\mathbf{y}\right)=\left\Vert \mathbf{x}-\mathbf{y}\right\Vert 
+\]
+
+
+A \emph{metric} has the properties: 
+\begin{enumerate}
+\item Symmetric 
+\item Positive Definite 
+\item Obeys triangle inequality: $d\left(\mathbf{x},\mathbf{z}\right)\leq d\left(\mathbf{x},\mathbf{y}\right)+d\left(\mathbf{y},\mathbf{z}\right)$ 
+\end{enumerate}
+
+\subsubsection{Showing Orthogonality}
+
+\[
+\mathbf{x}\bot\mathbf{y}\iff\left\langle \mathbf{x},\mathbf{y}\right\rangle =0
+\]
+
+
+
+\subsubsection{Finding the Angle between Vectors}
+
+\[
+\cos\omega=\frac{\left\langle \mathbf{x},\mathbf{y}\right\rangle }{\left\Vert \mathbf{x}\right\Vert \left\Vert \mathbf{y}\right\Vert }
+\]
+
+
+
+\subsubsection{Properties of Euclidean Vector Spaces}
+\begin{enumerate}
+\item Cauchy-Schwarz Inequality: $\left\langle \mathbf{x},\mathbf{y}\right\rangle \leq\left\Vert \mathbf{x}\right\Vert \left\Vert \mathbf{y}\right\Vert $ 
+\item Minkowski Inequality: $\left\Vert \mathbf{x}+\mathbf{y}\right\Vert \leq\left\Vert \mathbf{x}\right\Vert +\left\Vert \mathbf{y}\right\Vert $ 
+\item Triangle Inequality: $d\left(\mathbf{x},\mathbf{z}\right)\leq d\left(\mathbf{x},\mathbf{y}\right)+d\left(\mathbf{y},\mathbf{z}\right)$ 
+\item Parallelogram Law: $\left\Vert \mathbf{x}+\mathbf{y}\right\Vert +\left\Vert \mathbf{x}-\mathbf{y}\right\Vert =2\left\Vert \mathbf{x}\right\Vert ^{2}+2\left\Vert \mathbf{y}\right\Vert ^{2}$ 
+\item $4\left\langle \mathbf{x},\mathbf{y}\right\rangle =\left\Vert \mathbf{x}+\mathbf{y}\right\Vert ^{2}-\left\Vert \mathbf{x}-\mathbf{y}\right\Vert ^{2}$ 
+\item $\mathbf{x}\bot\mathbf{y}\iff\left\Vert \mathbf{x}+\mathbf{y}\right\Vert ^{2}=\left\Vert \mathbf{x}\right\Vert ^{2}+\left\Vert \mathbf{y}\right\Vert ^{2}$ \end{enumerate}
+
+\end{document}

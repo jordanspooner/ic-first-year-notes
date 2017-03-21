@@ -1,0 +1,909 @@
+\documentclass[twocolumn,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[landscape]{geometry}
+\geometry{verbose,tmargin=0.5in,bmargin=0.75in,lmargin=0.5in,rmargin=0.5in}
+
+\makeatletter
+
+\setlength{\columnsep}{0.25in}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{listings}
+\lstset{
+  language=haskell,
+  tabsize=2,
+  basicstyle=\small\ttfamily,
+}
+
+\makeatother
+
+\usepackage{babel}
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Listing}
+
+\begin{document}
+
+\title{Reference Sheet for CO120.1 Programming I}
+
+
+\date{Autumn 2016}
+
+\maketitle
+This reference sheet does not cover many interesting types and classes,
+such as \texttt{Either}, \texttt{IO}, \texttt{Complex}, and \texttt{Monad}.
+These are not included in the 120.1 syllabus, but even a limited understanding
+of them may be helpful in examinations.
+
+
+\section{Bools}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+(&&) :: Bool -> Bool -> Bool
+(||) :: Bool -> Bool -> Bool
+not  :: Bool -> Bool
+\end{lstlisting}
+
+
+
+\section{Maybes}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+maybe :: b -> (a -> b) -> Maybe a -> b
+\end{lstlisting}
+
+
+Given default value, a function, and \texttt{Maybe} value: Returns
+default value if \texttt{Maybe} value is \texttt{Nothing}; Otherwise
+applies function to value inside \texttt{Just}.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+isJust    :: Maybe a -> Bool
+isNothing :: Maybe a -> Bool
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.Maybe}}\emph{.}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+fromJust :: Maybe a -> a
+fromMaybe :: a-> Maybe a -> a
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.Maybe}}\emph{. }
+
+\texttt{fromJust}: Given a \texttt{Maybe} value: Returns value inside
+\texttt{Just} or error if \texttt{Nothing}.
+
+\texttt{fromMaybe}: Given default value and \texttt{Maybe} value:
+Returns value inside \texttt{Just} or default value if \texttt{Nothing}.
+\begin{lstlisting}[language=Haskell,frame=single]
+catMaybes :: [Maybe a] -> [a]
+mapMaybe  :: (a -> Maybe b) -> [a] -> [b]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.Maybe}}\emph{. }
+
+\texttt{catMaybes}: Given list of \texttt{Maybe} values: Returns a
+list of all \texttt{Just} values.
+
+\texttt{mapMaybe}: Given function from value to \texttt{Maybe} value
+and list of values: Returns a list of all \texttt{Just} values from
+mapping function to list of values.
+
+
+\section{Tuples}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+fst :: (a, b) -> a
+snd :: (a, b) -> b
+\end{lstlisting}
+
+
+It is usually better to use pattern matching unless used with higher
+order functions.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+curry   :: ((a, b) -> c) -> a -> b -> c
+uncurry :: a -> b -> c -> (a, b) -> c
+\end{lstlisting}
+
+
+\texttt{curry}: Given uncurried function $f(x,y)$: Returns curried
+function $f\:x\:y$.
+
+\texttt{uncurry}: Given curried function $f\:x\:y$: Returns uncurried
+function $f(x,y)$.
+\begin{lstlisting}[language=Haskell,frame=single]
+swap :: (a,b) -> (b,a)
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.Tuple}}\emph{.}
+
+
+\section{Enums}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+succ :: a -> a
+pred :: a -> a
+\end{lstlisting}
+
+
+\texttt{succ}: Given a value: Returns its successor.
+
+\texttt{pred}: Given a value: Returns its predecessor.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+[n..]
+[n,n'..]
+[n..m]
+[n,n'..m]
+\end{lstlisting}
+
+
+Returns enum from $n$.
+
+Returns enum from $n$ then $n'$.
+
+Returns enum from $n$ to $m$.
+
+Returns enum from $n$ then $n'$ to $m$.
+
+
+\section{Numbers}
+
+
+\subsection{Common Operators}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+(+), (-), (*) :: Num a => a -> a -> a
+(/)           :: Fractional a => a -> a -> a
+(^), (^^)     :: (Fractional a, Integral b) => a -> b -> a
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Haskell,frame=single]
+negate :: Num a => a -> a
+recip  :: Fractional a => a -> a
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Haskell,frame=single]
+abs    :: Num a => a -> a
+signum :: Num a => a -> a
+\end{lstlisting}
+
+
+\texttt{abs}: Given a value, returns its absolute value.
+
+\texttt{signum}: Given a value, returns its sign.
+
+
+\subsection{Mathematical Constants and Functions}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+pi :: Floating a => a
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Haskell,frame=single]
+exp, log, sqrt :: Floating a => a -> a
+(**), logBase  :: Floating a => a -> a -> a
+\end{lstlisting}
+
+
+\texttt{log}: Natural log.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+sin, cos, tan, asin, acos, atan :: Floating a => a -> a
+\end{lstlisting}
+
+
+In Radians.
+
+
+\subsection{Number Theoretical Functions}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+even :: Integral a => a -> Bool
+odd  :: Integral a => a -> Bool
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Haskell,frame=single]
+div    :: Num a => a -> a -> a
+mod    :: Num a => a -> a -> a
+divMod :: Num a => a -> a -> (a, a)
+\end{lstlisting}
+
+
+\texttt{divMod}: Simultaneous div and mod.
+\begin{lstlisting}[language=Haskell,frame=single]
+gcd :: Integral a => a -> a -> a
+lcm :: Integral a => a -> a -> a
+\end{lstlisting}
+
+
+
+\subsection{Conversion between Numerical Types}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+round, ceiling, floor :: (Floating a, Num b) => a -> b
+\end{lstlisting}
+
+
+\texttt{round}: Rounds to the closest integer, or even integer if
+closest integers are equidistant.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+fromIntegral :: (Integral a, Num b) a -> b
+\end{lstlisting}
+
+
+
+\section{Characters}
+
+\emph{Requires }\texttt{\emph{Data.Char}}\emph{.}
+
+
+\subsection{Classification}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+isSpace       :: Char -> Bool
+isLower       :: Char -> Bool
+isUpper       :: Char -> Bool
+isAlpha       :: Char -> Bool
+isAlphaNum    :: Char -> Bool
+isDigit       :: Char -> Bool
+isPunctuation :: Char -> Bool
+isSeparator   :: Char -> Bool
+\end{lstlisting}
+
+
+
+\subsection{Case Conversion}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+toUpper :: Char -> Char
+toLower :: Char -> Char
+\end{lstlisting}
+
+
+
+\subsection{Numeric Conversion}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+ord :: Char -> Int
+chr :: Int -> Char
+\end{lstlisting}
+
+
+
+\section{Lists}
+
+
+\subsection{Working with Lists}
+
+
+\subsubsection{List Operations and Transformations}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+(:)  :: a -> [a] -> [a]
+(++) :: [a] -> [a] -> [a]
+\end{lstlisting}
+
+
+\texttt{(:)}: Cons: Adds single element to beginning of a list.
+
+\texttt{(++)}: Appends two lists.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+map    :: (a -> b) -> [a] -> [b]
+filter :: (a -> Bool) -> [a] -> [a]
+\end{lstlisting}
+
+
+\texttt{map}: Maps a function over a list. The more general function
+\texttt{fmap} (infix \texttt{<\$>} works for all functor types).
+
+\texttt{filter}: Returns a list of elements for which a predicate
+holds.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+head :: [a] -> a
+last :: [a] -> a
+tail :: [a] -> [a]
+init :: [a] -> [a]
+\end{lstlisting}
+
+\texttt{head, last}: Returns the first, last element respectively.
+
+\texttt{tail, init}: Returns all elements but the first, last respectively.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+null :: [a] -> Bool
+\end{lstlisting}
+
+
+Returns \texttt{True} if and only if the given list is empty.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+reverse :: [a] -> [a]
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Haskell,frame=single]
+intersperse :: a -> [a] -> [a]
+intercalate :: [a] -> [[a]] -> [a]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.}
+
+\texttt{intersperse}: Given an element and a list: Returns a list
+with element interspersed between each element of the list.
+
+\texttt{intercalate}: Intersperses elements between each list in a
+set of lists.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+transpose :: [[a]] -> [[a]]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.} E.g. \texttt{transpose}
+$[[1,2,3,4],[11,12],[1,2,13],[5]]=[[1,11,1,5],[2,12,2],[3,13],[4]]$
+
+\begin{lstlisting}[language=Haskell,frame=single]
+subsequences :: [a] -> [[a]]
+permutations :: [a] -> [[a]]
+\end{lstlisting}
+
+
+\texttt{subsequences}: Returns a list of all subsequences.
+
+\texttt{permutations}: Returns a list of all permutations.
+
+
+\subsubsection{Sublists}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+take    :: Int -> [a] -> [a]
+drop    :: Int -> [a] -> [a]
+splitAt :: Int -> [a] -> ([a], [a])
+\end{lstlisting}
+
+
+\texttt{splitAt n xs}: \texttt{take n xs} and \texttt{drop n xs}.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+takeWhile :: (a -> Bool) -> [a] -> [a]
+dropWhile :: (a -> Bool) -> [a] -> [a]
+span      :: (a -> Bool) -> [a] -> ([a], [a])
+break     :: (a -> Bool) -> [a] -> ([a], [a])
+\end{lstlisting}
+
+
+\textbf{Don't forget to use }\texttt{\textbf{takeWhile}}\textbf{ and
+}\texttt{\textbf{dropWhile}}\textbf{!}
+
+\texttt{span}: Given a predicate and a list: Returns a tuple where
+the first element is the longest prefix of the list that satisfy the
+predicate and the second element is the remainder.
+
+\texttt{break}: As for \texttt{span}, but for the longest prefix that
+does not satisfy the predicate.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+dropWhileEnd :: (a -> Bool) -> [a] -> [a]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{. }Drops the largest
+suffix of the list for which the predicate holds.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+stripPrefix :: [a] -> [a] -> Maybe [a]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{. }Drops the given
+prefix from a list, or returns \texttt{Nothing} if the list did not
+start with the given prefix.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+group :: [a] -> [[a]]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{. }Given a list; Returns
+a list of lists, that when concatenated reform the original list,
+and such that each sublist only contains equal elements.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+inits :: [a] -> [[a]]
+tails :: [a] -> [[a]]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.}
+
+\texttt{inits}: Returns all initial segments, shortest first.
+
+\texttt{tails}: Returns all final segments, shortest first.
+
+
+\subsubsection{Predicates}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+isPrefixOf      :: [a] -> [a] -> Bool
+isSuffixOf      :: [a] -> [a] -> Bool
+isInfixOf       :: [a] -> [a] -> Bool
+isSubsequenceOf :: [a] -> [a] -> Bool
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.}
+
+\texttt{isPrefixOf}: Returns \texttt{True} if the first list is a
+prefix of the second.
+
+\texttt{isSuffixOf}: Returns \texttt{True} if the first list is a
+suffix of the second.
+
+\texttt{isInfixOf}: Returns \texttt{True} if the first list is contained,
+wholly and intact, in the second.
+
+\texttt{isSubsequenceOf}: Returns \texttt{True} if the first list
+is contained, in order, in the second (elements not necessarily consecutive).
+
+
+\subsubsection{Indexing Lists}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+(!!) :: [a] -> Int -> a
+\end{lstlisting}
+
+
+Returns element at given index.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+elemIndex   :: a -> [a] -> Maybe Int
+elemIndices :: a -> [a] -> [Int]
+findIndex   :: (a -> Bool) -> [a] -> Maybe Int
+findIndices :: (a -> Bool) -> [a] -> [Int]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.}
+
+\texttt{elemIndex, findIndex}: Returns the index of the first element
+in the given list that is equal to the given value, satisfies the
+given predicate respectively; Or returns \texttt{Nothing} if none
+exists.
+
+\texttt{elemIndices, findIndices},: Returns the indices of all elements
+in the given list that are equal to the given value, satisfy the given
+predicate respectively.
+
+
+\subsubsection{Searching Lists}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+elem    :: a -> [a] -> Bool
+notElem :: a -> [a] -> Bool
+\end{lstlisting}
+
+
+\texttt{elem, notElem}: Returns \texttt{True} if the given element
+is, is not an element of the given list respectively.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+lookup :: a -> [(a, b)] -> Maybe b
+\end{lstlisting}
+
+
+Looks up a key in a dictionary; Returns \texttt{Nothing} if key not
+found.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+find :: (a -> Bool) -> [a] -> Maybe a
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.} Returns the first
+element that satisfies the predicate, or \texttt{Nothing} if none
+exists.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+partition :: (a -> Bool) -> [a] -> ([a], [a])
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.} Returns the pair
+of lists of elements which do and do not satisfy the predicate respectively.
+
+
+\subsubsection{Zipping and Unzipping Lists}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+zip  :: [a] -> [b] -> [(a, b)]
+zip3 :: [a] -> [b] -> [c] -> [(a, b, c)]
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Haskell,frame=single]
+zipWith  :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith3 :: (a -> b -> c -> d) -> [a] -> [b] -> [c] -> [d]
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Haskell,frame=single]
+unzip  :: [(a, b)] -> ([a], [b])
+unzip3 :: [(a, b, c)] -> ([a], [b], [c])
+\end{lstlisting}
+
+
+
+\subsection{Building Lists}
+
+
+\subsubsection{Building Lists}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+scanr          :: (a -> b -> b) -> b -> [a] -> [b]
+scanl          :: (b -> a -> b) -> b -> [a] -> [b]
+scanr1, scanl1 :: (a -> a -> a) -> [a] -> [a]
+\end{lstlisting}
+
+
+Returns a list of successive values from respective fold function.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+unfoldr :: (b -> Maybe (a, b)) -> b -> [a]
+\end{lstlisting}
+
+
+Given a function that produces a \texttt{Maybe} pair and a starting
+value; Applies the function to the starting value; If the function
+returns a \texttt{Just} pair, the first element is added to the resulting
+list and the function is applied again to the second element; If the
+function returns \texttt{Nothing}, the resulting list is returned.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+mapAccumR (or L) :: (a -> b -> (a, c)) -> a -> [b] -> (a, [c])
+\end{lstlisting}
+
+
+Given a function to a pair of an accumulator and a result, and a starting
+value for the accumulator; Returns a pair of the final accumulator
+and the list of results.
+
+
+\subsubsection{Infinite Lists}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+iterate   :: (a -> a) -> a -> [a]
+repeat    :: a -> [a]
+replicate :: Int -> a -> [a]
+cycle     :: [a] -> [a]
+\end{lstlisting}
+
+
+\texttt{iterate}: Returns an infinite list of applications of a function
+to a starting value.
+
+\texttt{repeat}: Returns an infinite list with each element of the
+given value.
+
+\texttt{replicate}: Returns a list of given length of a repeated element.
+
+\texttt{cycle}: Returns an infinite list produced by cycling the given
+list.
+
+
+\subsection{Reducing Lists}
+
+
+\subsubsection{Folds}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+foldr  :: (a -> b -> b) -> b -> [a] -> b
+foldl  :: (b -> a -> b) -> b -> [a] -> b
+foldr1 :: (a -> a -> a) -> [a] -> a
+foldl1 :: (a -> a -> a) -> [a] -> a
+\end{lstlisting}
+
+
+\textbf{Don't forget to use folds!}
+
+Given a binary operator, starting value and list: Reduces list using
+the binary operator in the given direction, starting from the given
+starting value.
+
+e.g. \texttt{foldr} $f$ $x_{0}$ $[x_{1},x_{2},x_{3},\dots,x_{n}]$
+$=$ $f$ $x_{1}(f$ $x_{2}(f$ $x_{3}($ $\dots$ $(f$ $x_{n}$
+$x_{0}))))$,
+
+and \texttt{foldl} $f$ $x_{0}$ $[x_{1},x_{2},x_{3},\dots,x_{n}]$
+$=$ $(f$ $(f$ $(f$ $(f$ $x_{0}$ $x_{1})$ $x_{2})$ $x_{3})$$\dots$
+$x_{n})$.
+
+\texttt{fold1}: Has no starting value.
+
+
+\subsubsection{Special Folds}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+length  :: [a] -> Int
+sum     :: Num a => [a] -> a
+product :: Num a => [a] -> a
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Haskell,frame=single]
+maximum :: [a] -> a
+minimum :: [a] -> a
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Haskell,frame=single]
+or  :: [Bool] -> Bool
+and :: [Bool] -> Bool
+any :: (a -> Bool) -> [a] -> Bool
+all :: (a -> Bool) -> [a] -> Bool
+\end{lstlisting}
+
+
+\texttt{or, any}: Returns \texttt{True} if \texttt{True} for any element.
+
+\texttt{and, all}: Returns \texttt{True} if \texttt{True} for all
+elements.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+concat    :: [[a]] -> [a]
+concatMap :: (a -> [b]) -> [a] -> b
+\end{lstlisting}
+
+
+\texttt{concat}: Concatenates a list of lists into a list.
+
+\texttt{concatMap}: Maps a function, then concatenates result.
+
+
+\subsection{Special Lists}
+
+
+\subsubsection{Set Functions}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+nub :: [a] -> [a]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.} Removes duplicates.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+delete :: a -> [a] -> [a]
+(\\)   :: [a] -> [a] -> [a]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.} Deletes first occurrence
+of given element, each element of given list.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+union     :: [a] -> [a] -> [a]
+intersect :: [a] -> [a] -> [a]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.} Returns union, intersection
+of two lists.
+
+
+\subsubsection{Ordered Lists}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+sort :: [a] -> [a]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.} Sorts list.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+sortOn :: (a -> b) -> [a] -> [a]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.} Sorts list by comparing
+values generated by given function.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+insert :: a -> [a] -> [a]
+\end{lstlisting}
+
+
+\emph{Requires }\texttt{\emph{Data.List}}\emph{.} Inserts element
+so that a sorted list remains sorted.
+
+
+\subsubsection{Functions on Strings}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+lines   :: String -> [String]
+words   :: String -> [String]
+unlines :: [String] -> String
+unwords :: [String] -> String
+\end{lstlisting}
+
+
+\texttt{words}: Breaks up into a list of words, delimited by white
+space.
+
+\texttt{lines}: Breaks up into a list of strings separated by newlines.
+
+
+\section{Functions}
+
+\begin{lstlisting}[language=Haskell,frame=single]
+id       :: a -> a
+const    :: a -> b -> a
+asTypeOf :: a -> a -> a
+\end{lstlisting}
+
+
+\texttt{id}: Identity function.
+
+\texttt{const}: Evaluates to constant value for all inputs.
+
+\texttt{asTypeOf}: Forces first argument to have the same type as
+the second.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+(.) :: (b -> c) -> (a -> b) -> a -> c
+($) :: (a -> b) -> a -> b
+\end{lstlisting}
+
+
+\texttt{(.)}: Function composition: $(f.g)\:x=f(g\:x)$. Note the
+requirements for the type and number of arguments. You can use this
+to combine two higher order functions into one.
+
+\texttt{(\$)}: Function application: $f\:\$\:g\:\$\:h\:x=f(g(h\:x))$.
+Often used to omit parentheses. To be avoided in general!
+
+\begin{lstlisting}[language=Haskell,frame=single]
+flip :: (a -> b -> c) -> b -> a -> c
+\end{lstlisting}
+
+
+Use to invert arguments. Alternative to back-quotes or lambdas.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+until :: (a -> Bool) -> (a -> a) -> a -> a
+\end{lstlisting}
+
+
+Given a predicate and function; Applies function until predicate holds.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+error "Error string"
+\end{lstlisting}
+
+
+Stops execution and displays error message.
+
+
+\section{Types and Common Type Classes}
+
+Use \texttt{data} to define a new data-type (you \emph{must} define
+type constructors), \texttt{type} to define a type synonym, \texttt{class}
+to define a new type-class, and \texttt{instance} to make a type an
+instance of a type-class.
+
+Don't forget you can use \texttt{deriving} in most cases. Example:
+
+\begin{lstlisting}[language=Haskell,frame=single]
+data Tree a = Empty | Leaf a | Node a (Tree a) (Tree a) 
+            deriving (Show) 
+\end{lstlisting}
+Remember you can use \texttt{:i} in ghci for information about types
+and type-classes.
+
+
+\section{Syntactic Features and Good Practice}
+
+
+\paragraph{Spacing}
+
+Use proper spacing and alignment. Keep lines short.
+
+
+\paragraph{Function Names}
+
+Give functions meaningful names. Don't ever give two different things
+the same name!
+
+
+\paragraph{Comments}
+
+Use to keep code ordered and to explain complicated functions. Begin
+with \texttt{-{}-}. Multli-line comments use \texttt{\{-} and \texttt{-\}}.
+
+
+\paragraph{Multi-Line Strings}
+
+End and start each line with \texttt{\textbackslash{}}.
+
+
+\paragraph{Where clauses}
+
+Use instead of \texttt{let} statements to avoid computing something
+multiple times or to clean up code.
+
+
+\paragraph{Helper Functions}
+
+Use helper functions to provide complicated functionality (e.g. creating
+a list \emph{and} checking for convergence as it is created). Accumulating
+parameters are also particularly useful:
+
+\begin{lstlisting}[language=Haskell,frame=single]
+function input = function' input startingAcc
+  where
+    function' baseCase  acc = acc
+    function' otherCase acc = function nextCase updatedAcc
+\end{lstlisting}
+
+
+
+\paragraph{Lambdas}
+
+Use as an alternative to higher-order functions for very complicated
+functions.
+
+
+\paragraph*{List comprehensions}
+
+Often functions involving lists can be written using comprehensions,
+recursion, or higher-order functions. Choose carefully.
+
+\begin{lstlisting}[language=Haskell,frame=single]
+[f x | x <- xs, p] = map f $ filter p xs
+\end{lstlisting}
+
+
+
+\paragraph{Pattern matching}
+
+Use often. Especially helpful for breaking up lists using \texttt{:}
+and for working with tuples. Don't forget to use \texttt{\_} and \texttt{@}
+where appropriate.
+
+
+\paragraph{Guards}
+
+Use instead of \texttt{if} ... \texttt{then} ... \texttt{else} statements.
+
+
+\paragraph*{Tips for Lexis Tests}
+\begin{itemize}
+\item Read instructions carefully. Don't rewrite a given function!
+\item Be prepared to write very little for the first questions and much
+more (helper functions, etc.) towards the end. You should check your
+answers to the first parts before beginning the last part. You should
+spend time planning your answer (on paper) for the last part.
+\item Aim firstly to get a working implementation, then consider optimisations.
+\item Don't forget to use functions defined earlier in the program.
+\item Test often (using \texttt{undefined} where necessary to allow compilation)
+and read any error messages carefully.
+\item Make use of any provided test cases but do not rely upon them.
+\item Use an editor with syntax highlighting and \texttt{ghci} in terminal.
+\item Use \texttt{:set -W} to turn on warnings and \texttt{:set -w} to turn
+off warnings in \texttt{ghci}. Use \texttt{:browse} to see a list of all functions included in a module.
+\end{itemize}
+\end{document}
