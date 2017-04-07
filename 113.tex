@@ -309,7 +309,7 @@ von Neumann bottleneck.
 \subsection{CPU Organisation}
 
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.35]{img/cpu}
+\noindent \centering{}\includegraphics[scale=0.35]{\string"../Documents/113 Architecture/img/cpu\string".png}
 \end{figure}
 
 \begin{enumerate}
@@ -530,7 +530,7 @@ n \textless{} 0}\tabularnewline
 \subsubsection{CPU Structure}
 
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.2]{img/cpu-hardware}
+\noindent \centering{}\includegraphics[scale=0.2]{\string"../Documents/113 Architecture/img/cpu-hardware\string".png}
 \end{figure}
 
 \begin{enumerate}
@@ -541,7 +541,7 @@ n \textless{} 0}\tabularnewline
 \subsubsection{Micro-Steps}
 
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.275]{img/microsteps}
+\noindent \centering{}\includegraphics[scale=0.275]{\string"../Documents/113 Architecture/img/microsteps\string".png}
 \end{figure}
 
 \begin{enumerate}
@@ -556,7 +556,7 @@ next state (3 bits).
 7 bits input, 18 bits output so size is $2^{7}\times18$.
 
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.325]{img/rom-implementation}
+\noindent \centering{}\includegraphics[scale=0.325]{\string"../Documents/113 Architecture/img/rom-implementation\string".png}
 \end{figure}
 
 
@@ -570,7 +570,7 @@ next state (3 bits).
 \item \emph{Control Logic ROM}: 3 inputs, 17 outputs so size $2^{3}\times17$.
 \end{enumerate}
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.375]{img/microsequencer-implementation}
+\noindent \centering{}\includegraphics[scale=0.375]{\string"../Documents/113 Architecture/img/microsequencer-implementation\string".png}
 \end{figure}
 
 
@@ -642,17 +642,17 @@ Generally have the form \texttt{label: opcode Destination, Source
 Examples:
 
 \noindent 
-\begin{lstlisting}[basicstyle={\normalsize\ttfamily},frame=single]
-age      dw           21      ; word with val 21
-total    dd           999     ; doubleword with val 999
-message  db           "hello" ; 5-byte string hello
-sequence dw           1,2,3   ; 3 words with vals 1,2,3
-array    times 100 dw 33      ; 100 words with val 33
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},frame=single]
+age        dw           21      ; word with val 21
+total      dd           999     ; doubleword with val 999
+message    db           "hello" ; 5-byte string hello
+sequence   dw           1,2,3   ; 3 words with vals 1,2,3
+array      times 100 dw 33      ; 100 words with val 33
 
-little   resw         100     ; reserve 100 words
-big      resd         1000    ; reserve 1000 dwords
+little     resw         100     ; reserve 100 words
+big        resd         1000    ; reserve 1000 dwords
 
-dozen    equ          12      ; defines constant `dozen'
+dozen      equ          12      ; defines constant `dozen'
 \end{lstlisting}
 
 
@@ -662,7 +662,7 @@ dozen    equ          12      ; defines constant `dozen'
 Example assembly instructions:
 
 \noindent 
-\begin{lstlisting}[basicstyle={\normalsize\ttfamily},frame=single]
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},frame=single]
 mov   rax, [rpb+4]   ; rax = memory16[rpb + 4]
 add   ax, [bx]       ; ax = ax + memory16[bx]
 sub   rax, 45        ; rax = rax - 45
@@ -767,7 +767,7 @@ in 32 and 64 bits (using extended registers).
 Check the zero flag:
 
 \noindent 
-\begin{lstlisting}[basicstyle={\normalsize\ttfamily},frame=single]
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},frame=single]
 cmp    bh, 0      ; compare divisor with 0
 je     zd_label   ; jump to zd_label if divisor is zero
 idiv   bh         ; otherwise go ahead with division
@@ -829,7 +829,7 @@ Represent boolean using a full byte: 0 for false, true otherwise.
 \texttt{if (age \textless{} 100) then s1 else s2}:
 
 \noindent 
-\begin{lstlisting}[basicstyle={\normalsize\ttfamily},frame=single]
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},frame=single]
 if:    cmp word[age], 100
        jge else
        ; s1
@@ -845,7 +845,7 @@ endif:
 \texttt{while (age \textless{} 100) s}:
 
 \noindent 
-\begin{lstlisting}[basicstyle={\normalsize\ttfamily},frame=single]
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},frame=single]
 while:    cmp word[age], 100
           jge endwhile
           ; s
@@ -860,7 +860,7 @@ endwhile:
 \texttt{for (age = 1; age \textless{} 100; age++) s}:
 
 \noindent 
-\begin{lstlisting}[basicstyle={\normalsize\ttfamily},frame=single]
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},frame=single]
 for:    mov word[age], 1
 next:   cmp word[age], 100
         jge enfor
@@ -936,6 +936,125 @@ are allowed.
 11. & Use method result. & \tabularnewline
 \bottomrule
 \end{tabular}
+\end{table}
+
+
+
+\paragraph{Local Variables}
+
+\textbf{Callee} makes space for local variables:
+
+\noindent 
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},frame=single]
+push   rbp           ; push caller's frame pointer onto stack
+mov    rbp, rsp      ; set frame pointer to current stack pointer
+sub    rsp, nbytes   ; allocate nbytes for local vars
+\end{lstlisting}
+
+
+and then de-allocates these variables:
+
+\noindent 
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},frame=single]
+mov    rsp, rbp      ; restore stack pointer
+pop    rbp           ; restore caller's frame pointer
+\end{lstlisting}
+
+
+
+\paragraph{Array and object parameters}
+
+We push the start \emph{address} rather than its value. We can use
+\texttt{lea} (load effective address) to do this: \texttt{lea dstreg,
+{[}BaseReg + Scale {*} IndexReg + Disp{]}}.
+
+
+\paragraph{Object Method Calls}
+
+Need to be translated as if they were written without a class.
+
+\begin{table}[H]
+\textbf{Example: Caller}
+
+\noindent \begin{minipage}[t]{0.2\textwidth}
+\begin{lstlisting}[basicstyle={\scriptsize\ttfamily},breaklines=true,keywords={loop, exit, when, end}]
+coord point
+...
+point.setpos(3, 5)
+
+/* translated to: */
+coord_setpos(point, 3, 5)
+\end{lstlisting}
+
+
+\noindent \end{minipage}
+\begin{minipage}[t]{0.3\textwidth}
+
+\noindent \begin{centering}
+\begin{lstlisting}[basicstyle={\scriptsize\ttfamily},breaklines=true,keywords={loop, exit, when, end}]
+point resd 2        ; allocate point
+...
+push qword 5        ; push 5
+push qword 3        ; push 3
+push qword point    ; push @point
+call coord_setpos   ; call callee
+add  rsp, 24        ; restore stack pointer
+\end{lstlisting}
+
+\par\end{centering}
+
+\noindent \centering{}\end{minipage}
+\end{table}
+\begin{table}[H]
+\textbf{Example: Callee}
+
+\noindent \begin{centering}
+\includegraphics[scale=0.15]{img/stack}
+\par\end{centering}
+
+\noindent \begin{minipage}[t]{0.2\textwidth}
+\begin{lstlisting}[basicstyle={\scriptsize\ttfamily},breaklines=true,keywords={loop, exit, when, end}]
+class coord {
+  int row;
+  int col;
+  void setpos (int x, int y) {
+    row = x;
+    col = y;
+  }
+}
+
+/* translated to: */
+void coord_setpos (coord this, int x, int y) {
+  this.row = x;
+  this.col = y;
+}
+\end{lstlisting}
+
+
+\noindent \end{minipage}
+\begin{minipage}[t]{0.3\textwidth}
+
+\noindent \begin{centering}
+\begin{lstlisting}[basicstyle={\scriptsize\ttfamily},breaklines=true,keywords={loop, exit, when, end}]
+coord_setpos:
+  push rbp             ; save frame pointer
+  mov  rbp, rsp        ; setup frame pointer
+  push rsi             ; save rsi
+  mov  rsi, [rbp+16]   ; rsi = this
+  
+  mov  rax, [rbp+24]   ; rax = x
+  mov  [rsi], rax      ; this.row = x
+  mov  rax, [rbp+32]   ; rax = y
+  mov  [rsi+4], rax    ; this.col = y
+
+  pop  rsi             ; restore rsi
+  pop  rbp             ; restore frame pointer
+  ret                  ; return
+\end{lstlisting}
+
+\par\end{centering}
+
+\noindent \centering{}\end{minipage}
 \end{table}
 
 \end{document}
