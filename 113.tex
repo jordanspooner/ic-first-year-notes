@@ -256,7 +256,7 @@ required bits from adjacent words and concatenating together.
 \emph{chips}.
 \item \emph{DIMMs} (dual inline memory modules) support 64-bit transfers,
 \emph{SIMMs} support 32-bit.
-\item A chip with length $2^{k}$ requires $k$ adress bits.
+\item A chip with length $2^{k}$ requires $k$ address bits.
 \item Number of chips = size of memory $/$ size of chip.
 \item Chips per module $=$ width of memory word $/$ width of chip.
 \item Number of modules = number of chips $/$ chips per module.
@@ -276,9 +276,9 @@ bits.
 \item If more than one module can be read/written at a time:
 
 \begin{enumerate}
-\item Low-order: Read same row in each module. E.g. single mult-word access
+\item Low-order: Read same row in each module. E.g. single multi-word access
 of sequential data.
-\item High-order: Different modules independently accessd by different units.
+\item High-order: Different modules independently accessed by different units.
 E.g. CPU can access rows in one module, hard disk / another CPU access
 row in another module concurrently.
 \end{enumerate}
@@ -309,7 +309,7 @@ von Neumann bottleneck.
 \subsection{CPU Organisation}
 
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.35]{\string"../Documents/113 Architecture/img/cpu\string".png}
+\noindent \centering{}\includegraphics[scale=0.35]{\string"img/cpu\string".png}
 \end{figure}
 
 \begin{enumerate}
@@ -328,7 +328,7 @@ is then copied to final destination (e.g. CPU register, main memory,
 I/O device).
 \end{enumerate}
 \item \emph{General-Purpose Registers}: For use by programmer.
-\item \emph{Busses}: Pass information within CPU and between CPU and main
+\item \emph{Buses}: Pass information within CPU and between CPU and main
 memory. Generally transfer $>$1 bit at a time.
 
 \begin{enumerate}
@@ -381,7 +381,7 @@ Results). E.g. LOAD:}
 \item 0 goes from control bus to memory (so READ).
 \item Value 2 goes from memory{[}ADDRESS{]} to data bus.
 \item Value 2 goes from data bus to ALU reg 2.
-\item Operation goes from control unit to AL (so ADD).
+\item Operation goes from control unit to ALU (so ADD).
 \item Final value goes from ALU output reg to REG.
 \end{enumerate}
 \item \emph{E.g. WRITE:}
@@ -414,7 +414,7 @@ Consider a basic instruction set:
 0100 & SUB & Rn, {[}addr{]} & Rn = Rn - Memory{[}addr{]}\tabularnewline
 1010 & GOTO & addr & PC = addr\tabularnewline
 0110 & IFZER & Rn, addr & IF Rn = 0 THEN PC = addr\tabularnewline
-0111 & IFNEG & Rn, addr & IF Rn \textless{} 0 THEN PC =addr\tabularnewline
+0111 & IFNEG & Rn, addr & IF Rn \textless{} 0 THEN PC = addr\tabularnewline
 1001 & LOAD & Rn, {[}Rm{]} & Rn = Memory{[}Rm{]}\tabularnewline
 1010 & STORE & Rn, {[}Rm{]} & Memory{[}Rm{]} = Rn\tabularnewline
 1011 & ADD & Rn, {[}Rm{]} & Rn = Rn + Memory{[}Rm{]}\tabularnewline
@@ -530,7 +530,7 @@ n \textless{} 0}\tabularnewline
 \subsubsection{CPU Structure}
 
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.2]{\string"../Documents/113 Architecture/img/cpu-hardware\string".png}
+\noindent \centering{}\includegraphics[scale=0.2]{\string"img/cpu-hardware\string".png}
 \end{figure}
 
 \begin{enumerate}
@@ -541,7 +541,7 @@ n \textless{} 0}\tabularnewline
 \subsubsection{Micro-Steps}
 
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.275]{\string"../Documents/113 Architecture/img/microsteps\string".png}
+\noindent \centering{}\includegraphics[scale=0.275]{\string"img/microsteps\string".png}
 \end{figure}
 
 \begin{enumerate}
@@ -556,7 +556,7 @@ next state (3 bits).
 7 bits input, 18 bits output so size is $2^{7}\times18$.
 
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.325]{\string"../Documents/113 Architecture/img/rom-implementation\string".png}
+\noindent \centering{}\includegraphics[scale=0.325]{\string"img/rom-implementation\string".png}
 \end{figure}
 
 
@@ -570,7 +570,7 @@ next state (3 bits).
 \item \emph{Control Logic ROM}: 3 inputs, 17 outputs so size $2^{3}\times17$.
 \end{enumerate}
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.375]{\string"../Documents/113 Architecture/img/microsequencer-implementation\string".png}
+\noindent \centering{}\includegraphics[scale=0.375]{\string"img/microsequencer-implementation\string".png}
 \end{figure}
 
 
