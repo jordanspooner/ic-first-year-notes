@@ -80,8 +80,8 @@ Simply convert from the least significant bit:
 
 \paragraph{Radix Arithmetic}
 
-As for decimal but use the base (2 for binary) as point of reference
-instead of 10.
+Exactly as for decimal but use the base (2 for binary) as point of
+reference instead of 10.
 
 
 \paragraph{Bit Groups}
@@ -309,7 +309,7 @@ von Neumann bottleneck.
 \subsection{CPU Organisation}
 
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.35]{\string"../Documents/113 Architecture/img/cpu\string".png}
+\noindent \centering{}\includegraphics[scale=0.35]{img/cpu}
 \end{figure}
 
 \begin{enumerate}
@@ -530,7 +530,7 @@ n \textless{} 0}\tabularnewline
 \subsubsection{CPU Structure}
 
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.2]{\string"../Documents/113 Architecture/img/cpu-hardware\string".png}
+\noindent \centering{}\includegraphics[scale=0.2]{img/cpu-hardware}
 \end{figure}
 
 \begin{enumerate}
@@ -541,7 +541,7 @@ n \textless{} 0}\tabularnewline
 \subsubsection{Micro-Steps}
 
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.275]{\string"../Documents/113 Architecture/img/microsteps\string".png}
+\noindent \centering{}\includegraphics[scale=0.275]{img/microsteps}
 \end{figure}
 
 \begin{enumerate}
@@ -556,7 +556,7 @@ next state (3 bits).
 7 bits input, 18 bits output so size is $2^{7}\times18$.
 
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.325]{\string"../Documents/113 Architecture/img/rom-implementation\string".png}
+\noindent \centering{}\includegraphics[scale=0.325]{img/rom-implementation}
 \end{figure}
 
 
@@ -570,7 +570,7 @@ next state (3 bits).
 \item \emph{Control Logic ROM}: 3 inputs, 17 outputs so size $2^{3}\times17$.
 \end{enumerate}
 \begin{figure}[H]
-\noindent \centering{}\includegraphics[scale=0.375]{\string"../Documents/113 Architecture/img/microsequencer-implementation\string".png}
+\noindent \centering{}\includegraphics[scale=0.375]{img/microsequencer-implementation}
 \end{figure}
 
 
@@ -1056,5 +1056,297 @@ coord_setpos:
 
 \noindent \centering{}\end{minipage}
 \end{table}
+
+
+
+\section{Floating Point Numbers}
+
+Represent numbers in format $M\times2^{E}$.
+\begin{itemize}
+\item $M$ is the \emph{coefficient}, \emph{significand}, \emph{fraction}
+or \emph{mantissa}. No. of bits determinse \emph{precision}.
+\item $E$ is the \emph{exponent} or \emph{characteristic}. No. of bits
+determines \emph{range}.
+\item $2$is the \emph{radix} or \emph{base}.
+\end{itemize}
+
+\paragraph{Zones of Expressibility}
+
+E.g. with signed 3-digit coefficient and signed 2-digit exponent:
+
+\begin{figure}[H]
+\noindent \centering{}\includegraphics[scale=0.3]{img/floatrange}
+\end{figure}
+
+
+
+\paragraph{Floating Point vs Real Numbers}
+\begin{enumerate}
+\item Floating points have a finite range ad a finite number of values.
+\item The gap between numbers varies.
+\item Incorrect results are possible.
+\end{enumerate}
+
+\paragraph{Normalised Form}
+
+We normalise coefficients in the range $\left[1,\dots R\right)$ where
+$R$ is the base.
+
+
+\paragraph{Binary Fractions}
+
+E.g. decimal value of \textbf{0.01101}?
+
+\begin{table}[H]
+\noindent \centering{}%
+\begin{tabular}{cccccc}
+\toprule 
+32 & 16 & 8 & 4 & 2 & 1\tabularnewline
+\textbf{.} & \textbf{0} & \textbf{1} & \textbf{1} & \textbf{0} & \textbf{1}\tabularnewline
+\bottomrule
+\end{tabular}$=\frac{8+4+1}{32}=\frac{13}{32}$
+\end{table}
+
+
+E.g. binary value of \textbf{0.6875}?
+\[
+=\frac{1.375}{2}=\frac{1}{2}+\frac{0.75}{4}=\frac{1}{2}+\frac{1.5}{8}=\frac{1}{2}+\frac{1}{8}+\frac{1}{16}=0.1011
+\]
+
+
+
+\paragraph{Multiplication}
+
+Multiply coefficents, add exponents, normalise result.
+
+
+\paragraph{Addition}
+
+Need to align \emph{smaller exponent}, by shifting its coefficient
+the corresponding number of digits to the right.
+
+
+\paragraph{Comparing}
+
+Due to potential for inexact results, $a=b$ should be adjusted to
+$b-\epsilon<a<b+\epsilon$. Or calculated closeness based on relative
+sizes.
+
+
+\paragraph{Truncation and Rounding}
+
+If result is too large to store in coefficent truncate (biased error)
+or round (unbiased).
+
+
+\paragraph{Exponent Overflow and Underflow}
+
+Set value as infinity / zero or raise an exception.
+
+
+\subsection{IEEE Floating Point Standard}
+
+\noindent \begin{center}
+\begin{tabular}{ccc}
+\toprule 
+Sign $S$ & Exponent $E$ & Significand $F$\tabularnewline
+1 bit & 8 (\emph{11}) bits & 23 (\emph{52}) bits\tabularnewline
+\bottomrule
+\end{tabular}
+\par\end{center}
+
+
+\paragraph{Single Precision}
+\begin{enumerate}
+\item Represented value is $\pm1.F\times2^{E-127}$.
+\item First significand bit (1) is hidden.
+\item Note that exponents stored in excess-127 values.
+\end{enumerate}
+
+\paragraph{Double Precision}
+
+Value is $\pm1.F\times2^{E-1023}$.
+
+
+\paragraph{Conversion to IEEE Format}
+
+E.g. 42.6875 in single precision format.
+\begin{enumerate}
+\item Convert to binary number: 10 1010.1011
+\item Normalise : 1.0101 0101 1$\times2^{5}$
+\item Significand field: 0101 0101 1000 0000 0000 000
+\item Exponent field: 5 + 127 = 132 = 1000 0100
+\end{enumerate}
+Gives %
+\begin{tabular}{ccc}
+\toprule 
+$S$ & $E$ & $F$\tabularnewline
+0 & 1000 0100 & 0101 0101 1000 0000 0000 000\tabularnewline
+\bottomrule
+\end{tabular} or 422A C000.
+
+
+\paragraph{Conversion from IEEE Format}
+
+E.g. BEC0 0000 or 1 01111101 10000000000000000000000 from single precision
+format.
+\begin{enumerate}
+\item Exponent field: 125 - 127 = - 2
+\item Significand field: 1.1
+\item Add sign bit: - 1.1$\times2^{-2}$ = - 0.25 - 0.125 = - 0.375
+\end{enumerate}
+
+\paragraph{Addition}
+\begin{enumerate}
+\item Shift smaller number to the right so that exponents are the same.
+\item Sum significands.
+\end{enumerate}
+
+\paragraph{Special Values}
+\begin{enumerate}
+\item \textbf{Zero} has 0 exponent and 0 significand.
+\item \textbf{Denormalised numbers} ($0.F\times2^{-126}$) have 0 exponent.
+\item \textbf{Infinity} has 255 exponent and 0 significand.
+\item \textbf{NaN} has 255 exponent.
+\item \textbf{Normalised numbers} have 1..254 exponent.
+\end{enumerate}
+Infinity and NaN do what you expect under mathematical operations.
+
+
+\section{Input and Output}
+
+
+\paragraph{I/O Controllers}
+\begin{enumerate}
+\item Provide CPU with a programming interface.
+\item \emph{Data ports} used for passing data to / from CPU.
+\item \emph{Control ports} used to issue I/O commands and check device status.
+\end{enumerate}
+
+\paragraph{I/O Addressing I : Seperate Address Space}
+\begin{enumerate}
+\item I/O ports have their own small address space. Architecture provides
+commands to access it.
+\item Control bus signals if transfer is for I/O or main memory address
+space.
+\item Intel 64 provides 64K 8-bit I/O ports.
+\end{enumerate}
+\noindent 
+\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},frame=single]
+in    ax, 20   ; copy 16 bits from I/O port 20 to ax 
+out   35, al   ; copy 8 bits from al to I/O port 35
+\end{lstlisting}
+
+
+
+\paragraph{I/O Addressing I : Memory Mapped I/O}
+\begin{enumerate}
+\item I/O ports appear as normal memory locations.
+\item Any instruction acting on memory operands can be used on I/O ports.
+\item Intel 64 also supports this.
+\end{enumerate}
+
+\paragraph{Four I/O Schemes}
+\begin{enumerate}
+\item \emph{Programmed I/O}: Continually polls a control port until it's
+ready, then transfers.
+
+\begin{enumerate}
+\item Pros: Simple to program and guarantees response times.
+\item Cons: Poor CPU utilisation, awkward to handle multiple devices.
+\end{enumerate}
+\item \emph{Interrupt-driven I/O}: Initiate transfer and then do something
+else, interrupt CPU when transfer is complete. Control then transferred
+to interrupt handler.
+
+\begin{enumerate}
+\item Cons: Need to save and restore CPU state. Bad for high-speed high-data
+volume devices that might lose data if they are not serviced quickly
+enough. Bad if devices continually require attention.
+\end{enumerate}
+\item \emph{DMA I/O}: Initiate large data block transfer. CPU writes start
+address of block, number of bytes, and direction of transfer to DMA's
+I/O ports and issues start command. DMA controller transfers block
+of data to main memory without direct CPU intervention. Interrupts
+CPU when completed.
+
+\begin{enumerate}
+\item Pro: Greatly reduces interrupts.
+\end{enumerate}
+\item \emph{I/O processor}: Delegate I/O tasks to dedicated processor. Much
+more powerful solution.
+\end{enumerate}
+
+\paragraph{Operating Systems: Concurrency}
+
+Interleaves processes. Operating system is a scheduler that puts processes
+(threads) in different states (using interrupts).
+
+
+\subsection{Interrupts}
+
+
+\paragraph{Locating Interrupt Handler}
+\begin{enumerate}
+\item Device that wishes to interrupt CPU sends an interrupt signal to the
+CPU along with a \emph{interrupt vector number}.
+\item Interrupt vector number indexes \emph{interrupt descriptor table}.
+\item Start address of IDT is held in special CPU register called \emph{IDT
+base register}.
+\end{enumerate}
+
+\paragraph{Calling the Interrupt Handler}
+
+The Intel 64 CPU:
+\begin{enumerate}
+\item Completes the executing instruction.
+\item Pushes RFLAGS onto the stack.
+\item Clears the interrupt flag bit in the RFLAGS register.
+\item Push the CS register and return address
+\item Jump to interrupt handler using IDT.
+\end{enumerate}
+Handler executes \texttt{iret} which restores state of RFLAGS, CS
+and RIP and jumps to return address on stack. \emph{Preserving registers
+is duty of handler}.
+
+
+\paragraph{Enabling and Disabling Interrupts}
+\begin{enumerate}
+\item Interrupts automatically disabled on entering handler.
+\item Interrupts can be re-enabled by setting IF (interrupt enable flag)
+with \texttt{sti}.
+\item Interrupts can be disabled using \texttt{cli}.
+\end{enumerate}
+
+\paragraph{Drivers}
+\begin{enumerate}
+\item Devices controlled by readiny writing to I/O ports (memory locations
+in memory-mapped I/O).
+\item Completion of I/O request signalled by sending interrupt vector number
+whiich causes CPU to call device's interrupt handler.
+\item \emph{Top half} (\emph{interrupt handler}) services interrupt - check
+for errors and copies data to / from memory and shares it with bottom
+half.
+\item \emph{Bottom half} runs as a \emph{schedulable thread} within the
+OS and interracts with the device via I/O ports, the top half (via
+shared memory) and the user-level process.
+\end{enumerate}
+
+\paragraph{Types of Interrupt}
+\begin{enumerate}
+\item External I/O Device-generated (vectors \emph{32-255}): I/O devices
+sends interrupt via buses. The only asynchronous type.
+\item CPU-generated (\emph{0-18}) : Attempt to execute illegal operation.
+\item Software-generated: Generated by instruction.
+\end{enumerate}
+
+\paragraph{Software Interrupts (System Calls / Traps)}
+\begin{enumerate}
+\item \texttt{syscall} used to call operating system functions.
+\item System call number held in \texttt{rax}. E.g. 0 = read from standard
+input, 1 = write to standard output.
+\item Parameters held in \texttt{rdi}, \texttt{rsi}, \texttt{rdx}, \texttt{rcx},
+\texttt{r8}, \texttt{r9}.
+\item Result passed into \texttt{rax}.\end{enumerate}
 
 \end{document}
