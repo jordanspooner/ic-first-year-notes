@@ -259,7 +259,7 @@ name of attribute $o_{1}$ to $n_{1}$, ..., $o_{n}$ to $n_{n}$.
 
 \paragraph{Relational Expressions}
 
-Used for \emph{retreival}, \emph{updates} (insert, change, delete
+Used for \emph{retrieval}, \emph{updates} (insert, change, delete
 data), defining \emph{constraints}, \emph{derived relations} (define
 one relation in terms of others), \emph{concurrency} (defining data
 to use for concurrent actions), \emph{access control} (define data
@@ -304,7 +304,7 @@ of $R$.
 
 Sound and complete axiomatisation of FDs.
 \begin{enumerate}
-\item \emph{Refelexivity}: $\alpha\rightarrow\beta$ always holds if $\beta\subseteq\alpha$
+\item \emph{Reflexivity}: $\alpha\rightarrow\beta$ always holds if $\beta\subseteq\alpha$
 \item \emph{Augmentation}: if $\alpha\rightarrow\beta$ then $\alpha\gamma\rightarrow\beta\gamma$
 (note that $\alpha\gamma=\gamma\alpha$).
 \item \emph{Transivitiy}: if $\alpha\rightarrow\beta$ and $\beta\rightarrow\gamma$
@@ -357,7 +357,7 @@ and $\alpha\rightarrow\gamma$ then $\alpha\rightarrow\beta\gamma$).
 \item LHS $X$ is extraneous if $\mbox{RHS}\subseteq\left\{ \mbox{LHS}-X\right\} ^{+}$
 under the FD set.
 \item RHS $X$ is extraneous if $X\in\mbox{LHS}^{+}$ under the FD set with
-$X$ removed from the RHS.
+$X$ removed from its FD RHS.
 \end{enumerate}
 \end{enumerate}
 
@@ -379,7 +379,7 @@ $S=\pi_{\mbox{attr}\left(S\right)}\left(R\right)$, $T=\pi_{\mbox{attr}\left(T\ri
 dependencies of $R$ without joining $S$ and $T$.
 \end{enumerate}
 
-\subsection{Boyce-Code Normal Form}
+\subsection{Boyce-Codd Normal Form}
 
 A relation is in \emph{BCNF} iff for all non-trivial FDs, the LHS
 of every FD is a superkey (contains a key).
