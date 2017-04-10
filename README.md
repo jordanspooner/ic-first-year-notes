@@ -11,4 +11,4 @@
 | 141           | Reasoning     | 5% Complete  |
 | 142.1         | DM 1          | Complete     |
 | 142.2         | DM 2          | 75% Complete |
-| 145           | Math Methods  | 99% Complete |
+| 145           | Math Methods  | Complete     |

@@ -11,12 +11,21 @@
 
 \makeatletter
 
+
+
 \usepackage{calc}
+
+
+
+
+\usepackage{calc}
+
 
 \usepackage{amsthm}
 \usepackage{mathrsfs}
 \usepackage{amsfonts}
 \usepackage{dsfont}
+
 
 \setlength{\columnsep}{0.25in}
 
@@ -27,6 +36,10 @@
 \newcommand{\N}[0]{\mathds{N}} % natural numbers
 \newcommand{\nat}[0]{\mathds{N}} % natural numbers
 \newcommand{\Q}[0]{\mathds{Q}} % rational numbers
+
+
+
+
 
 \makeatother
 
@@ -270,6 +283,9 @@ given by $\sum_{n=0}^{\infty}\frac{f^{\left(n\right)}\left(a\right)}{n!}\left(x-
 \end{enumerate}
 
 \subsection{Finding the Radius of Convergence}
+
+\emph{Radius of Convergence}: Size of $x$ set for which a power series
+converges.
 \begin{enumerate}
 \item Apply a ratio test using absolute values. 
 \item Set $\left|r\right|<1$ to show the region of convergence. 
@@ -316,6 +332,14 @@ f\left(x\right) & =\sum_{n=0}^{k}\frac{f^{\left(n\right)}\left(a\right)}{n!}\lef
 
 \part{Linear Algebra}
 
+
+\section{Introduction}
+\begin{enumerate}
+\item \emph{Vectors} can be added together or multiplied by scalars to produce
+another vector. 
+\item \emph{Examples of vector objects}: Geometric vectors, polynomials,
+$\R^{n}$, audio signals.
+\end{enumerate}
 
 \section{Groups}
 
@@ -365,11 +389,11 @@ has the properties:
 \item $\mathbf{A}\mathbf{A}^{-1}=\mathbf{A}^{-1}\mathbf{A}=\mathbf{I}$ 
 \item Note $\left(\mathbf{A}+\mathbf{B}\right)^{-1}\neq\mathbf{A}^{-1}+\mathbf{B}^{-1}$ 
 \item $\left(\mathbf{A}\mathbf{B}\right)^{-1}=\mathbf{B}^{-1}\mathbf{A}^{-1}$\\
- 
+
 \item $\left(\mathbf{A}^{\top}\right)^{\top}=\mathbf{A}$ 
 \item $\left(\mathbf{A}+\mathbf{B}\right)^{\top}=\mathbf{A}^{\top}+\mathbf{B}^{\top}$ 
 \item $\left(\mathbf{A}\mathbf{B}\right)^{\top}=\mathbf{B}^{\top}\mathbf{A}^{\top}$\\
- 
+
 \item $\left(\mathbf{A}^{-1}\right)^{\top}=\left(\mathbf{A}^{\top}\right)^{-1}$ 
 \end{enumerate}
 
@@ -417,6 +441,8 @@ Columns with pivots define \emph{basic variables}, other columns give
 
 
 \subsubsection{Finding the Rank of a Matrix}
+
+\emph{Rank}: number of linearly independant columns of a matrix.
 \begin{enumerate}
 \item Apply Gaussian elimination to reach RREF. 
 \item The rank is given by the number of pivots (linearly independent cols
@@ -528,8 +554,8 @@ For a vector space, $V$:
 \begin{enumerate}
 \item If every vector in $V$ can be expressed as a linear combination of
 $A\left\{ \mathbf{x}_{1},\mathbf{x}_{2},\dots,\mathbf{x}_{n}\right\} $,
-then $A$ is a generating set for $V$. 
-\item For $U\subset V$ and $U\neq\emptyset$, $U$ is a vector subspace
+then $A$ is a \emph{generating set} for $V$. 
+\item For $U\subset V$ and $U\neq\emptyset$, $U$ is a \emph{vector subspace}
 of $V$ if $U$ is a vector space. 
 \end{enumerate}
 
@@ -543,6 +569,9 @@ For a vector subspace $U$, we need to show:
 \end{enumerate}
 
 \subsection{Determining Linear Dependence or Independence}
+
+\emph{Linear Dependence}: For a vector space $\mathbf{x}_{1},\dots,\dot{\mathbf{x}_{k}}$
+here is a non-trivial linear combination such that $\mathbf{0}=\sum_{i=1}^{k}\lambda_{i}\mathbf{x}_{i}$.
 
 To prove $\mathbf{x}_{1},\dots,\mathbf{x}_{k}$ are linearly independent: 
 \begin{enumerate}
@@ -572,13 +601,13 @@ are linearly independent.
 
 \subsubsection{Determining a Basis and Dimension}
 
-A basis is a minimal (linearly independent) generating set for $V$.
+\emph{Basis}: Minimal (linearly independent) generating set for $V$.
 It can be determined as follows: 
 \begin{enumerate}
 \item Write the spanning vectors as columns of a matrix. 
 \item Apply Gaussian elimination to reach RREF. 
 \item The original values of the pivot columns form a basis. 
-\item The dimension is the number of basis vectors. 
+\item The \emph{dimension} is the number of basis vectors. 
 \end{enumerate}
 
 \subsubsection{Determining a Simple Basis}
@@ -593,7 +622,7 @@ It can be determined as follows:
 For $U_{1}=\left[\mathbf{b}_{1},\dots,\mathbf{b}_{k}\right]$ and
 $U_{2}=\left[\mathbf{c}_{1},\dots,\mathbf{c}_{l}\right]$: 
 \begin{enumerate}
-\item Find the respective bases of $U_{1}$ and $U_{2}$.
+\item Find the respective bases of $U_{1}$ and $U_{2}$. 
 \item We want to solve $\sum_{i=1}^{k}\lambda_{i}\mathbf{b}_{i}=\sum_{j=1}^{l}\mu_{j}\mathbf{c}_{j}$,
 i.e. $\sum_{i=1}^{k}\lambda_{i}\mathbf{b}_{i}-\sum_{j=1}^{l}\mu_{j}\mathbf{c}_{j}=\mathbf{0}$. 
 \item This can be solved by the method for homogeneous linear equations,
@@ -622,12 +651,12 @@ $\mathbf{x}_{1}+\sum_{i=1}^{k}\lambda_{i}\mathbf{b}_{i}=\mathbf{x}=\mathbf{x}_{2
 Hence $\sum_{i=1}^{k}\lambda_{i}\mathbf{b}_{i}-\sum_{j=1}^{l}\mu_{j}\mathbf{c}_{j}=\mathbf{x}_{2}-\mathbf{x}_{1}$.
 This can be solved by the method for inhomogeneous linear equations,
 where the basis vectors $\mathbf{b}_{1},\dots,\mathbf{b}_{k},-\mathbf{c}_{1},\dots,-\mathbf{c}_{l}$
-form the columns of the augmented matrix.
-\item Determine the basis vectors.
-\item Solve the resulting inhomogeneous LEQS.
+form the columns of the augmented matrix. 
+\item Determine the basis vectors. 
+\item Solve the resulting inhomogeneous LEQS. 
 \item Use the solution to determine a value for $\mathbf{x}$ using one
-of the original equations.
-\item You can check your answer with the other equation.
+of the original equations. 
+\item You can check your answer with the other equation. 
 \end{enumerate}
 
 \subsubsection{Determining Parallelism}
@@ -641,7 +670,8 @@ $L_{1}||L_{2}$ if $U_{1}\subseteq U_{2}$ or $U_{2}\subseteq U_{1}$.
 
 \subsection{Defining Linear Mappings}
 
-To prove a mapping is linear (a homomorphism), we must show that: 
+To prove a mapping $\Phi$ is linear (a homomorphism), we must show
+that: 
 \begin{enumerate}
 \item $\Phi\left(\mathbf{x}+\mathbf{y}\right)=\Phi\left(\mathbf{x}\right)+\Phi\left(\mathbf{y}\right)$ 
 \item $\Phi\left(\lambda\mathbf{y}\right)=\lambda\Phi\left(\mathbf{x}\right)$ 
@@ -649,9 +679,9 @@ To prove a mapping is linear (a homomorphism), we must show that:
 
 \paragraph{Special Cases}
 \begin{enumerate}
-\item \textbf{Isomorphism:} bijective 
-\item \textbf{Endomorphism:} maps from $V$ to $V$ 
-\item \textbf{Automorphism:} maps from $V$ to $V$ and bijective 
+\item \textbf{Isomorphism:} also bijective.
+\item \textbf{Endomorphism:} also maps from $V$ to $V$.
+\item \textbf{Automorphism:} also maps from $V$ to $V$ and bijective.
 \end{enumerate}
 
 \paragraph{Points to Note}
@@ -664,15 +694,24 @@ the mapping $\Psi\circ\Phi:V\rightarrow X$ is also linear.
 
 \subsection{Image and Kernel (Null Space)}
 
-For a mapping $\Phi:\mathbf{x}\rightarrow\mathbf{A}\mathbf{x}$:
+For a mapping $\Phi:\mathbf{x}\in V\rightarrow\mathbf{A}\mathbf{x}\in W$:
 
 
 \paragraph{Determining the Image}
+
+\emph{Image}: $\left\{ \mathbf{w}\in W|\exists\mathbf{v}\in V:\Phi\left(\mathbf{v}\right)=\mathbf{w}\right\} $:
+Set of vectors in $W$ that can be reached by $\Phi$ from any vector
+in $V$.
 
 Return the column space of $\mathbf{A}$ (find its basis).
 
 
 \paragraph{Determining the Kernel}
+
+\emph{Kernel}: $\left\{ \mathbf{v}\in V|\Phi\left(\mathbf{v}\right)=\mathbf{0}_{W}\right\} $:
+Set of vectors in $V$ that $\Phi$ maps onto the neutral element
+in $W$. \emph{Note}: If kernel is $\left\{ \mathbf{0}\right\} $,
+$\Phi$ is injective.
 
 Return the solution to the LEQS $\mathbf{A}\mathbf{x}=\mathbf{0}$.
 
@@ -685,7 +724,7 @@ For $\Phi:V\rightarrow W$, $\dim\left(\mbox{Im}\left(\Phi\right)\right)=\dim\lef
 \subsection{Matrix Representation}
 
 For the mapping $\Phi:V\rightarrow W$, and ordered bases $B\subseteq V$
-and $C\subseteq W$, the transformation matrix $\mathbf{A}_{\Phi}$
+and $C\subseteq W$, the \emph{transformation matrix} $\mathbf{A}_{\Phi}$
 is defined such that for the coordinates $\mathbf{\hat{x}}$ of $\mathbf{x}\in V$
 with respect to $B$ and $\mathbf{\hat{y}}$ of $\Phi\left(\mathbf{x}\right)\in W$
 with respect to $C$: $\mathbf{\hat{y}}=\mathbf{A}_{\Phi}\mathbf{\hat{x}}$.
@@ -716,19 +755,38 @@ can be expressed as $\mathbf{\tilde{A}}=\mathbf{S}^{-1}\mathbf{A}\mathbf{S}$.
 
 \subsection{Eigenvalues}
 
+For an endomorphism $\Phi:V\rightarrow V$, $\lambda$ is an \emph{eigenvalue}
+if there exists an $\mathbf{x}\in V\backslash\left\{ \mathbf{0}\right\} $
+s.t. $\Phi\left(\mathbf{x}\right)=\lambda\mathbf{x}$. $\mathbf{x}$
+is the corresponding eigenvector.
+
 For a transformation matrix \textbf{$\mathbf{A}$:}
 
 
 \subsubsection{Determining the Spectrum (Eigenvalues)}
 \begin{enumerate}
 \item Calculate the determinant, $\left|\mathbf{A}-\lambda\mathbf{I}\right|$. 
-\item Solve (equal to 0) the resulting characteristic polynomial for $\lambda$. 
+\item Solve (equal to 0) the result (the \emph{characteristic polynomial})
+for $\lambda$. 
 \item The eigenvalues of $\mathbf{A}$ are given by the solutions. 
 \end{enumerate}
 
 \subsubsection{Determining the Corresponding Eigenspaces}
 \begin{enumerate}
 \item For each eigenvalue $\lambda$, find the solutions to the LEQS $\left(\mathbf{A}-\lambda\mathbf{I}\right)\mathbf{x}=\mathbf{0}$. 
+\end{enumerate}
+
+\subsubsection{Applications}
+\begin{enumerate}
+\item Used in principal component analysis (principle components have largest
+eigenvalues) for dimensionality reduction in machine learning applications.
+\item Used to determine the theoretical limit to how much information can
+be transferred through a communication medium by calculating eigenvalues
+and eigenvectors of communication channel.
+\item Used in the PageRank algorithm to determine the rank of a page for
+a search (based on maximal eigenvalue).
+\item Determine numerical stability, e.g. when inverting matrices, by looking
+at condition numbers (ratio of biggest to smallest eigenvalue).
 \end{enumerate}
 
 \subsection{Diagonalization}
@@ -739,19 +797,29 @@ For a transformation matrix \textbf{$\mathbf{A}$:}
 \item The characteristic polynomial must decompose into linear factors (and
 the sign must be correct). 
 \item The dimension of each eigenspace must be equal to the power (algebraic
-multiplicity) of its respective factor in the characteristic polynomial.
+multiplicity) of its respective factor in the characteristic polynomial. 
 \end{enumerate}
 
 \subsubsection{Diagonalization}
 \begin{enumerate}
-\item Determine the eigenspaces of the given matrix $\mathbf{A}$.
-\item Collect the eigenvectors in a single matrix $\mathbf{S}$.
+\item Determine the eigenspaces of the given matrix $\mathbf{A}$. 
+\item Collect the eigenvectors in a single matrix $\mathbf{S}$. 
 \item The diagonalization of $\mathbf{A}$ is given by $\mathbf{D}=\mathbf{S}^{-1}\mathbf{A}\mathbf{S}$.
 This corresponds to a matrix with the eigenvalues of $\mathbf{A}$
 along the diagonal.
 \end{enumerate}
 
+\subsubsection{Applications}
+\begin{enumerate}
+\item Diagonal matrices are easily raised to a power.
+\item Decouple variables - uses in probability theory to interpret random
+variables.
+\item Easier to analyse properties of differential equations.
+\end{enumerate}
+
 \subsection{Projections}
+
+A linear mapping $\pi$ is a projection if $\pi^{2}=\pi\circ\pi=\pi$.
 
 
 \subsubsection{Projection onto a Line}
@@ -773,24 +841,33 @@ projected onto the point $\mathbf{p}$:
 \begin{enumerate}
 \item Find a $\lambda$ such that $\mathbf{p}=\sum_{i=1}^{n}\lambda_{i}\mathbf{b}_{i}=\mathbf{B}\mathbf{\lambda}$
 and $\mathbf{x}-\mathbf{p}\bot\mathbf{b}_{i}$. Hence $\left(\mathbf{x}-\mathbf{B}\mathbf{\lambda}\right)\cdot\mathbf{b}_{i}=0\iff\mathbf{B}^{\top}\left(\mathbf{x}-\mathbf{B}\mathbf{\mathbf{\lambda}}\right)=\boldsymbol{0}\iff\mathbf{B}^{\top}\mathbf{B}\mathbf{\mathbf{\lambda}}=\mathbf{B}^{\top}\mathbf{x}$.
-Hence $\mathbf{\lambda}$ can be found by $\boxed{\mathbf{\mathbf{\lambda}}=\left(\mathbf{B}^{\top}\mathbf{B}\right)^{-1}\mathbf{B}^{\top}\mathbf{x}}$.
+Hence $\mathbf{\lambda}$ can be found by $\boxed{\mathbf{\mathbf{\lambda}}=\left(\mathbf{B}^{\top}\mathbf{B}\right)^{-1}\mathbf{B}^{\top}\mathbf{x}}$. 
 \item Find the projection point, $\boxed{\mathbf{p}=\mathbf{B}\mathbf{\lambda}}=\mathbf{B}\left(\mathbf{B}^{\top}\mathbf{B}\right)^{-1}\mathbf{B}^{\top}\mathbf{x}$. 
-\item Conclude that the projection matrix $\boxed{\mathbf{P}_{\pi}=\mathbf{B}\left(\mathbf{B}^{\top}\mathbf{B}\right)^{-1}\mathbf{B}^{\top}}$.
+\item Conclude that the projection matrix $\boxed{\mathbf{P}_{\pi}=\mathbf{B}\left(\mathbf{B}^{\top}\mathbf{B}\right)^{-1}\mathbf{B}^{\top}}$. 
 \item To check your answer, ensure that:
 
 \begin{enumerate}
 \item \textbf{$\mathbf{p}-\mathbf{x}\bot\mathbf{b}$} for each $\mathbf{b}$
-in $\mathbf{B}$.
-\item $\mathbf{P}_{\pi}=\mathbf{P}_{\pi}^{2}$.
+in $\mathbf{B}$. 
+\item $\mathbf{P}_{\pi}=\mathbf{P}_{\pi}^{2}$. 
 \end{enumerate}
 \end{enumerate}
 
 \subsubsection{Projection Error}
 
 $d\left(\mathbf{x},U\right)$ for a point $\mathbf{x}$ projected
-onto the basis $U$.
+onto the basis $U$. 
 \begin{enumerate}
-\item Calculate the value $\left\Vert \mathbf{x}-\mathbf{p}\right\Vert $.
+\item Calculate the value $\left\Vert \mathbf{x}-\mathbf{p}\right\Vert $. 
+\end{enumerate}
+
+\subsubsection{Applications}
+\begin{enumerate}
+\item In graphics, e.g. to generate shadows.
+\item Optimisation: orthogonal projections used to iteratively minimise
+residual errors.
+\item Project high dimensional data into a lower dimensional feature space,
+e.g. for ML.
 \end{enumerate}
 
 \subsection{Rotations}
@@ -856,10 +933,10 @@ We keep all but two axes the same:
 
 \subsubsection{Properties}
 \begin{enumerate}
-\item Composition of rotations is $\mathbf{R}\left(\phi\right)\mathbf{R}\left(\theta\right)=\mathbf{R}\left(\phi+\theta\right)$
+\item Composition of rotations is $\mathbf{R}\left(\phi\right)\mathbf{R}\left(\theta\right)=\mathbf{R}\left(\phi+\theta\right)$ 
 \item Preserves lengths and distances, i.e. $\left\Vert \mathbf{x}\right\Vert =\left\Vert \mathbf{R}\left(\theta\right)\mathbf{x}\right\Vert $
-and $\left\Vert \mathbf{x}-\mathbf{y}\right\Vert =\left\Vert \mathbf{R}\left(\theta\right)\mathbf{x}-\mathbf{R}\left(\theta\right)\mathbf{y}\right\Vert $
-\item Not commutative (except in two dimensions)
+and $\left\Vert \mathbf{x}-\mathbf{y}\right\Vert =\left\Vert \mathbf{R}\left(\theta\right)\mathbf{x}-\mathbf{R}\left(\theta\right)\mathbf{y}\right\Vert $ 
+\item Not commutative (except in two dimensions) 
 \end{enumerate}
 
 \subsection{Cayley-Hamilton Theorem}
@@ -906,6 +983,16 @@ except for $\left\langle \mathbf{0},\mathbf{0}\right\rangle =0$.
 \end{enumerate}
 The standard scalar product is $\left\langle \mathbf{x},\mathbf{y}\right\rangle =\mathbf{x}^{\top}\mathbf{y}$.
 
+
+\subsubsection{Applications}
+\begin{enumerate}
+\item Compute angles between vectors or distances, determine whether orthogonal.
+\item Allows us to determine specific bases where each vector is orthogonal
+to others - important for optimistations of numerical algortihms for
+solving LEQs.
+\item Kernel methods in machine learning. Allows for non-linearisation of
+many ML algorithms.
+\end{enumerate}
 
 \subsection{Useful Geometric Properties}
 
