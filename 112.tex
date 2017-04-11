@@ -1,18 +1,25 @@
+%% LyX 2.1.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
 \documentclass[twocolumn,english]{article}
 \usepackage[latin9]{inputenc}
 \usepackage[landscape]{geometry}
 \geometry{verbose,tmargin=0.5in,bmargin=0.75in,lmargin=0.5in,rmargin=0.5in}
 \setlength{\parskip}{0bp}
 \setlength{\parindent}{0pt}
+\usepackage{array}
 \usepackage{float}
 \usepackage{booktabs}
+\usepackage{multirow}
 \usepackage{amstext}
 \usepackage{graphicx}
 
 \makeatletter
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
 \providecommand{\tabularnewline}{\\}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \setlength{\columnsep}{0.25in}
 \usepackage{xcolor}
 \usepackage{textcomp}
@@ -1051,6 +1058,72 @@ and capacitor is used for each bit. Value = whether capacitor is charged.
 \begin{itemize}
 \item Store is not permanent, ones drift to zero quickly.
 \item Capacitor charge is restored regularly, done by memory controller
-when the computer not accessing memory.\end{itemize}
+when the computer not accessing memory.
+\end{itemize}
+
+\paragraph{Speeding Up the Processor}
+\begin{itemize}
+\item Change buses from 8 to 32 bit.
+\item Provide local registers which can be programmed to store partial results.
+\item Design a controller with as small a number of execution cycles as
+possible.
+\item Remove carry arrangments, doing arithmetic on big integers.
+\item Replace bi-directional data bus with seperate data in and data out
+buses.
+\end{itemize}
+\begin{figure}[H]
+\noindent \centering{}\includegraphics[width=0.325\paperwidth]{img/32-processor}
+\end{figure}
+
+
+
+\paragraph{Defining Operations}
+
+E.g. LOAD, using register transfer language:
+
+\noindent 
+\begin{table}[H]
+\noindent \centering{}%
+\begin{tabular}{cccc}
+\toprule 
+{\footnotesize{}Instruction} & {\footnotesize{}Cycle} & {\footnotesize{}Transfers} & {\footnotesize{}Path}\tabularnewline
+\midrule 
+\multirow{3}{*}{{\footnotesize{}LOAD Rdst, Addr}} & {\footnotesize{}E1} & {\footnotesize{}MAR$\leftarrow$MDR} & {\footnotesize{}Via bit mask}\tabularnewline
+ & {\footnotesize{}E2} & {\footnotesize{}MDR$\leftarrow$Memory} & \tabularnewline
+ & {\footnotesize{}E3} & {\footnotesize{}Rdst$\leftarrow$MDR} & {\footnotesize{}No mask}\tabularnewline
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+Instruction format: 8 bits for the opcode, 4 for Rdest, 20 for address.
+
+
+\paragraph{Designing the Controller}
+\begin{itemize}
+\item Define a control input based on how many cycles required for each
+operation.
+
+\begin{itemize}
+\item Using 8-to-256 decoder to decode the opcode.
+\item Using 3-to-8 decoder for current state.
+\end{itemize}
+\item Sequential design problem to work out next state, uses this control
+input and previous state.
+\item Output logic:
+
+\begin{itemize}
+\item Clocks: NAND gates with system clock. In practice, we can simplify
+output logic by considering the following cycle.
+\item Multiplexers and ALU / Shifter function selection output is trivial.
+\end{itemize}
+\end{itemize}
+
+\paragraph{Possible Improvements}
+\begin{itemize}
+\item Instructions packed on byte boundaries so not to waste fetch cycles.
+\item Additional arithmetic hardware.
+\item Additional multiplexers, e.g. to select input of B independently of
+A.\end{itemize}
 
 \end{document}
