@@ -1,3 +1,5 @@
+%% LyX 2.1.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
 \documentclass[twocolumn,english]{article}
 \usepackage[latin9]{inputenc}
 \usepackage[landscape]{geometry}
@@ -6,9 +8,10 @@
 \setlength{\parindent}{0pt}
 \usepackage{amsbsy}
 \usepackage{amssymb}
+\usepackage{esint}
 
 \makeatletter
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 \setlength{\columnsep}{0.25in}
 \usepackage{xcolor}
 \usepackage{textcomp}
@@ -522,22 +525,267 @@ of 8).
 \item Insert $L\left[i\right]$ into $L\left[0..i-1\right]$ in the correct
 position. Then $L\left[0..i\right]$ is sorted.
 \item This takes between 1 and $i$ comparisons.
-\item Worst case: $W\left(n\right)=\sum_{i=1}^{n-1}i=\frac{n(n-1)}{2}$
+\item \emph{Worst case}: $W\left(n\right)=\sum_{i=1}^{n-1}i=\frac{n(n-1)}{2}$
 (occurs when in reverse order). Order $\Theta\left(n^{2}\right)$.
 \end{enumerate}
 
-\subsubsection{Lower Bound}
+\subsubsection{Merge Sort}
+\begin{enumerate}
+\item Divide rougly in two.
+\item Sort each half seperately (by recursion).
+\item Merge two halves.
+\item \emph{Worst case}: $W\left(n\right)=n-1+W\left(\left\lceil \frac{n}{2}\right\rceil \right)+W\left(\left\lfloor \frac{n}{2}\right\rfloor \right)=n\log\left(n\right)-n+1$
+assuming $n$ can be written as $2^{k}$.
+\end{enumerate}
+
+\subsubsection{Quick Sort}
+\begin{enumerate}
+\item Split around the first element.
+\item Sort the two sides recursively.
+\item \emph{Worst case}: $W\left(n\right)=n-1+W\left(n-1\right)=\frac{n\left(n-1\right)}{2}$
+(occurs when already sorted).
+\item \emph{Average case}: $A\left(n\right)=n-1+\frac{1}{n}\sum_{s=1}^{n}\left(A\left(s-1\right)+A\left(n-s\right)\right)=n-1+\frac{2}{n}\sum_{i=2}^{n-1}A\left(i\right)$,
+asuming each position $s$ is equally likely. $A\left(n\right)$ is
+order $\Theta\left(n\log n\right)$.
+\end{enumerate}
+
+\subsubsection{Heap Sort}
+\begin{enumerate}
+\item Add elements to a priority queue, implemented with binary heap. Read
+off the queue.
+\item Is $\Theta(n\log n)$ - also can be performed in place.
+
+\begin{enumerate}
+\item $\Theta\left(n\right)$ inserts each taking $\Theta\left(\log n\right)$.
+\item $\Theta\left(n\right)$ gets each taking $\Theta\left(1\right)$.
+\item $\Theta\left(n\right)$ deletions each taking $\Theta\left(\log n\right)$.
+\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Parallel Sorting}
+\begin{enumerate}
+\item Merge sort can be parallelised by executing recursive calls in parallel.
+\item Work still same but time taken reduced.
+\item \emph{Worst case (time taken)}: $W'\left(n\right)=n-1+W'\left(\frac{n}{2}\right)=2n-2-\log n$.
+\end{enumerate}
+
+\subsubsection{Odd / Even Merge}
+\begin{enumerate}
+\item To merge $L_{1}$ and $L_{2}$:
+
+\begin{enumerate}
+\item Take odd positions and merge to get $L_{3}$ ($O\left(\log n\right)$).
+\item Take even positions and merge to get $L_{4}$ ($O\left(\log n\right)$).
+\item Do an interleaving merge on $L_{3}$ and $L_{4}$ ($O\left(1\right)$).
+\end{enumerate}
+\item Merge is $O\left(\log n\right)$ instead of $O\left(n\right)$ (sequential).
+\item Exploits odd/even networks (made up of comparators).
+\item Time taken is now $\left(\log n\right)\left(1+\log n\right)/2$ which
+is $\Theta\left(\log^{2}n\right)$.
+\end{enumerate}
+
+\subsubsection{Lower Bounds}
 
 We express the sorting algorithm as a \emph{decision tree}. Internal
 nodes are \emph{comparisons}. Leaves are \emph{results}. The worst
 case number of comparisons is given by depth.
+
+
+\paragraph{Minimising Depth (Worst Case)}
 \begin{enumerate}
 \item There are $n!$ permutations so we require $n!$ leaves.
 \item \emph{Proposition}: if a binary tree had depth $d$ then it has $\leq2^{d}$
 leaves.
 \item \emph{Proof}: simple proof by induction.
-\item \emph{Lower bound}: $2^{d}\geq n!$ so $d\geq\left\lceil \log\left(n!\right)\right\rceil $.
-\item \emph{Average case}: must peform at least $\left\lfloor \log\left(n!\right)\right\rfloor $
-calculations (since total path length is minimum for balanced trees).\end{enumerate}
+\item \emph{Lower bound (worst case)}: $2^{d}\geq n!$ so $d\geq\left\lceil \log\left(n!\right)\right\rceil $.
+\item $\log\left(n!\right)=\sum_{1}^{n}\log\left(k\right)\approx\int_{1}^{n}\log x\mbox{ d}x=n\log\left(n\right)-n+1$.
+\end{enumerate}
+
+\paragraph{Minimising Total Path Length (Average Case)}
+\begin{enumerate}
+\item \emph{Balanced tree}: tree at which every leaf is at depth $d$ or
+$d-1$.
+\item \emph{Proposition}: if a tree is unbalanced then we can find a balanced
+tree with the same number of leaves without increasing total path
+length.
+\item \emph{Lower bound (average case)}: must peform at least $\left\lfloor \log\left(n!\right)\right\rfloor $
+calculations (since total path length is minimum for balanced trees).
+\end{enumerate}
+
+\subsection{Master Theorem}
+
+For $T\left(n\right)=aT\left(\frac{n}{b}\right)+f\left(n\right)$,
+with the critical exponent $E=\frac{\log a}{\log b}$:
+\begin{enumerate}
+\item If $n^{E+\epsilon}=O\left(f\left(n\right)\right)$ for some $\epsilon>0$
+then $T\left(n\right)=\Theta\left(f\left(n\right)\right)$.
+\item If $f\left(n\right)=\Theta\left(n^{E}\right)$ then $T\left(n\right)=\Theta\left(f\left(n\right)\log n\right)$.
+\item If $f\left(n\right)=O\left(n^{E-\epsilon}\right)$ for some $\epsilon>0$
+then $T\left(n\right)=\Theta\left(n^{E}\right)$.
+\end{enumerate}
+
+\section{Complexity}
+
+
+\subsection{Tractable Problems and P}
+
+\textbf{P}: Class of decision problems that can be easily \emph{solved}.
+\begin{enumerate}
+\item \emph{Tractable problem}: efficiently computable, focusing on worst
+case.
+\item \emph{Decision problem}: Has a yes or no answer.
+\item \emph{Cool-Karp Thesis}: Problem is tractable if it can be computed
+within polynomially many steps in the worst case.
+\item \emph{Polynomial Invariance Thesis}: If a problem can be solved in
+p-time in some reasonable model of computation, then it can be solved
+in p-time in any other reasonable model.
+\item P: A decision problem $D\left(x\right)$ is in P if it can be decided
+within time $p\left(n\right)$ in some reasonable model of computation,
+where $n$ is the size of the input, $\left|x\right|$.
+\end{enumerate}
+
+\paragraph{Unreasonable Models}
+\begin{enumerate}
+\item \emph{Superpolynomial Parallelism}: I.e. take out more than polynomially
+many operations in parallel in a single step.
+\item \emph{Unary numbers}: Gives input size exponentially larger than binary.
+\end{enumerate}
+
+\paragraph{Polynomial Time Functions}
+\begin{enumerate}
+\item \emph{Arithmetical operations} are p-time.
+\item If $f$ is a p-time function, then its \emph{ouput size} is polynomially
+bounded in the \emph{input size}. I.e. $\left|f\left(x\right)\right|\leq p\left(\left|x\right|\right)$
+- because we only have p-time to build the output.
+\item \emph{Composition}: If functions $f$ and $g$ are p-time, then $g\circ f$
+is computable. Since $f$ takes $p\left(n\right)$ and $g$ then takes
+$q\left(p'\left(n\right)\right)$ where $p'\left(n\right)$ is the
+output size of $f$.
+\end{enumerate}
+
+\subsection{NP}
+
+\textbf{NP}: Class of decision problems that can be easily \emph{verified}.
+
+
+\subsubsection{HamPath Problem}
+
+Given a graph $G$ and a list $p$, is $p$ a Ham path of $G$?
+\begin{enumerate}
+\item Verification of HamPath is in P. $\mbox{HamPath}\left(G\right)$ iff
+$\exists p\mbox{Ver-HamPath}\left(G,p\right)$.
+\item $D\left(x\right)$ is in NP if there is a problem $E\left(x,y\right)$
+in P and a polynomial $p\left(n\right)$ such that:
+
+\begin{enumerate}
+\item $D\left(x\right)$ iff $\exists y.E\left(x,y\right)$.
+\item If $E\left(x,y\right)$ then $\left|y\right|\leq p\left(\left|x\right|\right)$
+($E$ is poly bounded).
+\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Satisfiability Problem}
+
+Given a propositional formula $\phi$ in CNF, is it satisfiable?
+\begin{enumerate}
+\item SAT is not decidable in p-time: we have to try all possible truth
+assignments - for $m$ variables this is $2^{m}$ assignments.
+\item SAT is in NP: Guess an assignment $v$ and verify in p-time that $v$
+satisfies $\phi$.
+\end{enumerate}
+
+\subsubsection{P$\boldsymbol{\subseteq}$NP}
+\begin{enumerate}
+\item Suppose that $D$ is in P.
+\item To verify $D\left(x\right)$ holds, we don't need to guess a certificate
+$y$ - we just decide $D\left(x\right)$ directly.
+\item Formally: Define $E\left(x,y\right)$ iff $D(x)$ and $y$ is the
+empty string. Then clearly $D\left(x\right)$ iff $\exists y.E\left(x,y\right)$
+and $\left|y\right|\leq p\left(\left|x\right|\right)$.
+\end{enumerate}
+
+\subsubsection{P$\boldsymbol{=}$NP}
+
+Unknown.
+
+
+\subsection{Problem Reduction}
+\begin{enumerate}
+\item \emph{Many-one reduction}: Consider two decision problems $D$ and
+$D'$. $D$ many-one reduces to $D'$ ($D\leq D'$) if there is a
+p-time function $f$ s.t. $D\left(x\right)$ iff $D'\left(f\left(x\right)\right)$.
+\item Reduction is reflexive and transitive.
+\item If both $D\leq D'$ and $D'\leq D$, then $D\sim D'$.
+\end{enumerate}
+
+\subsubsection{P and Reduction}
+\begin{enumerate}
+\item Suppose algorithm $A'$ decides $D'$ in time $p'\left(n\right)$.
+We define algorithm $A$ to solve $D$ by first computing $f\left(x\right)$
+and then running $A'\left(f\left(x\right)\right)$.
+
+\begin{enumerate}
+\item Step 1 takes $p\left(n\right)$ steps.
+\item Note that $\left|f\left(x\right)\right|\leq q\left(n\right)$ for
+some poly $q$. Step 2 takes $p'\left(q\left(n\right)\right)$.
+\end{enumerate}
+\item Hence: If $D\leq D'$ and $D'\in\mbox{P}$, then $D\in\mbox{P}$.
+\end{enumerate}
+
+\subsubsection{NP and Reduction}
+
+
+\paragraph{Assumption}
+\begin{enumerate}
+\item Assume $D\leq D'$ and $D'\in\mbox{NP}$.
+\item Then $D\left(x\right)$ iff $D'\left(f\left(x\right)\right)$.
+\item Also there is $E'\left(x,y\right)\in\mbox{P}$ s.t. $D'\left(x\right)$
+iff $\exists y.E'\left(x,y\right)$.
+\item Also if $E'\left(x,y\right)$ then $\left|y\right|\leq p'\left(\left|x\right|\right)$.
+\end{enumerate}
+
+\paragraph{Proof Part A}
+\begin{enumerate}
+\item $D\left(x\right)$ iff $\exists y.E'\left(f\left(x\right),y\right)$.
+\item Define then $E\left(x,y\right)$ iff $E'\left(f\left(x\right),y\right)$.
+We can now prove part (a).
+\end{enumerate}
+
+\paragraph{Proof Part B}
+\begin{enumerate}
+\item Suppose $E\left(x,y\right)$. Then $E'\left(f\left(x\right),y\right)$,
+hence $\left|y\right|\leq p'\left(\left|x\right|\right)$.
+\item $f\left|x\right|<q\left(n\right)$ for some poly $q$. So $\left|y\right|\leq p'\left(q\left(\left|x\right|\right)\right)$,
+proving part (b).
+\end{enumerate}
+
+\subsection{NP-Completeness}
+\begin{enumerate}
+\item $D$ is NP-\emph{hard} if for all problems $D'\in\mbox{NP}$, $D'\leq D$.
+\item $D$ is NP-\emph{complete} if for all problems $D\in\mbox{NP}$ and
+$D$ is NP-hard.
+\end{enumerate}
+
+\paragraph{Cook-Levin Theorem}
+
+SAT is NP-complete.
+
+
+\paragraph{Intractability}
+\begin{enumerate}
+\item Suppose $\mbox{P}\neq\mbox{NP}$ and $D$ is NP-hard.
+\item Suppose for a contradiction that $D\in\mbox{P}$.
+\item Consider any other $D'\in\mbox{NP}$. $D'\leq D$ since $D$ is NP-hard.
+Hence $D\in\mbox{P}$.
+\item Hence $\mbox{NP}\subseteq\mbox{P}$. But $\mbox{P}\subseteq\mbox{NP}$.
+Hence $\mbox{P}=\mbox{NP}$, which is a contradiction.
+\end{enumerate}
+
+\paragraph{Proving NP-Completeness}
+
+E.g. Prove TSP is NP-complete.
+\begin{enumerate}
+\item Prove TSP is NP (easy).
+\item Reduce HamPath (a known NP-hard problem) to TSP.\end{enumerate}
 
 \end{document}
