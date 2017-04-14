@@ -416,8 +416,8 @@ Pre-conditions for functions on lists are usually $\top$ or sometimes involve ch
 
 Post-conditions for functions on lists often involve:
 \begin{enumerate}
-\item Checking a property of a list and its length compared to the given list (e.g. $\#xs = \#ys \land \forall i \left(i < \#xs \rightarrow P\left(ys!!i\right)\right)$ where $ys = f(x)$).
-\item Checking a property of an item and its presence in the given list (e.g. $\exists i \left(i < \#xs \land xs!!i = y\right) \land P\left(y\right)$ where $y = f(x)$).
+\item Checking a property of a list and its length compared to the given list (e.g. $\#xs = \#ys \land \forall i:\mbox{Nat} \left(i < \#xs \rightarrow P\left(ys!!i\right)\right)$ where $ys = f(x)$).
+\item Checking a property of an item and its presence in the given list (e.g. $\exists i:\mbox{Nat} \left(i < \#xs \land xs!!i = y\right) \land P\left(y\right)$ where $y = f(x)$).
 \end{enumerate}
 
 \section{Checking Validity}
