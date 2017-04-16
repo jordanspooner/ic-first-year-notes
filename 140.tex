@@ -365,7 +365,7 @@ this as $x:\mbox{s}$ and $c:\mbox{s}$.
 Redefined such that:
 \begin{enumerate}
 \item Each $n$-ary relation symbol $R$ comes with a template $R\left(\mbox{s}_{1},\mbox{s}_{2},\dots,\mbox{s}_{n}\right)$.
-\item $t_{1}=t_{2}$ is a term if $t_{1},t_{2}$ have the same sort.
+\item $t_{1}=t_{2}$ is a formula if $t_{1},t_{2}$ have the same sort.
 \end{enumerate}
 It is polite to indicate the sort of a variable in $\forall,\exists$,
 e.g. $\forall x:\mbox{lecturer}\exists y:\mbox{Sun}\left(\mbox{bough\ensuremath{t_{lecturer,Sun}}}\left(x,y\right)\right)$.
@@ -378,7 +378,7 @@ e.g. $\forall x:\mbox{lecturer}\exists y:\mbox{Sun}\left(\mbox{bough\ensuremath{
 
 Formula $A\left(x_{1},x_{2},\dots,x_{n}\right)$ such that any arguments
 $\left(a_{1},a_{2},\dots,a_{n}\right)$ satisfy the pre-condition
-if $A\left(a_{1},a_{2},\dots,a_{n}\right)$ is true. If there is no
+iff $A\left(a_{1},a_{2},\dots,a_{n}\right)$ is true. If there is no
 restrictions on arguments beyond type information, we write 'none'
 or $\top$.
 
@@ -407,7 +407,7 @@ Functions:
 \item $\mbox{cons}(:):\mbox{(Nat,[Nat])\ensuremath{\rightarrow}[Nat]}$
 \item $++:\mbox{([Nat],[Nat])\ensuremath{\rightarrow}[Nat]}$
 \item $\mbox{head}:\mbox{[Nat]\ensuremath{\rightarrow}Nat}$
-\item $\mbox{head}:\mbox{[Nat]\ensuremath{\rightarrow}[Nat]}$
+\item $\mbox{tail}:\mbox{[Nat]\ensuremath{\rightarrow}[Nat]}$
 \item $\#:\mbox{[Nat]\ensuremath{\rightarrow}Nat}$
 \item $!!:\mbox{([Nat],Nat)\ensuremath{\rightarrow}Nat}$
 \end{itemize}
@@ -416,8 +416,8 @@ Pre-conditions for functions on lists are usually $\top$ or sometimes involve ch
 
 Post-conditions for functions on lists often involve:
 \begin{enumerate}
-\item Checking a property of a list and its length compared to the given list (e.g. $\#xs = \#ys \land \forall i \left(i < \#xs \rightarrow P\left(ys!!i\right)\right)$ where $ys = f(x)$).
-\item Checking a property of an item and its presence in the given list (e.g. $\exists i \left(i < \#xs \land xs!!i = y\right) \land P\left(y\right)$ where $y = f(x)$).
+\item Checking a property of a list and its length compared to the given list (e.g. $\#xs = \#ys \land \forall i:\mbox{Nat} \left(i < \#xs \rightarrow P\left(ys!!i\right)\right)$ where $ys = f(x)$).
+\item Checking a property of an item and its presence in the given list (e.g. $\exists i:\mbox{Nat} \left(i < \#xs \land xs!!i = y\right) \land P\left(y\right)$ where $y = f(x)$).
 \end{enumerate}
 
 \section{Checking Validity}
