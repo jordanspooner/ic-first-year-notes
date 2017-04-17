@@ -415,7 +415,7 @@ Different types:
 \paragraph{Sequential Circuit \emph{Design Process}}
 \begin{enumerate}
 \item Determine the required number of states and assign each output to
-a state. Adjacent assignmenst should be given to states if they:
+a state. State assignments should be adjacent (i.e. only changing 1 digit, 011 \textrightarrow{} 111) if they:
 
 \begin{enumerate}
 \item Have the same next state for a given input.
@@ -423,14 +423,14 @@ a state. Adjacent assignmenst should be given to states if they:
 \item \emph{Or choose to minimise output logic.}
 \end{enumerate}
 \item Determine the state transitions. Draw a state transition diagram and
-a state transition table table.
+a state transition table.
 \item For each flip-flop input $D_{n}$, draw a Karnaugh Map and determine
 a Boolean expression in terms of the flip-flop outputs and circuit
 inputs. Simplify.
 \item Check don't cares. Fix by one of these methods:
 
 \begin{enumerate}
-\item Look at K-Maps and try to find a simple modifiacation.
+\item Look at K-Maps and try to find a simple modification.
 \item Include unused states and redo.
 \end{enumerate}
 \item Determine Boolean expressions for output from the state assignments,
