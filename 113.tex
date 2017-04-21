@@ -610,7 +610,7 @@ next state (3 bits).
 
 \paragraph{Instruction Pointer Register}
 \begin{itemize}
-\item Holds next instruction to be executed.
+\item Holds address of next instruction to be executed.
 \item Rarely manipulated directly by programs.
 \item Used implicitly by instructions such as \texttt{call}, \texttt{jmp}
 and \texttt{ret}.
@@ -663,7 +663,7 @@ Example assembly instructions:
 
 \noindent 
 \begin{lstlisting}[basicstyle={\footnotesize\ttfamily},frame=single]
-mov   rax, [rpb+4]   ; rax = memory16[rpb + 4]
+mov   rax, [rpb+4]   ; rax = memory[rpb + 4]
 add   ax, [bx]       ; ax = ax + memory16[bx]
 sub   rax, 45        ; rax = rax - 45
 \end{lstlisting}
