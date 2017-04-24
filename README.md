@@ -14,7 +14,7 @@ These are not substitutes for the actual course lectures / notes / slides, in th
 | 120.2         | Programming 2 | Complete     |
 | 130           | Databases     | Complete     |
 | 140           | Logic         | Complete     |
-| 141           | Reasoning     | No notes     |
+| 141           | Reasoning     | 50% Complete |
 | 142.1         | DM 1          | Complete     |
 | 142.2         | DM 2          | Complete     |
 | 145           | Math Methods  | Complete     |

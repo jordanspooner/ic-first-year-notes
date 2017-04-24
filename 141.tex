@@ -4,6 +4,7 @@
 \geometry{verbose,tmargin=0.5in,bmargin=0.75in,lmargin=0.5in,rmargin=0.5in}
 \setlength{\parskip}{\smallskipamount}
 \setlength{\parindent}{0pt}
+\usepackage{amsmath}
 
 \makeatletter
 
@@ -20,6 +21,9 @@
 \newcommand{\Q}[0]{\mathds{Q}} % rational numbers
 
 \makeatother
+
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Listing}
 
 \begin{document}
 
@@ -65,24 +69,140 @@ for some $c$.
 
 \subsection{Mathematical Induction}
 
-
-\paragraph{Principle of Mathematical Induction}
-
-For any $P\subseteq\mathbb{N}$:
-
+\emph{Principle of Mathematical Induction}: For any $P\subseteq\mathbb{N}$:
 \[
-P\left(0\right)\land\forall k:\mathbb{N}.\left[P\left(k\right)\rightarrow P\left(k+1\right)\right]
+P\left(0\right)\land\forall k:\mathbb{N}.\left[P\left(k\right)\rightarrow P\left(k+1\right)\right]\rightarrow\forall\mathbb{N}.P\left(n\right)
+\]
+i.e. to prove by induction, we prove a base case and an inductive
+step.
+
+\emph{General Technique}: For any $P\subseteq\mathbb{Z}$ and any
+$m:\mathbb{Z}$:
+\[
+P\left(m\right)\land\forall k\geq m.\left[P\left(k\right)\rightarrow P\left(k+1\right)\right]\rightarrow\forall n\geq m.P\left(n\right)
 \]
 
 
 
 \subsection{Strong Induction}
 
+\[
+P\left(0\right)\land\forall k:\mathbb{N}.\left[\forall j\in\left\{ 0..k\right\} .P\left(j\right)\rightarrow P\left(k+1\right)\right]\rightarrow\forall n:\mathbb{N}.P\left(n\right)
+\]
+\emph{Note}: for some problems, it may be necessary to split the inductive
+step into cases. E.g. $k=0$ or $k\neq0$.
+
+Mathematical induction and strong induction are \emph{equivalent}.
+
 
 \subsection{Structural Induction over Haskell Data Types}
 
+We generalise the concept of predecessor and successor.
+
+\emph{Example 1}: Structural Induction Principle over Lists:
+\[
+P\left(\mathtt{[]}\right)\land\forall\mathtt{vs}:\mathtt{[T]}\forall\mathtt{v}:\mathtt{T}.\left[P\left(\mathtt{vs}\right)\rightarrow P\left(\mathtt{v:vs}\right)\right]\rightarrow\forall\mathtt{xs}:\mathtt{[T]}.P\left(\mathtt{xs}\right)
+\]
+
+
+\emph{Example 2}: Structural Induction Principle over \texttt{Data
+BExp = Tr \textbar{} Fl \textbar{} BNt BExp \textbar{} BAnd BExp BExp}:
+\begin{multline*}
+P\left(\mathtt{Tr}\right)\land P\left(\mathtt{Fl}\right)\land\forall\mathtt{b}:\mathtt{BExp}.\left[P\left(\mathtt{b}\right)\rightarrow P\left(\mathtt{BNt}\;\mathtt{b}\right)\right]\land\\
+\forall\mathtt{b1},\mathtt{b2}:\mathtt{BExp}.\left[P\left(\mathtt{b1}\right)\land P\left(\mathtt{b2}\right)\rightarrow P\left(\mathtt{BAnd}\;\mathtt{b1}\;\mathtt{b2}\right)\right]\rightarrow\forall\mathtt{b}:\mathtt{BExp}.P\left(\mathtt{b}\right)
+\end{multline*}
+
+
+
+\paragraph{Proof Methods}
+\begin{enumerate}
+\item Invent an Auxiliary Lemma.
+\item Strengthen the original property. E.g. rewrite $\forall\mathtt{is}:\mathtt{[Int]}.\mathtt{sum}\;\mathtt{is}=\mathtt{sum\_tr\;is\;0}$
+as $\forall\mathtt{k}:\mathtt{Int}\forall\mathtt{is}:\mathtt{[Int]}.\mathtt{k}+\mathtt{sum}\;\mathtt{is}=\mathtt{sum\_tr\;is\;k}$.
+\end{enumerate}
 
 \subsection{Induction over Recursively Defined Structures}
+
+Sets, relations and functionas can be defined inductively, which leads
+to inductive principles.
+
+
+\paragraph{Sets}
+
+\emph{Example}: Consider the set of ordered lists, $OL\subseteq\mathbb{N}^{*}$:
+\begin{align*}
+1.\; & []\in OL\\
+2.\; & \forall i\in\mathbb{N}.i:[]\in OL\\
+3.\; & \forall i,j\in\mathbb{N}\forall js\in\mathbb{N}^{*}.\left[i\leq j\land j:js\in L\rightarrow i:j:js\in OL\right]
+\end{align*}
+For a property $Q\subseteq\mathbb{N}^{*}$, we get the inductive principle
+\begin{multline*}
+Q\left([]\right)\land\forall i\in\mathbb{N}.Q\left(i:[]\right)\land\\
+\forall i,j\in\mathbb{N}\forall js\in\mathbb{N}^{*}.\left[i\leq j\land j:js\in OL\land Q\left(j:js\right)\rightarrow Q\left(i:j:js\right)\right]\\
+\rightarrow\forall ns\in OL.Q\left(ns\right)
+\end{multline*}
+
+
+
+\paragraph{Relations}
+
+\emph{Example 1}: Consider the strictly less than relation, $SL\subseteq\mathbb{N}\times\mathbb{N}$:
+\begin{align*}
+1.\; & \forall k\in\mathbb{N}.SL\left(0,k+1\right)\\
+2.\; & \forall m,n\in\mathbb{N}.\left[SL\left(m,n\right)\rightarrow SL\left(m+1,n+1\right)\right]
+\end{align*}
+For a property $Q\subseteq\mathbb{N}\times\mathbb{N}$, we get the
+inductive principle
+\begin{multline*}
+\forall k\in\mathbb{N}.Q\left(0,k+1\right)\land\forall m,n\in\mathbb{N}.,\left[SL\left(m,n\right)\land Q\left(m,n\right)\rightarrow Q\left(m+1,n+1\right)\right]\\
+\rightarrow\forall m,n\in\mathbb{N}.\left[SL\left(m,n\right)\rightarrow Q\left(m,n\right)\right]
+\end{multline*}
+
+
+\emph{Example 2}: Consider the set of natural numbers, $S_{\mathbb{N}}$:
+\begin{align*}
+1.\; & \mbox{Zero}\in S_{\mathbb{N}}\\
+2.\; & \forall n.\left[n\in S_{\mathbb{N}}\rightarrow\mbox{Succ }n\in S_{\mathbb{N}}\right]
+\end{align*}
+and the predicate $Odd\left(S_{\mathbb{N}}\right)$:
+\begin{align*}
+1.\; & Odd\left(\mbox{Succ Zero}\right)\\
+2.\; & \forall n\in S_{\mathbb{N}}.\left[Odd\left(n\right)\rightarrow Odd\left(\mbox{Succ }\left(\mbox{Succ }n\right)\right)\right]
+\end{align*}
+Here it is much simpler to derive the inductive principle from the
+definition of $Odd$, rather than from the definition of $S_{\mathbb{N}}$:
+\begin{multline*}
+Q\left(\mbox{Succ Zero}\right)\land\forall n\in S_{\mathbb{N}}.\left[Odd\left(n\right)\land Q\left(n\right)\rightarrow Q\left(\mbox{Succ }\left(\mbox{Succ }n\right)\right)\right]\\
+\rightarrow\forall n\in S_{\mathbb{N}}.\left[Odd\left(n\right)\rightarrow Q\left(n\right)\right]
+\end{multline*}
+
+
+
+\paragraph{Functions}
+
+\emph{Example}: Consider the Haskell function:
+\begin{lstlisting}[language=Haskell,basicstyle={\ttfamily}]
+DM (i, j) = DM' (i, j, 0, 0)
+DM' (i, j, cnt, acc)
+  | acc + j > i = (cnt, i - acc)
+  | otherwise = DM' (i, j, cnt +1, acc + j)
+\end{lstlisting}
+We can define this inductively as follows:
+\begin{align*}
+1.\; & \forall i,j\in\mathbb{Z}.\left[\mathtt{DM}\left(i,j\right)=\mathtt{DM'}\left(i,j,0,0\right)\right]\\
+2.\; & \forall i,j,cnt,acc\in\mathbb{Z}.\left[acc+j>i\rightarrow\mathtt{DM'}\left(i,j,cnt,acc\right)=\left(cnt,i-acc\right)\right]\\
+3.\; & \forall i,j,cnt,acc\in\mathbb{Z}.[acc+j\leq i\land\mathtt{DM'}\left(i,j,cnt+1,acc+j\right)=\left(k1,k2\right)\\
+ & \rightarrow\mathtt{DM'}\left(i,j,cnt,acc\right)=\left(k1,k2\right)]
+\end{align*}
+For a predicate $Q\in\mathbb{Z}\times\mathbb{Z}\times\mathbb{Z}\times\mathbb{Z}\times\mathbb{Z}\times\mathbb{Z}$,
+we get the following inductive principle for \texttt{DM'}:
+\begin{multline*}
+\forall i,j,cnt,acc\in\mathbb{Z}.\left[acc+j>i\rightarrow Q\left(i,j,cnt,acc,cnt,i-acc\right)\right]\land\\
+\forall i,j,cnt,acc,k1,k2\in\mathbb{Z}.[acc+j\leq i\land\mathtt{DM'}\left(i,j,cnt+1,acc+j\right)=\left(k1,k2\right)\land\\
+Q\left(i,j,cnt+1,acc+j,k1,k2\right)\rightarrow Q\left(i,j,cnt,acc,k1,k2\right)]\\
+\rightarrow\forall i,j,cnt,acc,k1,k2:\mathbb{Z}.\left[\mathtt{DM'}\left(i,j,cnt,acc\right)=\left(k1,k2\right)\rightarrow Q\left(i,j,cnt,acc,k1,k2\right)\right]
+\end{multline*}
+
 
 
 \section{Reasoning about Java Programs}
