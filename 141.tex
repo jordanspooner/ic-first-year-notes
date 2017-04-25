@@ -4,10 +4,10 @@
 \geometry{verbose,tmargin=0.5in,bmargin=0.75in,lmargin=0.5in,rmargin=0.5in}
 \setlength{\parskip}{\smallskipamount}
 \setlength{\parindent}{0pt}
+\usepackage{color}
 \usepackage{amsmath}
 
 \makeatletter
-
 \usepackage{amsmath,amssymb,amsthm,mathrsfs,amsfonts,dsfont} 
 
 \setlength{\columnsep}{0.25in}
@@ -19,6 +19,9 @@
 \newcommand{\N}[0]{\mathds{N}} % natural numbers
 \newcommand{\nat}[0]{\mathds{N}} % natural numbers
 \newcommand{\Q}[0]{\mathds{Q}} % rational numbers
+
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+\definecolor{green}{rgb}{0,0.75,0}
 
 \makeatother
 
@@ -181,11 +184,11 @@ Q\left(\mbox{Succ Zero}\right)\land\forall n\in S_{\mathbb{N}}.\left[Odd\left(n\
 \paragraph{Functions}
 
 \emph{Example}: Consider the Haskell function:
-\begin{lstlisting}[language=Haskell,basicstyle={\ttfamily}]
+\begin{lstlisting}[language=Haskell,basicstyle={\small\ttfamily},tabsize=4]
 DM (i, j) = DM' (i, j, 0, 0)
 DM' (i, j, cnt, acc)
-  | acc + j > i = (cnt, i - acc)
-  | otherwise = DM' (i, j, cnt +1, acc + j)
+	| acc + j > i = (cnt, i - acc)
+	| otherwise = DM' (i, j, cnt +1, acc + j)
 \end{lstlisting}
 We can define this inductively as follows:
 \begin{align*}
@@ -211,11 +214,210 @@ Q\left(i,j,cnt+1,acc+j,k1,k2\right)\rightarrow Q\left(i,j,cnt,acc,k1,k2\right)]\
 \subsection{Program Specifications}
 
 
+\paragraph{Pre-Conditions, Mid-Conditions, Post-Conditions}
+\begin{enumerate}
+\item \emph{Pre-condition}: Must be proven in order to call function, an
+assumption that code in method can make.
+\item \emph{Mid-condition}: Assumption made at specific point in code, must
+be guaranteed by preceeding code and can be assumed by subsequent
+code.
+\item \emph{Post-condition}: Expected to hold after the code has been executed
+(assuming termination and that precondition held).
+\end{enumerate}
+\emph{Example}: Consider the Java code:
+\begin{lstlisting}[language=Java,basicstyle={\small\ttfamily},tabsize=4,mathescape=true,commentstyle={\color{grey}}]
+type method(type $x_1$, $\dots$, type $x_n$)
+// PRE: $\color{grey}P(x_1, \dots, x_n)$
+// POST: $\color{grey}Q(x_1, \dots, x_n)$
+{
+	code1
+	// MID: $\color{grey}R(x_1, \dots, x_n)$
+	code2
+	// MID: $\color{grey}S(x_1, \dots, x_n)$
+	code3
+}
+\end{lstlisting}
+\emph{Note}: if we choose to introduce new (value) variables in our
+conditions, there is an implicit universal quantification over the
+whole specification.
+
+Here we need to prove:
+\begin{enumerate}
+\item $P\left(x_{1},\dots,x_{n}\right)\land\mathtt{code1}\rightarrow R\left(x_{1},\dots,x_{n}\right)$
+\item $R\left(x_{1},\dots,x_{n}\right)\land\mathtt{code2}\rightarrow S\left(x_{1},\dots,x_{n}\right)$
+\item $S\left(x_{1},\dots,x_{n}\right)\land\mathtt{code3}\rightarrow Q\left(x_{1},\dots,x_{n}\right)$
+\end{enumerate}
+
+\paragraph{Program Variables}
+\begin{enumerate}
+\item $\mathtt{x}$ refers to the value of $\mathtt{x}$ before code is
+executed.
+\item $\mathtt{x'}$ refers to its value after code is executed, \emph{shouldn't
+be present in assertions}.
+\item $\mathtt{x_{0}}$ refers to its original value, as passed into the
+method.
+\end{enumerate}
+We use $\mathtt{r}$ to refer to the return value of a method.
+
+
+\paragraph{Arrays}
+\begin{enumerate}
+\item $\mathtt{a}\sim\mathtt{b}$ means $\mathtt{a}$ is a permutation of
+$\mathtt{b}$.
+\item $\mathtt{a}\approx\mathtt{b}$ means $\mathtt{a}$ is identical to
+$\mathtt{b}$.
+\item $\mathtt{a}\left[x..y\right)$ means the elements of $\mathtt{a}$
+from index $x$ up to (but not including) $y$.
+\item $Sorted\left(\mathtt{a}\right)$ means $\mathtt{a}$ is sorted.
+\item $min\left(\mathtt{a}\right)$ is the smallest element in $\mathtt{a}$.
+\item $max\left(\mathtt{a}\right)$ is the largest element in $\mathtt{a}$.
+\end{enumerate}
+
 \subsection{Conditional Branches}
+
+We can assume the pre-condition and the \texttt{if else} condition.
+Have to show post-condition holds on borth branches of the code.
+
+\emph{Example}: Consider the Java code:
+\begin{lstlisting}[language=Java,basicstyle={\small\ttfamily},tabsize=4,mathescape=true,commentstyle={\color{grey}}]
+// PRE: $\color{grey}true$
+if (x >= y) {
+	// MID: $\color{grey}\mathtt{x_0} \geq \mathtt{y_0}$
+	res = x;
+	// MID: $\color{grey}\mathtt{res} = \mathtt{x_0} \land \mathtt{x_0} \geq \mathtt{y_0}$
+} else {
+	// MID: $\color{grey}\mathtt{y_0} > \mathtt{x_0}$
+	res = y;
+	// MID: $\color{grey}\mathtt{res} = \mathtt{y_0} \land \mathtt{y_0} > \mathtt{x_0}$
+}
+// MID: $\color{grey}\mathtt{res} = max\{\mathtt{x_0} , \mathtt{y_0}\}$
+\end{lstlisting}
+
 
 
 \subsection{Recursion}
 
 
+\paragraph{Method Calls}
+
+Need to show that the precondition is met before the method call,
+then can assume postcondition will hold afterwards. We make necessary
+substitutions in order to prove our assertions.
+
+\emph{Example}: Consider the java method:
+\begin{lstlisting}[language=Java,numbers=left,numberstyle={\footnotesize},basicstyle={\small\ttfamily},tabsize=4,mathescape=true,xleftmargin={5.0ex},commentstyle={\color{grey}}]
+int sumAux(int[] a, int i)
+// PRE: $\color{grey}\mathtt{a} \neq \mathtt{null} \land 0 \leq \mathtt{i} \leq \mathtt{a.length}$
+// POST: $\color{grey}\mathtt{a} \approx \mathtt{a_0} \land \mathtt{r} = \sum \mathtt{a}[\mathtt{i}..\mathtt{a.length})$
+{
+	if (i == a.length) {
+		// MID: $\color{grey}\mathtt{a} \approx \mathtt{a_0} \land \mathtt{i} = \mathtt{a.length}$
+		return 0;
+	} else {
+		// MID: $\color{grey}\mathtt{a} \approx \mathtt{a_0} \land \mathtt{a} \neq \mathtt{null} \land 0 \leq \mathtt{i} < \mathtt{a.length}$
+		int val = a[i] + sumAux(a, i+1);
+		// MID: $\color{grey}\mathtt{a} \approx \mathtt{a_0} \land \mathtt{val} = \mathtt{a}[\mathtt{i}..\mathtt{a.length})$
+		return val;
+	}
+}
+\end{lstlisting}
+We need to prove:
+\begin{enumerate}
+\item \emph{Line 6}: Show mid-condition holds: ${\color{blue}\mathtt{a_{0}}\neq\mathtt{null}\land0\leq\mathtt{i}\leq\mathtt{a_{0}.length}}\land{\color{red}\mathtt{i=a_{0}.length}}\land{\color{green}\mathtt{a'}\approx\mathtt{a_{0}}}\rightarrow\mathtt{a'}\approx\mathtt{a_{0}}\land\mathtt{i}=\mathtt{a'.length}$.
+\item \emph{Line 7}: Show post-condition holds: ${\color{blue}\mathtt{a}\approx\mathtt{a_{0}}\land\mathtt{i}=\mathtt{a.length}}\land{\color{red}\mathtt{r}=0}\rightarrow\mathtt{a}\approx\mathtt{a_{0}}\land\mathtt{r}=\sum\mathtt{a}\left[\mathtt{i}..\mathtt{a.length}\right)$.
+\item \emph{Line 9}: Show mid-condition holds:${\color{blue}\mathtt{a_{0}}\neq\mathtt{null}\land0\leq\mathtt{i}\leq\mathtt{a_{0}.length}}\land{\color{red}\mathtt{i\neq a'.length}}\land{\color{green}\mathtt{a'}\approx\mathtt{a_{0}}}\rightarrow\mathtt{a'}\approx\mathtt{a_{0}}\land\mathtt{a'}\neq\mathtt{null}\land0\leq\mathtt{i}<\mathtt{a'.length}$.
+\item \emph{Line 10}: Show pre-condition for called method holds: ${\color{blue}\mathtt{a}\approx\mathtt{a_{0}}\land\mathtt{a}\neq\mathtt{null}\land0\leq\mathtt{i}<\mathtt{a.length}}\rightarrow\mathtt{a}\neq\mathtt{null}\land0\leq\mathtt{i+1}\leq\mathtt{a.length}$.
+\item \emph{Line 11}: Show mid-condition holds: ${\color{blue}\mathtt{a}\approx\mathtt{a_{0}}\land\mathtt{a}\neq\mathtt{null}\land0\leq\mathtt{i}<\mathtt{a.length}}\land{\color{red}{\color{magenta}\mathtt{a'}\approx\mathtt{a}\land\mathtt{r}=\sum\mathtt{a'}\left[\mathtt{i+1}..\mathtt{a'.length}\right)}}\land{\color{red}\mathtt{val'}=\mathtt{a[i]+r}}\rightarrow\mathtt{a'}\approx\mathtt{a_{0}}\land\mathtt{val'}=\sum\mathtt{a'}\left[\mathtt{i}..\mathtt{a'.length}\right)$.
+\item \emph{Line 12}: Show post-condition holds: ${\color{blue}\mathtt{a}\approx\mathtt{a_{0}}\land\mathtt{val}=\sum\mathtt{a}\left[\mathtt{i}..\mathtt{a.length}\right)}\land{\color{red}\mathtt{r}=\mathtt{val}}\rightarrow\mathtt{a}\approx\mathtt{a_{0}}\land\mathtt{r}=\sum\mathtt{a}\left[\mathtt{i}..\mathtt{a.length}\right)$.
+\end{enumerate}
+Blue statements come from the \textcolor{blue}{pre-condition or previous
+mid-condition}, green statements \textcolor{green}{implicitly from
+code}, red statements \textcolor{red}{explicitly from code} and purple
+statements from the \textcolor{magenta}{post-condition of a called
+method}.
+
+
 \subsection{Iteration}
+
+
+\paragraph{Invariant}
+
+To prove a property holds throughout the loop, we need to prove that
+the \emph{invariant} holds before entering the loop, and is preserved
+by the loop body (including at termination). The invariant and $\lnot cond$
+can be used to prove the following mid-condition.
+
+
+\paragraph{Variant}
+
+To prove a loop will terminate, we find an integer expression which
+is bounded below, and decreases in \emph{every} loop iteration.
+
+\emph{Example}: Consider the java method:
+\begin{lstlisting}[language=Java,numbers=left,numberstyle={\footnotesize},basicstyle={\small\ttfamily},tabsize=4,mathescape=true,xleftmargin={5.0ex},commentstyle={\color{grey}}]
+int culSum(int[] a)
+// PRE $\color{grey}P$: $\color{grey}\mathtt{a}\neq\mathtt{null}$
+// POST $\color{grey}Q$: $\color{grey}\mathtt{a.length}=\mathtt{a_{0}.length}\land\mathtt{r}=\sum\mathtt{a_{0}}\left[0..\mathtt{a.length}\right)\land$
+	       $\color{grey}\forall k\in\left[0..\mathtt{a.length}\right).\left[\mathtt{a[}k\mathtt{]}=\sum\mathtt{a}_{\mathtt{0}}\left[0..k+1\right)\right]$
+{
+	int res = 0;
+	int i = 0;
+	// INV $\color{grey}I$: $\color{grey}\mathtt{a}\neq\mathtt{null}\land\mathtt{a.length}=\mathtt{a_{0}.length}\land0\leq\mathtt{i}\leq\mathtt{a.length}\land$
+			  $\color{grey}\mathtt{res}=\sum\mathtt{a_{0}}\left[0..\mathtt{i}\right)\land\forall k\in\left[0..\mathtt{i}\right).\left[\mathtt{a[}k\mathtt{]}=\sum\mathtt{a_{0}}\left[0..k+1\right)\right]\land$
+			  $\color{grey}\forall k\in\left[\mathtt{i}..\mathtt{a.length}\right).\left[\mathtt{a[}k\mathtt{]}=\mathtt{a_{0}[}k\mathtt{]}\right]$
+	// VAR $\color{grey}V$: $\color{grey}\mathtt{a.length}-\mathtt{i}$
+	while (i < a.length) {
+		res = res + a[i];
+		a[i] = res; i++;
+	}
+	// MID $\color{grey}M$: $\color{grey}\mathtt{a.length}=\mathtt{a_{0}.length}\land\mathtt{res}=\sum\mathtt{a_{0}\left[0..\mathtt{a.length}\right)}\land$
+		  	   $\color{grey}\forall k\in\left[0..\mathtt{a.length}\right).\left[\mathtt{a[}k\mathtt{]}=\sum\mathtt{a}_{\mathtt{0}}\left[0..k+1\right)\right]$
+	return res;
+}
+\end{lstlisting}
+We need to prove:
+
+1. Invariant holds before loop is entered. 
+\begin{multline*}
+{\color{blue}P\left[\mathtt{a}\mapsto\mathtt{a}_{\mathtt{0}}\right]}\land{\color{red}\mathtt{res}=0\land\mathtt{i}=0}\land{\color{green}\mathtt{a}\approx\mathtt{a_{0}}}\\
+\rightarrow I
+\end{multline*}
+
+
+2. Loop body re-establishes invariant. 
+\begin{multline*}
+{\color{blue}I}\land{\color{red}\mathtt{i}<\mathtt{a.length}\land\mathtt{res'}=\mathtt{res}+\mathtt{a[i]}\land\mathtt{a'[i]}=\mathtt{res'}\land\mathtt{i'}=\mathtt{i}+1}\land\\
+{\color{green}\forall k\in\left[0..\mathtt{a.length}\right)\backslash\left\{ i\right\} .\left[\mathtt{a'}\mathtt{[}k\mathtt{]}=\mathtt{a[}k\mathtt{]}\right]}\\
+\rightarrow I\left[\mathtt{a\mapsto a',i\mapsto i',res\mapsto res'}\right]
+\end{multline*}
+
+
+3. Mid-condition holds straight after loop. 
+\begin{multline*}
+{\color{blue}I}\land{\color{red}\mathtt{i}\geq\mathtt{a.length}}\\
+\rightarrow M
+\end{multline*}
+
+
+4. Loop terminates. 
+\begin{multline*}
+{\color{blue}I}\land{\color{red}\mathtt{i}<\mathtt{a.length}\land\mathtt{res'}=\mathtt{res}+\mathtt{\mathtt{a[}i\mathtt{]}}\land\mathtt{\mathtt{a'[}i]}=\mathtt{res'}\land\mathtt{i'}=\mathtt{i}+1}\land\\
+{\color{green}\forall k\in\left[0..\mathtt{a.length}\right)\backslash\left\{ \mathtt{i}\right\} .\left[\mathtt{\mathtt{a'}[}k\mathtt{]}=\mathtt{a[}k\mathtt{]}\right]}\\
+\rightarrow V\geq0\land V\left[\mathtt{a\mapsto a',i\mapsto i',res\mapsto res'}\right]<V
+\end{multline*}
+
+
+5. Post-condition established. 
+\begin{multline*}
+{\color{blue}M}\land{\color{red}\mathtt{r=res}}\\
+\rightarrow Q
+\end{multline*}
+
+
+6. Array accesses are legal. 
+\begin{multline*}
+{\color{blue}I}\land{\color{red}\mathtt{i<a.length}}\\
+\rightarrow0\leq\mathtt{i<a.length}
+\end{multline*}
+
 \end{document}

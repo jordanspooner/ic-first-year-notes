@@ -14,7 +14,7 @@ These are not substitutes for the actual course lectures / notes / slides, in th
 | 120.2         | Programming II           | Complete                    |
 | 130           | Databases                | Complete                    |
 | 140           | Logic                    | Complete                    |
-| 141           | Reasoning about Programs | 50% Complete                |
+| 141           | Reasoning about Programs | Complete                    |
 | 142.1         | Discrete Mathematics I   | Complete                    |
 | 142.2         | Discrete Mathematics II  | Complete                    |
 | 145           | Mathematical Methods     | Complete                    |
