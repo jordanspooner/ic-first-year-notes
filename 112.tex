@@ -657,26 +657,26 @@ Assumes bits arrive least significant first.
 
 \paragraph{Subtractor}
 
-$S=A\oplus B$ and $C=A\cdot B$:
+Difference $=A\oplus B\oplus P$ and Borrow $=A'\cdot (B\oplus P) + B\cdot P$:
 
 \begin{table}[H]
 \noindent \begin{minipage}[t]{0.25\textwidth}
 
 \noindent \begin{centering}
 \subfloat{\noindent \centering{}%
-\begin{tabular}{cccc}
+\begin{tabular}{ccccc}
 \toprule 
-{\footnotesize{}A} & {\footnotesize{}B} & \textbf{\footnotesize{}Difference} & \textbf{\footnotesize{}Borrow}\tabularnewline
+{\footnotesize{}A} & {\footnotesize{}B} & {\footnotesize{}P} & \textbf{\footnotesize{}Difference} & \textbf{\footnotesize{}Borrow}\tabularnewline
 \midrule
-{\footnotesize{}0} & {\footnotesize{}0} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}0}\tabularnewline
-{\footnotesize{}0} & {\footnotesize{}1} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}1}\tabularnewline
-{\footnotesize{}1} & {\footnotesize{}0} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}1}\tabularnewline
-{\footnotesize{}1} & {\footnotesize{}1} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}1}\tabularnewline
+{\footnotesize{}0} & {\footnotesize{}0} & {\footnotesize{}0} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}0}\tabularnewline
+{\footnotesize{}0} & {\footnotesize{}1} & {\footnotesize{}0} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}1}\tabularnewline
+{\footnotesize{}1} & {\footnotesize{}0} & {\footnotesize{}0} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}0}\tabularnewline
+{\footnotesize{}1} & {\footnotesize{}1} & {\footnotesize{}0} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}0}\tabularnewline
 \midrule
-{\footnotesize{}0} & {\footnotesize{}0} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}0}\tabularnewline
-{\footnotesize{}0} & {\footnotesize{}1} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}0}\tabularnewline
-{\footnotesize{}1} & {\footnotesize{}0} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}0}\tabularnewline
-{\footnotesize{}1} & {\footnotesize{}1} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}1}\tabularnewline
+{\footnotesize{}0} & {\footnotesize{}0} & {\footnotesize{}1} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}1}\tabularnewline
+{\footnotesize{}0} & {\footnotesize{}1} & {\footnotesize{}1} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}1}\tabularnewline
+{\footnotesize{}1} & {\footnotesize{}0} & {\footnotesize{}1} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}0}\tabularnewline
+{\footnotesize{}1} & {\footnotesize{}1} & {\footnotesize{}1} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}1}\tabularnewline
 \bottomrule
 \end{tabular}}
 \par\end{centering}
