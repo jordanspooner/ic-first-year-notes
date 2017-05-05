@@ -1,3 +1,5 @@
+%% LyX 2.1.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
 \documentclass[twocolumn,english]{article}
 \usepackage[latin9]{inputenc}
 \usepackage[landscape]{geometry}
@@ -6,6 +8,16 @@
 \usepackage{booktabs}
 
 \makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+
+
+
+
 
 \providecommand{\tabularnewline}{\\}
 
@@ -29,6 +41,14 @@
 \setlength{\itemsep}{0pt}
 }
 
+
+
+\usepackage{babel}
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Listing}
+
+
+
 \makeatother
 
 \usepackage{babel}
@@ -50,10 +70,10 @@
 \subsection{Control Flow}
 \begin{itemize}
 \item \texttt{if} \texttt{else}, \texttt{switch} statements. Don't forget
-to \texttt{break} in a \texttt{switch} statement.
+to \texttt{break} in a \texttt{switch} statement. 
 \item \texttt{while}, \texttt{do} \texttt{while}, \texttt{for}, \texttt{for}
-\texttt{each} loops.
-\item You can label loops, and use \texttt{break} and \texttt{continue}.
+\texttt{each} loops. 
+\item You can label loops, and use \texttt{break} and \texttt{continue}. 
 \end{itemize}
 
 \subsection{Input and Ouput}
@@ -61,42 +81,42 @@ to \texttt{break} in a \texttt{switch} statement.
 
 \paragraph{Processing of Strings}
 \begin{itemize}
-\item \texttt{Integer.parseInt(String s)} converts \texttt{s} to an \texttt{int}.
-\item \texttt{.toString()} converts object to \texttt{String}.
-\item \texttt{.charAt(int i)} returns character at index \texttt{i}.
+\item \texttt{Integer.parseInt(String s)} converts \texttt{s} to an \texttt{int}. 
+\item \texttt{.toString()} converts object to \texttt{String}. 
+\item \texttt{.charAt(int i)} returns character at index \texttt{i}. 
 \item \texttt{.substring(int i, int j)} returns substring between indices
-\texttt{i} and \texttt{j}.
+\texttt{i} and \texttt{j}. 
 \item \texttt{.split(String s)} returns array which splits string around
-matches of \texttt{s}.
+matches of \texttt{s}. 
 \end{itemize}
 
 \paragraph{Reading from Input}
 \begin{itemize}
 \item \texttt{BufferedReader br = new BufferedReader(new InputStreamReader(System.in))}
-creates buffered reader.
-\item \texttt{String line = br.readLine()} reads line of input.
+creates buffered reader. 
+\item \texttt{String line = br.readLine()} reads line of input. 
 \end{itemize}
 
 \paragraph{Writing to Output}
 \begin{itemize}
 \item \texttt{PrintStream ps = new PrintStream(System.out)} creates print
-stream.
-\item \texttt{.println(String s)} prints new line of output.
+stream. 
+\item \texttt{.println(String s)} prints new line of output. 
 \end{itemize}
 
 \subsection{Enums}
 
-E.g. \texttt{public enum Day \{MON, TUE, WED, THU, FRI, SAT, SUN;\}}.
+E.g. \texttt{public enum Day \{MON, TUE, WED, THU, FRI, SAT, SUN;\}}. 
 \begin{itemize}
-\item Can add fields and constructor to give properties.
-\item Can add methods within \texttt{enum}.
+\item Can add fields and constructor to give properties. 
+\item Can add methods within \texttt{enum}. 
 \end{itemize}
 
 \subsection{Arrays}
 
 E.g. \texttt{char{[}{]} abc = \{'a', 'b', 'c'\}}. Cannot be extended
 once defined. Can define values at given indices. Useful functionality
-in \texttt{util.Arrays}:
+in \texttt{util.Arrays}: 
 \begin{itemize}
 \item \texttt{copyOfRange(T{[}{]} a, int i, int j)} copies array between
 indices \texttt{i} and \texttt{j}.
@@ -112,116 +132,122 @@ array \texttt{a}.
 \paragraph{Lists}
 \begin{itemize}
 \item \texttt{List\textless{}E\textgreater{} list = new ArrayList\textless{}\textgreater{}()}
-or \texttt{new LinkedList\textless{}\textgreater{}()} creates new
-list.
-\item \texttt{.add(E e)} adds given \texttt{e} to list.
-\item \texttt{.contains(E e)} returns whether \texttt{e} is in list
-\item \texttt{.get(int i)} returns element at index \texttt{i}.
-\item \texttt{.isEmpty()} returns whether list is empty.
-\item \texttt{.remove(int i)} removes element at index \texttt{i}.
+or \texttt{new LinkedList\textless{}\textgreater{}()} creates
+new list. 
+\item \texttt{.add(E e)} adds given \texttt{e} to list. 
+\item \texttt{.contains(E e)} returns whether \texttt{e} is in list 
+\item \texttt{.get(int i)} returns element at index \texttt{i}. 
+\item \texttt{.isEmpty()} returns whether list is empty. 
+\item \texttt{.remove(int i)} removes element at index \texttt{i}. 
 \item \texttt{.set(int i, E e)} sets element at index \texttt{i} to element
-\texttt{e}.
-\item \texttt{.size()} returns number of items in list.
-\item \texttt{.stream()} creates an ordered stream from list elements.
+\texttt{e}. 
+\item \texttt{.size()} returns number of items in list. 
+\item \texttt{.stream()} creates an ordered stream from list elements. 
 \end{itemize}
 
 \paragraph{Sets}
 \begin{itemize}
 \item \texttt{Set\textless{}E\textgreater{} set = new HashSet\textless{}\textgreater{}()}
-creates new set.
-\item \texttt{.add(E e)} adds given \texttt{e} to set.
-\item \texttt{.contains(E e)} returns whether \texttt{e} is in set
-\item \texttt{.isEmpty()} returns whether set is empty.
-\item \texttt{.size()} returns number of items in set.
-\item \texttt{.stream()} creates an unordered stream from set elements.
+creates new set. 
+\item \texttt{.add(E e)} adds given \texttt{e} to set. 
+\item \texttt{.contains(E e)} returns whether \texttt{e} is in set 
+\item \texttt{.isEmpty()} returns whether set is empty. 
+\item \texttt{.size()} returns number of items in set. 
+\item \texttt{.stream()} creates an unordered stream from set elements. 
 \end{itemize}
 
 \paragraph{Maps}
 \begin{itemize}
 \item \texttt{Map\textless{}K,V\textgreater{} set = new HashMap\textless{}\textgreater{}()}
-creates new map.
-\item \texttt{.put(K key, V val)} maps \texttt{key} to \texttt{value}.
+creates new map. 
+\item \texttt{.put(K key, V val)} maps \texttt{key} to \texttt{value}. 
 \item \texttt{.get(Object key)} returns value associated with \texttt{key},
-or null if \texttt{key} isn't present.
+or null if \texttt{key} isn't present. 
 \item \texttt{.containsKey(Object key)} returns whether \texttt{key} is
-present.
-\item \texttt{.keySet()} returns set of all keys in map.
-\item \texttt{.values()} returns all vals in map.
-\item \texttt{.isEmpty()} returns whether map is empty.
-\item \texttt{.size()} returns number of items in map.
+present. 
+\item \texttt{.keySet()} returns set of all keys in map. 
+\item \texttt{.values()} returns all vals in map. 
+\item \texttt{.isEmpty()} returns whether map is empty. 
+\item \texttt{.size()} returns number of items in map. 
 \end{itemize}
 
 \paragraph{Queues}
 \begin{itemize}
 \item \texttt{Queue\textless{}E\textgreater{} queue = new PriorityQueue\textless{}\textgreater{}()}
-creates new priority queue.
-\item \texttt{.add(E e)} adds e to front of queue.
-\item \texttt{.remove()} removes last element from queue.
+creates new priority queue. 
+\item \texttt{.add(E e)} adds e to front of queue. 
+\item \texttt{.remove()} removes last element from queue. 
 \item \texttt{.poll()} retrieves \emph{and removes} head of queue, returns
-\texttt{null} if empty.
+\texttt{null} if empty. 
 \item \texttt{.peek()} retrieves head of queue, returns \texttt{null} if
-empty.
+empty. 
 \end{itemize}
 
 \paragraph{Deques}
 \begin{itemize}
 \item \texttt{Deque\textless{}E\textgreater{} deque = new ArrayDeque\textless{}\textgreater{}()}
-creates new double-ended queue.
+creates new double-ended queue. 
 \item Can use methods above at first or last element. E.g. \texttt{pollFirst()}
-and \texttt{pollLast()}.
-\item Can use stack methods \texttt{push(E e)}, \texttt{pop()} and \texttt{peek()}.
+and \texttt{pollLast()}. 
+\item Can use stack methods \texttt{push(E e)}, \texttt{pop()} and \texttt{peek()}. 
 \end{itemize}
 
 \subsection{Iterators}
 
-Only use if a \texttt{for} loop is not straightforward.
+Only use if a \texttt{for} loop is not straightforward. 
 \begin{itemize}
-\item \texttt{.iterator()} converts collection to Iterator.
-\item \texttt{.hasNext()} returns if there is another element.
-\item \texttt{.next()} returns the next element.
-\item \texttt{.remove()} removes the next element.
+\item \texttt{.iterator()} converts collection to Iterator. 
+\item \texttt{.hasNext()} returns if there is another element. 
+\item \texttt{.next()} returns the next element. 
+\item \texttt{.remove()} removes the next element. 
 \end{itemize}
 
 \subsection{Streams}
 \begin{itemize}
-\item \texttt{.stream()} converts \texttt{List} or \texttt{Set} into \texttt{Stream}.
+\item \texttt{.stream()} converts \texttt{List} or \texttt{Set} into \texttt{Stream}. 
 \item \texttt{.collect(Collectors.toList())} and \texttt{.collect(Collectors.toSet())}
-convert \texttt{Stream} into \texttt{List} and \texttt{Set} respectively.
-\item \texttt{.map(Class::f)} maps \texttt{f} (a method or constructor)
-to a stream.
-\item \texttt{.filter(Class::f)} filters out elements for which \texttt{f}
-applied to the element returns \texttt{false}.
-\item \texttt{.reduce(id, Class::f)} reduces the stream starting from \texttt{id},
+convert \texttt{Stream} into \texttt{List} and \texttt{Set} respectively. 
+\item \texttt{.map(f)} maps \texttt{f} (a method or constructor) to a stream. 
+\item \texttt{.filter(f)} filters out elements for which \texttt{f} applied
+to the element returns \texttt{false}. 
+\item \texttt{.reduce(id, f)} reduces the stream starting from \texttt{id},
 using the function \texttt{f}. Note that \texttt{f} has the type \texttt{T
-f(T first, T second)}.
+f(T first, T second)}. 
 \item \texttt{.toMap(f, g)} creates map where keys and vals comes from \texttt{f}
-and \texttt{g} applied to each stream element respectively.
-\item You can perform a \emph{pipeline} of operations on a stream.
+and \texttt{g} applied to each stream element respectively. 
+\item You can perform a \emph{pipeline} of operations on a stream. 
 \end{itemize}
 
-\paragraph{Lambda}
+\paragraph{Lambdas}
 
 We can pass anonymous functions of the form \texttt{x -\textgreater{}
 x {*} 2} or \texttt{(x, y) -\textgreater{} x {*} y}.
 
 
+\paragraph{Method References}
+
+Static methods: \texttt{ContainingClass::method}; Instance methods:
+\texttt{containingObject::method}; Instance method of arbitrary object:
+\texttt{ContainingType::method}; Constructors: \texttt{ClassName::new}.
+
+
 \paragraph{Optionals}
 
 We can also \texttt{reduce} without an identity element, returning
-an \texttt{Optional\textless{}T\textgreater{}}:
+an \texttt{Optional\textless{}T\textgreater{}}: 
 \begin{itemize}
 \item \texttt{.isPresent()} returns whether object is present.
 \item \texttt{.get()} returns value if present, else throws exception.
 \item \texttt{.orElse(T alternative)} returns value if present, else \texttt{alternative}.
 \item \texttt{.reduce(f)}. Now if steam is empty, an empty \texttt{Optional\textless{}T\textgreater{}}
-is returned.
+is returned. 
 \end{itemize}
 
 \subsection{Random}
 \begin{itemize}
 \item \texttt{Random generator = new Random()} creates new \texttt{Random}
-object.
-\item \texttt{.nextInt(n)} returns random \texttt{int} in range $[0..\mathtt{n})$.
+object. 
+\item \texttt{.nextInt(n)} returns random \texttt{int} in range $[0..\mathtt{n})$. 
 \end{itemize}
 
 \section{Object-Oriented Programming in Java}
@@ -233,13 +259,13 @@ object.
 \centering{}%
 \begin{tabular}{lcc}
 \toprule 
- & \textbf{Primitive Types} & \textbf{Reference Types}\tabularnewline
+ & \textbf{Primitive Types}  & \textbf{Reference Types}\tabularnewline
 \midrule 
-\textbf{Definition} & built-in & class definition\tabularnewline
-\textbf{Creation} & literals & \texttt{new}\tabularnewline
-\textbf{Initialisation} & default (e.g. \texttt{0}) & \texttt{null} or constructor\tabularnewline
-\textbf{Usage} & operators (e.g. \texttt{+}, \texttt{{*}}) & methods\tabularnewline
-\textbf{Content} & value & pointer to an object\tabularnewline
+\textbf{Definition}  & built-in  & class definition\tabularnewline
+\textbf{Creation}  & literals  & \texttt{new}\tabularnewline
+\textbf{Initialisation}  & default (e.g. \texttt{0})  & \texttt{null} or constructor\tabularnewline
+\textbf{Usage}  & operators (e.g. \texttt{+}, \texttt{{*}})  & methods\tabularnewline
+\textbf{Content}  & value  & pointer to an object\tabularnewline
 \bottomrule
 \end{tabular}
 \end{table}
@@ -258,9 +284,9 @@ Contain fields, constructor, methods.
 \begin{enumerate}
 \item \emph{Constants}: should be \texttt{final} (cannot change) and \texttt{static}
 (one per class, not one per object). Typically \texttt{public} (accessible
-from anywhere).
+from anywhere). 
 \item \emph{Non-constants}: should be \texttt{private} (accessible only
-from within class).
+from within class). 
 \end{enumerate}
 
 \paragraph{Methods}
@@ -272,10 +298,10 @@ methods support methods in the class.
 \subsection{Interfaces}
 \begin{enumerate}
 \item Can define method \emph{signatures} (implicity public): describe required
-capabilities of a class that \texttt{implements}\emph{ }the interface.
+capabilities of a class that \texttt{implements}\emph{ }the interface. 
 \item Can define \texttt{default} methods in interface (can be overriden
-in implementing classes).
-\item Can define \emph{constant} fields.
+in implementing classes). 
+\item Can define \emph{constant} fields. 
 \end{enumerate}
 
 \paragraph{Implementing Interfaces}
@@ -295,63 +321,63 @@ actual type (\texttt{Circle}).
 \subsection{Inheritance}
 \begin{enumerate}
 \item A subclass (\texttt{extends} a superclass) inherits all fields and
-methods from it's superclass, can also override / add additional functionality.
+methods from it's superclass, can also override / add additional functionality. 
 \item \texttt{protected} visibility in superclass allows access to its fields
-/ methods from a subclass (also accessible anywhere within package).
+/ methods from a subclass (also accessible anywhere within package). 
 \end{enumerate}
 
 \paragraph{\texttt{super}}
 \begin{enumerate}
 \item Can call superclass constructur using \texttt{super()} (called implicitly
-if no other constructor provided).
-\item Can call superclass method \texttt{method} from subclass using \texttt{super.method()}.
+if no other constructor provided). 
+\item Can call superclass method \texttt{method} from subclass using \texttt{super.method()}. 
 \end{enumerate}
 
 \paragraph{\texttt{abstract}}
 \begin{enumerate}
-\item Used to define class which cannot be instantiated.
-\item \texttt{abstract} methods have no body, needs to be overriden by subclass.
+\item Used to define class which cannot be instantiated. 
+\item \texttt{abstract} methods have no body, needs to be overriden by subclass. 
 \item \emph{Style}: usually a class \texttt{extends} an abstract class (with
 constructor and fields) which \texttt{implements} an interface (caters
-for case where abstract class is too specific).
+for case where abstract class is too specific). 
 \end{enumerate}
 
 \paragraph{\texttt{final}}
 \begin{enumerate}
-\item Methods which are \texttt{final} cannot be overriden.
-\item Classes which are \texttt{final} cannot be extended.
+\item Methods which are \texttt{final} cannot be overriden. 
+\item Classes which are \texttt{final} cannot be extended. 
 \end{enumerate}
 
 \subsection{Casting}
 \begin{enumerate}
 \item \emph{Upcasting}: cast from subclass to superclass. Done automatically,
-cannot fail.
+cannot fail. 
 \item \emph{Downcasting}: cast from superclass to subclass. E.g. for \texttt{Shape
 shape}, define \texttt{Circle circle = (Circle)shape}. Narrow apparent
-class so you can call certain methods / access certain fields.
+class so you can call certain methods / access certain fields. 
 \item Downcasting can lead to a \texttt{ClassCastException}. We can avoid
 this by using the \texttt{instanceOf} keyword to determine the actual
-type.
+type. 
 \item \emph{Style}: \texttt{instanceOf} can indicate poor design. Often
-better to use subclass methods.
+better to use subclass methods. 
 \end{enumerate}
 
 \subsection{Object Equality}
 
 \texttt{Object} implements \texttt{equals} based on identity. Often
-we want it to compare field contents:
+we want it to compare field contents: 
 \begin{enumerate}
 \item We \texttt{@Override} the method \texttt{public boolean equals(Object
-other)}.
+other)}. 
 \item Start by handling standard object equality cases (\texttt{==} and
-\texttt{null}).
-\item Check incoming object appropriate type, then downcast.
-\item Compare fields.
+\texttt{null}). 
+\item Check incoming object appropriate type, then downcast. 
+\item Compare fields. 
 \end{enumerate}
-We \emph{must} also override \texttt{public int hashCode()}.
+We \emph{must} also override \texttt{public int hashCode()}. 
 \begin{enumerate}
-\item Must return same value when \texttt{equals} returns true.
-\item Should tend to return different values for objects which are not equal.
+\item Must return same value when \texttt{equals} returns true. 
+\item Should tend to return different values for objects which are not equal. 
 \end{enumerate}
 
 \subsection{Generics}
@@ -366,15 +392,16 @@ use \texttt{S} and \texttt{T} freely inside method.
 
 \paragraph{Wildcards}
 \begin{enumerate}
-\item \texttt{Set\textless{}Shape\textgreater{}} refers to a set of shapes.
-We can add any shape to this set, and can retrieve shapes. \texttt{Set\textless{}Circle\textgreater{}}
-however is \emph{not} a subtype of \texttt{Set\textless{}Shape\textgreater{}}.
-\item \texttt{Set\textless{}? extends Shape\textgreater{}} refers to any
-set whose elements are a subclass of \texttt{Shape}. We cannot add
-to this set, but we can retrieve shapes. A \texttt{Set\textless{}Circle\textgreater{}}
-\emph{is} a subtype of \texttt{Set\textless{}? extends Shape\textgreater{}}.
+\item \texttt{Set\textless{}Shape\textgreater{}} refers to a set of
+shapes. We can add any shape to this set, and can retrieve shapes.
+\texttt{Set\textless{}Circle\textgreater{}} however is \emph{not}
+a subtype of \texttt{Set\textless{}Shape\textgreater{}}. 
+\item \texttt{Set\textless{}? extends Shape\textgreater{}} refers to
+any set whose elements are a subclass of \texttt{Shape}. We cannot
+add to this set, but we can retrieve shapes. A \texttt{Set\textless{}Circle\textgreater{}}
+\emph{is} a subtype of \texttt{Set\textless{}? extends Shape\textgreater{}}. 
 \item \emph{Note}: We could instead use \texttt{Set\textless{}T extends
-Shape\textgreater{}} if we care about the type of \texttt{?}.
+Shape\textgreater{}} if we care about the type of \texttt{?}. 
 \end{enumerate}
 
 \paragraph{Inheritance}
@@ -382,21 +409,21 @@ Shape\textgreater{}} if we care about the type of \texttt{?}.
 \item \emph{Extending a generic class / Implementing a generic interface}:
 E.g. \texttt{public abstract class AbstractSet\textless{}E\textgreater{}
 implements Set\textless{}E\textgreater{}} and \texttt{public class
-HashSet\textless{}E\textgreater{} extends AbstractSet\textless{}E\textgreater{}}.
+HashSet\textless{}E\textgreater{} extends AbstractSet\textless{}E\textgreater{}}. 
 \item \emph{Extending / Implementing a class to be specific}: E.g. \texttt{public
 interface Comparable\textless{}T\textgreater{}} and \texttt{public
-class ClassName implements Comparable\textless{}ClassName\textgreater{}}.
+class ClassName implements Comparable\textless{}ClassName\textgreater{}}. 
 \end{enumerate}
 
 \subsection{Functional Interfaces}
 \begin{enumerate}
-\item Annotated by \texttt{@FunctionalInterface}.
+\item Annotated by \texttt{@FunctionalInterface}. 
 \item Declares exactly one (abstract) method. E.g. \texttt{public interface
-Comparator\textless{}T\textgreater{} \{int compare(T o1, T o2);\}.}
+Comparator\textless{}T\textgreater{} \{int compare(T o1, T o2);\}.} 
 \item Sort list using void \texttt{.sort(Comparator\textless{}E\textgreater{}
-c)}.
+c)}. 
 \item Means we can write \texttt{strings.sort((a, b) -\textgreater{} a.compareTo(b))}
-since this provides the single method required by \texttt{Comparator\textless{}String\textgreater{}}.
+since this provides the single method required by \texttt{Comparator\textless{}String\textgreater{}}. 
 \end{enumerate}
 
 \subsection{Singleton Pattern}
@@ -420,21 +447,23 @@ public class OnlyOne {
 
 \subsection{Cloning}
 
-If you really think it's necessary:
+If you really think it's necessary: 
 \begin{enumerate}
-\item Implement \texttt{Clonable}.
-\item Override \texttt{clone}.
-\item Increase visibility to \texttt{public}.
+\item Implement \texttt{Clonable}. 
+\item Override \texttt{clone}. 
+\item Increase visibility to \texttt{public}. 
 \item Restrict return type. Call \texttt{Object}'s clone to create bitwise
-copy, using \texttt{(myClass)super.clone()}.
-\item Deep-clone fields if appropriate.
-\item Return the clone.
+copy, using \texttt{(myClass)super.clone()}. 
+\item Deep-clone fields if appropriate. 
+\item Return the clone. 
 \end{enumerate}
 
 \subsection{Exceptions}
 
 Exceptions can be thrown by called methods. Can either be caught in
 \texttt{try}, \texttt{catch}, \texttt{finally} block or propagated.
+Unchecked exceptions, such as runtime exceptions do not need to be
+caught / propogated.
 
 
 \section{Abstract Data Types in Java}
@@ -445,67 +474,67 @@ Exceptions can be thrown by called methods. Can either be caught in
 
 \paragraph{Lists}
 \begin{enumerate}
-\item Arbitrary number of elements ordered by position.
+\item Arbitrary number of elements ordered by position. 
 \item Need to be able to create, check if empty, obtain size, get, add and
-remove.
-\item \emph{Array-based}: use dynamic expansion (use copy of old array).
+remove. 
+\item \emph{Array-based}: use dynamic expansion (use copy of old array). 
 \item \emph{Linked}: use nodes that store current elem and reference to
 next node, keep a reference to the head node. Note that you need seperate
-cases for dealing with the first element!
+cases for dealing with the first element! 
 \item \emph{Ordered}: Use \texttt{compareTo} from \texttt{Comparable} interface.
-Add using recursion.
-\item \emph{Iterators}: Usually implemented as inner classes. Need to be
-careful of concurrent modifications.
+Add using recursion. 
+\item \emph{Iterators}: Usually implemented as inner classes. Implement
+\texttt{Iterable}. Need to be careful of concurrent modifications.
 \end{enumerate}
 
 \paragraph{Stacks}
 \begin{enumerate}
 \item Linear sequence of items with insertions and deletions only allowed
-at top. Implements LIFO access.
+at top. Implements LIFO access. 
 \item Example applications: frame stack for recursive functions, reverting
-text, validating parentheses.
-\item Need to be able to create, check if empty, push, pop and peek.
+text, validating parentheses. 
+\item Need to be able to create, check if empty, push, pop and peek. 
 \item \emph{Array-based}: Use array of specific length, keep the index of
-top element.
-\item \emph{List Based}: Use a linked list. Head of list is the top.
+top element. 
+\item \emph{List Based}: Use a linked list. Head of list is the top. 
 \end{enumerate}
 
 \paragraph{Queues}
 \begin{enumerate}
 \item Allows insertion only at back, deletion only at front. Implements
 FIFO access. 
-\item Example applications: scheduling, demerging.
-\item Need to be able to create, check if empty, enqueue and dequeue.
+\item Example applications: scheduling, demerging. 
+\item Need to be able to create, check if empty, enqueue and dequeue. 
 \item \emph{Array-based}: Use circular array (using \texttt{\%}) of specific
-max length. Keep indexes for first and last elements.
+max length. Keep indexes for first and last elements. 
 \item \emph{List-based}: Use linked list. Keep references to first and last
-elements.
+elements. 
 \item \emph{Priority}: Extend node class to include priority. Keep an ordered
 linked list whose elements are orderd according to priority value.
-Or use a min-heap.
+Or use a min-heap. 
 \end{enumerate}
 
 \paragraph{Maps}
 \begin{enumerate}
 \item Collection of items described by (key, value) pairs. No duplicate
-keys.
+keys. 
 \item Example applications: caches, finding duplicates, random access to
-large data sets.
+large data sets. 
 \item Need to be able to create, check if empty, obtain size, check if contains
-element, put, get and remove elements.
+element, put, get and remove elements. 
 \item \emph{Array-based}: use an array to store values, index computed by
-hash function applied to key.
+hash function applied to key. 
 \item Hash function should: minimise collisions, be fast to compute, distriibute
-elements uniformly through the array, be deterministic.
+elements uniformly through the array, be deterministic. 
 \item Example hash functions: selecting digits, adding digits together,
-modulo arithmetic.
+modulo arithmetic. 
 \end{enumerate}
 
 \paragraph{Sets}
 \begin{enumerate}
-\item Models mathematical set.
-\item Need to be able to create, check if empty, obtain size, add and remove.
-\item Can use hash map to implement.
+\item Models mathematical set. 
+\item Need to be able to create, check if empty, obtain size, add and remove. 
+\item Can use hash map to implement. 
 \end{enumerate}
 
 \subsection{Tree-Based Data Structures}
@@ -513,19 +542,19 @@ modulo arithmetic.
 
 \paragraph{Binary Trees}
 \begin{enumerate}
-\item Consist of data element (root) and two disjoint binary trees.
+\item Consist of data element (root) and two disjoint binary trees. 
 \item Need to be able to create, check if empty, obtain size, set and get
-left and right subtrees.
-\item Example applications: syntax trees, Huffman coding trees.
-\item \emph{Height}: the number of \emph{levels} in a tree\emph{.}
+left and right subtrees. 
+\item Example applications: syntax trees, Huffman coding trees. 
+\item \emph{Height}: the number of \emph{levels} in a tree\emph{.} 
 \item \emph{Perfectly balanced}: height equal to length of shortest path.
-A perfectly balanced tree has $2^{h}-1$ nodes.
+A perfectly balanced tree has $2^{h}-1$ nodes. 
 \item \emph{Complete}: full down to height $h-1$ and level $h$ filled
-from left to right.
+from left to right. 
 \item \emph{Linked}: contain current element and references to left and
-right subtrees.
+right subtrees. 
 \item \emph{Array-based}: root at index 0, children at $2i+1$ and $2i+2$,
-parent at $(i-1)/2$.
+parent at $(i-1)/2$. 
 \end{enumerate}
 
 \paragraph{General Trees}
@@ -538,51 +567,50 @@ with lists.
 \begin{enumerate}
 \item \emph{Depth First}: Recursive (or using stack).\emph{ Pre-order}:
 root, left, right. \emph{In-order}: left, root, right. \emph{Post-order}:
-left, right, root.
-\item \emph{Breadth First}: Level by level. Use a queue.
+left, right, root. 
+\item \emph{Breadth First}: Level by level. Use a queue. 
 \end{enumerate}
 
 \paragraph{Binary Search Trees}
 \begin{enumerate}
-\item All values on left subtree smaller than in root, on right are larger.
+\item All values on left subtree smaller than in root, on right are larger. 
 \item Provide a \texttt{Comparator} or implement \texttt{Comparable} to
-provide search key.
-\item Search, insert and size all defined recursively.
+provide search key. 
+\item Search, insert and size all defined recursively. 
 \item Remove has several cases:
 
 \begin{enumerate}
-\item If leaf, just delete
-\item If has one child (L or R), use that child.
-\item If has two children, create replacement node with value of one, make
-the other the correct child of replacement node.
+\item If leaf, just delete.
+\item If has one child (L or R), use that child. 
+\item If has two children, swap with leftmost child of the right child.
 \end{enumerate}
 \end{enumerate}
 
 \paragraph{Self-Balancing Trees}
 \begin{enumerate}
-\item \emph{Balanced}: Nodes at level $\leq h-2$ have 2 children.
+\item \emph{Balanced}: Nodes at level $\leq h-2$ have 2 children. 
 \item \emph{Rotations}:
 
 \begin{enumerate}
-\item Reparent child on opposite side.
-\item Set child on rotation side to the old parent.
+\item Reparent child on opposite side. 
+\item Set child on rotation side to the old parent. 
 \end{enumerate}
 \item \emph{Double Rotations }(e.g. Left-Right rotation):
 
 \begin{enumerate}
-\item Left side (left rotation).
-\item Right rotation.
+\item Left side (left rotation). 
+\item Right rotation. 
 \end{enumerate}
 \item \emph{AVL Tree}: Store height values. After each insertion, check
 node and rebalance if necessary:
 
 \begin{enumerate}
 \item Left bigger than Right and Left side (left bigger than right): left-right
-rotation.
-\item Left bigger than Right: right rotation.
+rotation. 
+\item Left bigger than Right: right rotation. 
 \item Right bigger than Left and Right side (right bigger than left): right-left
-rotation.
-\item Right bigger than Left: left rotation.
+rotation. 
+\item Right bigger than Left: left rotation. 
 \end{enumerate}
 \item \emph{Red-Black Tree}: Store a color value (R or B). Root is black.
 Number of black nodes on every path from the root is the same. No
@@ -590,45 +618,45 @@ two consecutive nodes are red. Start by setting the node red. Then
 five cases to handle:
 
 \begin{enumerate}
-\item \emph{Root node}: If no parent, colour current black, finish.
-\item \emph{Black parent}: If parent is black, finish.
+\item \emph{Root node}: If no parent, colour current black, finish. 
+\item \emph{Black parent}: If parent is black, finish. 
 \item \emph{Red uncle}: If uncle exists and is red, colour parent and uncle
-black and grandparent red. Begin case (a) on grandparent.
-\item \emph{Fix zig-zags}: 
+black and grandparent red. Begin case (a) on grandparent. 
+\item \emph{Fix zig-zags}:
 
 \begin{enumerate}
 \item If parent left of grandparent and current right of parent: rotate
 parent left. Begin case (e) on parent. 
 \item If parent right of grandparent and current left of parent: rotate
-parent right. Begin case (e) on parent.
+parent right. Begin case (e) on parent. 
 \end{enumerate}
 \item \emph{Fix colouring and rotate}:
 
 \begin{enumerate}
 \item If is left child, colour parent black and grandparent red. Rotate
-grandparent right, finish.
+grandparent right, finish. 
 \item If is right child, colour parent black and grandparent red. Rotate
-grandparent left, finish.
+grandparent left, finish. 
 \end{enumerate}
 \end{enumerate}
 \end{enumerate}
 
 \paragraph{Heaps}
 \begin{enumerate}
-\item Complete binary tree with weak ordering.
+\item Complete binary tree with weak ordering. 
 \item Need to be able to create, check if empty, obtain size, add elements,
-peek and poll max.
+peek and poll max. 
 \item \emph{Max Heap}: root contains largest element. Each subtree is a
-max heap.
-\item \emph{Array-based} is efficient implementation (see bin trees).
+max heap. 
+\item \emph{Array-based} is efficient implementation (see bin trees). 
 \item \emph{Retrieving max element}: leaves two subheaps to be merged:
 
 \begin{enumerate}
-\item Replace root with last element in array to create semi-heap.
-\item \emph{Sift} by swapping root with largest child recursively.
+\item Replace root with last element in array to create semi-heap. 
+\item \emph{Sift} by swapping root with largest child recursively. 
 \end{enumerate}
-\item \emph{Adding element}: add element to end of array and sift upwards.
-\item \emph{Heap sort}: convert array to heap first, then sort array heap.
+\item \emph{Adding element}: add element to end of array and sift upwards. 
+\item \emph{Heap sort}: convert array to heap first, then sort array heap. 
 \end{enumerate}
 
 \section{Concurrency in Java}
@@ -639,97 +667,97 @@ max heap.
 \item Specify a thread.
 
 \begin{enumerate}
-\item Extend \texttt{Thread} and override \texttt{run()}.
-\item Implement \texttt{Runnable} and override \texttt{run()}.
-\item \texttt{Thread t = new Thread(() -\textgreater{} \{code goes here\})}.
+\item Extend \texttt{Thread} and override \texttt{run()}. 
+\item Implement \texttt{Runnable} and override \texttt{run()}. 
+\item \texttt{Thread t = new Thread(() -\textgreater{} \{code goes here\})}. 
 \item \texttt{Runnable r = () -\textgreater{} \{code goes here\}; Thread
-t = new Thread(r)}.
+t = new Thread(r)}. 
 \end{enumerate}
-\item Start the thread using \texttt{t.start()}.
-\item Wait for termination using \texttt{t.join()}.
+\item Start the thread using \texttt{t.start()}. 
+\item Wait for termination using \texttt{t.join()}. 
 \item Sleep \texttt{x} seconds using \texttt{TimeUnit.SECONDS.sleep(x)}
-(goes inside \texttt{Thread}).
+(goes inside \texttt{Thread}). 
 \end{enumerate}
 
 \subsection{Avoiding Race Conditions}
 \begin{enumerate}
 \item Use the \texttt{synchronized} keyword (do this for all methods that
 can read or write shared fields - note \texttt{final} fields do not
-need it!).
+need it!). 
 \item Use locks:
 
 \begin{enumerate}
-\item Always use a \texttt{try-finally} block to ensure lock is released!
+\item Always use a \texttt{try-finally} block to ensure lock is released! 
 \item \texttt{ReentrantLock}
 
 \begin{enumerate}
-\item Use \texttt{Lock lock = new ReentrantLock(true)} to set a fair lock
-\item \texttt{lock.lock()} and \texttt{lock.unlock()} to lock and unlock.
+\item Use \texttt{Lock lock = new ReentrantLock(true)} to set a fair lock 
+\item \texttt{lock.lock()} and \texttt{lock.unlock()} to lock and unlock. 
 \end{enumerate}
 \item \texttt{ReadWriteLock}
 
 \begin{enumerate}
 \item \texttt{ReadWriteLock lock = new ReentrantReadWriteLock(true)} for
-new lock.
+new lock. 
 \item \texttt{lock.readLock().lock()} and \texttt{lock.readLock().unlock()}
-for read lock and unlock.
+for read lock and unlock. 
 \item \texttt{write.readLock().lock()} and \texttt{write.readLock().unlock()}
-for write lock and unlock.
+for write lock and unlock. 
 \end{enumerate}
 \item \texttt{StampedLock}
 
 \begin{enumerate}
-\item \texttt{StampedLock sl = new StampedLock()}.
-\item \texttt{long stamp = sl.readLock()} and \texttt{sl.unlockRead(stamp)}.
+\item \texttt{StampedLock sl = new StampedLock()}. 
+\item \texttt{long stamp = sl.readLock()} and \texttt{sl.unlockRead(stamp)}. 
 \item \texttt{long stamp = sl.tryOptimisticRead()} followed by if \texttt{(!sl.validate(stamp))\{stamp
-= sl.readLock()\}}.
+= sl.readLock()\}}. 
 \end{enumerate}
 \end{enumerate}
 \item Use semaphores:
 
 \begin{enumerate}
-\item Create new using \texttt{Sephamore(int permits, bool fair)}.
-\item \texttt{aquire()} to take a permit, waiting if necessary.
+\item Create new using \texttt{Sephamore(int permits, bool fair)}. 
+\item \texttt{aquire()} to take a permit, waiting if necessary. 
 \end{enumerate}
 \item Use atomic classes. E.g. \texttt{new AtomicBoolean(x)}, \texttt{new
 AtomicInteger(x)} and new \texttt{AtomicReference(x)}, use \texttt{.get()}
-and \texttt{.set(x)}.
+and \texttt{.set(x)}. 
 \item Use adders and accumulators. E.g. \texttt{new DoubleAccumulator((x,
 y) -\textgreater{} x {*} y, 1.00)} followed by \texttt{.accumulate(x)}
-and \texttt{.get()}.
+and \texttt{.get()}. 
 \item Use the \texttt{volatile} keyword. Guarantees visibility of changes
 (ignores cache). Can avoid locks and synchronisation if operations
-are atomic.
-\item Use the \texttt{final} keyword. Enforces visibility (as above).
+are atomic. 
+\item Use the \texttt{final} keyword. Enforces visibility (as above). 
 \item Immutable objects are always thread safe. Objects are immutable if
 all fields are final and immutable (if a field is not immutable, return
-copies of it using \texttt{clone()}).
+copies of it using \texttt{clone()}). 
 \item Use a \texttt{ConcurrentHashMap}. Also includes functionality such
 as:
 
 \begin{enumerate}
-\item \texttt{.forEach((k, v) -\textgreater{} ...)}
-\item \texttt{.putIfAbsent(k, v)}
-\item \texttt{.getOrDefault(k, defaultV)}
-\item \texttt{.replaceAll ((k, v) -\textgreater{} ...)}
-\item \texttt{.search((k, v) -\textgreater{} \{...\})}
+\item \texttt{.forEach((k, v) -\textgreater{} ...)} 
+\item \texttt{.putIfAbsent(k, v)} 
+\item \texttt{.getOrDefault(k, defaultV)} 
+\item \texttt{.replaceAll ((k, v) -\textgreater{} ...)} 
+\item \texttt{.search((k, v) -\textgreater{} \{...\})} 
 \item \texttt{.reduce((k, v) -\textgreater{} \{...\}, (p1, p2) -\textgreater{}
-\{...\})}
+\{...\})} 
 \end{enumerate}
-\item Use a \texttt{parallelStream}.
+\item Use a \texttt{parallelStream}. 
 \item \emph{Data parallelism} approaches (e.g. for linear algebra and image
-processing - can avoid locks entirely).
+processing - can avoid locks entirely). 
 \end{enumerate}
 
 \section{Tips for Lexis Tests}
 \begin{itemize}
-\item Read the questions and guidance very carefully.
+\item Read the questions and guidance very carefully. 
 \item Think carefully anywhere you have to change mutable objects. Don't
 forget to store the old information in a temp variable if you need
-it later.
+it later. 
 \item Avoid repetition of code. Move it to a private helper method or abstract
-class if you can.
-\item Handle unexpected cases. Make use of the exceptions provided.
+class if you can. 
+\item Handle unexpected cases. Make use of the exceptions provided. 
 \item Be careful. Provided ADTs are often 1-indexed.\end{itemize}
 
 \end{document}
