@@ -118,12 +118,12 @@ E.g. \texttt{char{[}{]} abc = \{'a', 'b', 'c'\}}. Cannot be extended
 once defined. Can define values at given indices. Useful functionality
 in \texttt{util.Arrays}: 
 \begin{itemize}
-\item \texttt{copyofRange(T{[}{]} a, int i, int j)} copies array between
-indices \texttt{i} and \texttt{j}. 
-\item \texttt{sort(T{[}{]} a, Comparator\textless{}T\textgreater{} c)}
-sorts array \texttt{a}. 
-\item \texttt{asList(T{[}{]} a)} converts \texttt{a} into list. 
-\item \texttt{toString(Object{[}{]} a)} converts array \texttt{a} to \texttt{String}. 
+\item \texttt{copyOfRange(T{[}{]} a, int i, int j)} copies array between
+indices \texttt{i} and \texttt{j}.
+\item \texttt{sort(T{[}{]} a, Comparator\textless{}T\textgreater{} c)} sorts
+array \texttt{a}.
+\item \texttt{asList(T{[}{]} a)} converts \texttt{a} into list.
+\item \texttt{toString(Object{[}{]} a)} converts array \texttt{a} to \texttt{String}.
 \end{itemize}
 
 \subsection{Collections}
@@ -236,9 +236,9 @@ Static methods: \texttt{ContainingClass::method}; Instance methods:
 We can also \texttt{reduce} without an identity element, returning
 an \texttt{Optional\textless{}T\textgreater{}}: 
 \begin{itemize}
-\item \texttt{.isPresent()} returns wether object is present. 
-\item \texttt{.get()} returns value if present, else throws exception. 
-\item \texttt{.orElse(T alternative)} returns value if present, else \texttt{alternative}. 
+\item \texttt{.isPresent()} returns whether object is present.
+\item \texttt{.get()} returns value if present, else throws exception.
+\item \texttt{.orElse(T alternative)} returns value if present, else \texttt{alternative}.
 \item \texttt{.reduce(f)}. Now if steam is empty, an empty \texttt{Optional\textless{}T\textgreater{}}
 is returned. 
 \end{itemize}
@@ -383,12 +383,11 @@ We \emph{must} also override \texttt{public int hashCode()}.
 \subsection{Generics}
 \begin{enumerate}
 \item \emph{Classes}: we can define a class \texttt{ClassName\textless{}A,
-B\textgreater{}} where \texttt{A} and \texttt{B} are \emph{type
-parameters}. We can then use \texttt{A} and \texttt{B} as normal type
-names within that class. 
-\item \emph{Methods}: example: \texttt{public static \textless{}S, T\textgreater{}
-Pair\textless{}S, T\textgreater{} makePair(s First, T second)}.
-Then use \texttt{S} and \texttt{T} freely inside method. 
+B\textgreater{}} where \texttt{A} and \texttt{B} are \emph{type parameters}.
+We can then use \texttt{A} and \texttt{B} as normal type names within
+that class.
+\item \emph{Methods}: example: \texttt{public static \textless{}S, T\textgreater{} Pair\textless{}S, T\textgreater{} makePair(s First, T second)}. Then
+use \texttt{S} and \texttt{T} freely inside method.
 \end{enumerate}
 
 \paragraph{Wildcards}

@@ -415,7 +415,7 @@ Different types:
 \paragraph{Sequential Circuit \emph{Design Process}}
 \begin{enumerate}
 \item Determine the required number of states and assign each output to
-a state. Adjacent assignmenst should be given to states if they:
+a state. Adjacent assignments should be given to states if they:
 
 \begin{enumerate}
 \item Have the same next state for a given input.
@@ -423,14 +423,14 @@ a state. Adjacent assignmenst should be given to states if they:
 \item \emph{Or choose to minimise output logic.}
 \end{enumerate}
 \item Determine the state transitions. Draw a state transition diagram and
-a state transition table table.
+a state transition table.
 \item For each flip-flop input $D_{n}$, draw a Karnaugh Map and determine
 a Boolean expression in terms of the flip-flop outputs and circuit
 inputs. Simplify.
 \item Check don't cares. Fix by one of these methods:
 
 \begin{enumerate}
-\item Look at K-Maps and try to find a simple modifiacation.
+\item Look at K-Maps and try to find a simple modification.
 \item Include unused states and redo.
 \end{enumerate}
 \item Determine Boolean expressions for output from the state assignments,
@@ -531,7 +531,7 @@ Extended to 8-to-1 by functional design:
 
 \paragraph{Demultiplexers}
 
-A 2-to-4 multiplexer:
+A 2-to-4 demultiplexer:
 
 \begin{figure}[H]
 \noindent \centering{}\includegraphics[width=0.125\paperwidth]{img/dmx4}
@@ -657,26 +657,26 @@ Assumes bits arrive least significant first.
 
 \paragraph{Subtractor}
 
-$S=A\oplus B$ and $C=A\cdot B$:
+Difference $=A\oplus B\oplus P$ and Borrow $=A'\cdot (B\oplus P) + B\cdot P$:
 
 \begin{table}[H]
 \noindent \begin{minipage}[t]{0.25\textwidth}
 
 \noindent \begin{centering}
 \subfloat{\noindent \centering{}%
-\begin{tabular}{cccc}
+\begin{tabular}{ccccc}
 \toprule 
-{\footnotesize{}A} & {\footnotesize{}B} & \textbf{\footnotesize{}Difference} & \textbf{\footnotesize{}Borrow}\tabularnewline
+{\footnotesize{}A} & {\footnotesize{}B} & {\footnotesize{}P} & \textbf{\footnotesize{}Difference} & \textbf{\footnotesize{}Borrow}\tabularnewline
 \midrule
-{\footnotesize{}0} & {\footnotesize{}0} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}0}\tabularnewline
-{\footnotesize{}0} & {\footnotesize{}1} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}1}\tabularnewline
-{\footnotesize{}1} & {\footnotesize{}0} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}1}\tabularnewline
-{\footnotesize{}1} & {\footnotesize{}1} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}1}\tabularnewline
+{\footnotesize{}0} & {\footnotesize{}0} & {\footnotesize{}0} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}0}\tabularnewline
+{\footnotesize{}0} & {\footnotesize{}1} & {\footnotesize{}0} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}1}\tabularnewline
+{\footnotesize{}1} & {\footnotesize{}0} & {\footnotesize{}0} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}0}\tabularnewline
+{\footnotesize{}1} & {\footnotesize{}1} & {\footnotesize{}0} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}0}\tabularnewline
 \midrule
-{\footnotesize{}0} & {\footnotesize{}0} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}0}\tabularnewline
-{\footnotesize{}0} & {\footnotesize{}1} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}0}\tabularnewline
-{\footnotesize{}1} & {\footnotesize{}0} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}0}\tabularnewline
-{\footnotesize{}1} & {\footnotesize{}1} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}1}\tabularnewline
+{\footnotesize{}0} & {\footnotesize{}0} & {\footnotesize{}1} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}1}\tabularnewline
+{\footnotesize{}0} & {\footnotesize{}1} & {\footnotesize{}1} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}1}\tabularnewline
+{\footnotesize{}1} & {\footnotesize{}0} & {\footnotesize{}1} & \textbf{\footnotesize{}0} & \textbf{\footnotesize{}0}\tabularnewline
+{\footnotesize{}1} & {\footnotesize{}1} & {\footnotesize{}1} & \textbf{\footnotesize{}1} & \textbf{\footnotesize{}1}\tabularnewline
 \bottomrule
 \end{tabular}}
 \par\end{centering}
@@ -704,7 +704,7 @@ $A-B=A+\left(-B\right)$.
 \paragraph{Multiplication}
 
 $a_{1}a_{0}\times b_{1}b_{0}=a_{1}\cdot b_{1}\cdot2^{2}+a_{0}\cdot b_{1}\cdot2+a_{1}\cdot b_{0}\cdot2+a_{0}\cdot b_{0}$.
-Multiplication by 2 is equivalent to a right shift, so for 2 bits:
+Multiplication by 2 is equivalent to a left shift, so for 2 bits:
 
 \begin{figure}[H]
 \noindent \centering{}\includegraphics[width=0.25\paperwidth]{img/multiply2}

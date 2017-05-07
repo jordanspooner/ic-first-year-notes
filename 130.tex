@@ -503,7 +503,7 @@ Domain  & \texttt{Type}\tabularnewline
 \begin{enumerate}
 \item \texttt{int, smallint, real, double precision, float(n), numeric(p,d),
 decimal(p,d)} - usual arithmetic operators are available. 
-\item \texttt{char, char(n), varchar(n), clob/tect, ...} - operators include
+\item \texttt{char, char(n), varchar(n), clob/text, ...} - operators include
 \texttt{\textbar{}\textbar{}} (concatenation), \texttt{like} (performs
 pattern matching: \texttt{\_} for any char, \texttt{\%} for zero or
 more chars), \texttt{similar to} (for regex matches). 
@@ -531,7 +531,7 @@ null} or \texttt{is not null}.
 \item \texttt{select atts from table where conds} used to query datbase. 
 \item \texttt{{*}} used to select all attributes. 
 \item \texttt{as newName} used to rename attributes. 
-\item \texttt{order by att} used to sort results by a column. 
+\item \texttt{order by att} (\texttt{asc} or \texttt{desc}) used to sort results by a column. 
 \item \texttt{table inner join} \texttt{table}, \texttt{left outer join},
 \texttt{right outer join}, \texttt{full outer join}. 
 \item \texttt{on cond} to join given a predicate. 

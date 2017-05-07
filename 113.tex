@@ -610,7 +610,7 @@ next state (3 bits).
 
 \paragraph{Instruction Pointer Register}
 \begin{itemize}
-\item Holds next instruction to be executed.
+\item Holds address of next instruction to be executed.
 \item Rarely manipulated directly by programs.
 \item Used implicitly by instructions such as \texttt{call}, \texttt{jmp}
 and \texttt{ret}.
@@ -663,7 +663,7 @@ Example assembly instructions:
 
 \noindent 
 \begin{lstlisting}[basicstyle={\footnotesize\ttfamily},frame=single]
-mov   rax, [rpb+4]   ; rax = memory16[rpb + 4]
+mov   rax, [rpb+4]   ; rax = memory[rpb + 4]
 add   ax, [bx]       ; ax = ax + memory16[bx]
 sub   rax, 45        ; rax = rax - 45
 \end{lstlisting}
@@ -932,7 +932,7 @@ are allowed.
 7. &  & Restore registers from stack.\tabularnewline
 8. &  & Jump back (return) from method.\tabularnewline
 9. & Remove object instance from stack. & \multirow{1}{*}{}\tabularnewline
-10. & Remove parameners from stack. & \tabularnewline
+10. & Remove parameters from stack. & \tabularnewline
 11. & Use method result. & \tabularnewline
 \bottomrule
 \end{tabular}
@@ -1067,7 +1067,7 @@ Represent numbers in format $M\times2^{E}$.
 or \emph{mantissa}. No. of bits determinse \emph{precision}.
 \item $E$ is the \emph{exponent} or \emph{characteristic}. No. of bits
 determines \emph{range}.
-\item $2$is the \emph{radix} or \emph{base}.
+\item $2$ is the \emph{radix} or \emph{base}.
 \end{itemize}
 
 \paragraph{Zones of Expressibility}
@@ -1082,7 +1082,7 @@ E.g. with signed 3-digit coefficient and signed 2-digit exponent:
 
 \paragraph{Floating Point vs Real Numbers}
 \begin{enumerate}
-\item Floating points have a finite range ad a finite number of values.
+\item Floating points have a finite range and a finite number of values.
 \item The gap between numbers varies.
 \item Incorrect results are possible.
 \end{enumerate}
@@ -1320,7 +1320,7 @@ with \texttt{sti}.
 
 \paragraph{Drivers}
 \begin{enumerate}
-\item Devices controlled by readiny writing to I/O ports (memory locations
+\item Devices controlled by reading/writing to I/O ports (memory locations
 in memory-mapped I/O).
 \item Completion of I/O request signalled by sending interrupt vector number
 whiich causes CPU to call device's interrupt handler.
@@ -1328,7 +1328,7 @@ whiich causes CPU to call device's interrupt handler.
 for errors and copies data to / from memory and shares it with bottom
 half.
 \item \emph{Bottom half} runs as a \emph{schedulable thread} within the
-OS and interracts with the device via I/O ports, the top half (via
+OS and interacts with the device via I/O ports, the top half (via
 shared memory) and the user-level process.
 \end{enumerate}
 
