@@ -1,0 +1,529 @@
+\documentclass[twocolumn,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[landscape]{geometry}
+\geometry{verbose,tmargin=0.5in,bmargin=0.75in,lmargin=0.5in,rmargin=0.5in}
+
+\makeatletter
+
+\setlength{\columnsep}{0.25in}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{listings}
+\lstset{
+  language=haskell,
+  tabsize=2,
+  basicstyle=\small\ttfamily,
+}
+
+\makeatother
+
+\usepackage{babel}
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Listing}
+
+\begin{document}
+
+\title{Reference Sheet for CO120.3 Programming III}
+
+
+\date{Summer 2017}
+
+\maketitle
+
+\paragraph{Basic Types}\label{basic-types}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+
+\item
+  Don't use the \texttt{char}, \texttt{short}, \texttt{int} and
+  \texttt{long} types.
+\end{enumerate}
+
+In order to increase portability and readability, use \texttt{stdint.h}.
+
+Included types are: \texttt{uint8\_t}, \texttt{uint16\_t},
+\texttt{uint32\_t}, \texttt{uint64\_t}, \texttt{int8\_t},
+\texttt{int16\_t}, \texttt{int32\_t}, \texttt{int64\_t}.
+
+\paragraph{Enumerated Types}\label{enumerated-types}
+
+Example:
+
+\begin{verbatim}
+/**
+ * @brief An enum type that represents flags for rendering.
+ *
+ * Each bit represents a different flag. Use bitwise and 
+ * to check if a flag is set.
+ */
+enum render_flag {
+  /** The ambient flag (bit 0). */
+  AMBIENT = 1,
+  /** The diffuse flag (bit 1). */
+  DIFFUSE = 2,
+  /** The specular flag (bit 2). */
+  SPECULAR = 4,
+};
+\end{verbatim}
+
+\paragraph{Functions}\label{functions}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+
+\item
+  Use underscore\_separation for function names.
+\item
+  Don't put a space between the function name and parameter list.
+\item
+  Never leave the parameter list for a function empty.
+\item
+  Leave a single space between the closing parenthesis of the parameter
+  list and the opening brace of the function body.
+\end{enumerate}
+
+Note: Try to keep functions under 40 lines long.
+
+Remember to include \texttt{void} in your parameter list for functions
+without parameters.
+
+\paragraph{Variables}\label{variables}
+
+Note: In general, you should initialise variables at point of
+definition.
+
+Example:
+\texttt{double\ numbers{[}2{]}{[}3{]}\ =\ \{\{1.0,\ 2.0,\ 3.0\},\ \{2.0,\ 3.0,\ 4.0\}\}}.
+
+A string can be represented as an array of type \texttt{char}, ending
+with \texttt{`/0'}.
+
+Example: \texttt{uint8\_t\ hello{[}{]}\ =\ "Hello!"}.
+
+\paragraph{Flow of Control}\label{flow-of-control}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+
+\item
+  Always use braces where it is possible to do so.
+\item
+  Leave a space and after the opening and closing parentheses for the
+  condition, respectively.
+\end{enumerate}
+
+Note: You should usually break at the end of each case in a switch
+statement.
+
+Examples:
+
+\begin{verbatim}
+if (condition) {
+  statement;
+  ...
+} else if (condition) {
+  ...
+} else {
+  ...
+}
+\end{verbatim}
+
+\begin{verbatim}
+while (condition) {
+  ...
+}
+\end{verbatim}
+
+\begin{verbatim}
+for (initialiser; condition; increment / decrement) {
+  ...
+}
+\end{verbatim}
+
+\begin{verbatim}
+switch (expression) {
+  case constant1:
+    ...
+    break;
+  case constant2:
+    ...
+    break;
+  default:
+    assert(false);
+}
+\end{verbatim}
+
+\paragraph{Logical Expressions}\label{logical-expressions}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+
+\item
+  Place constants before variables when using the equality operator.
+\end{enumerate}
+
+Note: Use parentheses to clarify precedence in complex expressions.
+
+Example: \texttt{3\ ==\ x}, NOT \texttt{x\ ==\ 3}.
+
+\paragraph{Input Output}\label{input-output}
+
+Use \texttt{printf} to print to standard output. Sanitise using: -
+\texttt{\%c} for character. - \texttt{\%d} for signed integer. -
+\texttt{\%u} for unsigned integer. - \texttt{\%o} for octal. -
+\texttt{\%x} for hexadecimal. - \texttt{\%f} for floating point value. -
+\texttt{\%e} for floating point value using scientific notation. -
+\texttt{\%s} for string. - \texttt{\%p} for pointer value.
+
+Use \texttt{scanf} to read from standard input. Beware of secuirity
+risks when inputting, say, a string. You can use \texttt{fgets} instead.
+
+Examples:
+
+\begin{verbatim}
+int i;
+int ret = scanf("%i", &i);
+assert(1 == ret);
+\end{verbatim}
+
+\begin{verbatim}
+char buffer[100];
+int size = sizeof(buffer);
+fgets(buffer, size, stdin);
+\end{verbatim}
+
+\paragraph{Bitwise Operations}\label{bitwise-operations}
+
+\begin{itemize}
+
+\item
+  \texttt{\&} for bitwise AND.
+\item
+  \texttt{\textbar{}} for bitwise OR.
+\item
+  \texttt{\textgreater{}\textgreater{}} for RIGHT SHIFT.
+\item
+  \texttt{\textless{}\textless{}} for LEFT SHIFT.
+\item
+  \texttt{\textasciitilde{}} for bitwise NOT.
+\item
+  \texttt{\^{}} for bitwise XOR.
+\end{itemize}
+
+\paragraph{Pointers}\label{pointers}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+
+\item
+  When declaring a pointer, place the \texttt{*} adjacent to the
+  variable name, not the type.
+\item
+  When passing by reference, pointers must be declared as
+  \texttt{const}.
+\end{enumerate}
+
+Example: \texttt{int\ *pointer}, NOT \texttt{int*\ pointer} or
+\texttt{int\ *\ pointer}.
+
+Note: Use the \texttt{const} keyword wherever possible.
+
+Examples:
+
+\begin{verbatim}
+int val = 5;
+// Value cannot be modified
+const int *ptr1 = &val;
+// Pointer cannot be modified
+int const *ptr2 = &val;
+// Neither value nor pointer can be modified
+const int const *ptr3 = &val;
+\end{verbatim}
+
+Think of \texttt{*} as an operator that takes an address and returns the
+value which it points to. \texttt{\&} is an operator that takes a value
+and returns its address.
+
+We can also use function pointers to pass functions be reference.
+
+Example:
+
+\begin{verbatim}
+/**
+ * @brief A function which sums its two inputs.
+ */
+int sum(int a, int b) {
+  return a + b;
+}
+
+/**
+ * @brief A main function which does nothing.
+ */
+int main(void) {
+  int (*sum_pointer)(int, int) = &sum;
+
+  return EXIT_SUCCESS;
+}
+\end{verbatim}
+
+\paragraph{Command Line Arguments}\label{command-line-arguments}
+
+\texttt{main} can have a type signature where it receives arguments from
+the command line:
+
+\begin{itemize}
+
+\item
+  \texttt{argc}, the number of passed parameters.
+\item
+  \texttt{argv}, an array of strings.
+\end{itemize}
+
+The first argument is the name of the file!
+
+Example:
+
+\begin{verbatim}
+/**
+ * @brief A main function which prints its command line arguments.
+ */
+int main(int argc, char **argv) {
+  for (int i = 0; i < argc; i++) {
+    printf("argv[%i] = %s\n", i, argv[i]);
+  }
+  return EXIT_SUCCESS;
+}
+\end{verbatim}
+
+\paragraph{Memory Management}\label{memory-management}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+
+\item
+  \texttt{main} should only return \texttt{EXIT\_SUCCESS} or
+  \texttt{EXIT\_FAILURE}.
+\end{enumerate}
+
+\begin{itemize}
+
+\item
+  \texttt{stlib.h}'s \texttt{void\ *malloc(size\_t\ size)} allocates a
+  region of memory of \texttt{size} bytes and returns a pointer to the
+  allocated memory.
+\item
+  \texttt{void\ free(void\ *ptr)} frees a previously allocated memory
+  region.
+\item
+  You need to check that these don't fail (not NULL).
+\item
+  \texttt{string.h}'s
+  \texttt{void\ *memset\ (void\ *s,\ int\ c,\ size\_t\ n)} sets teh
+  \texttt{n}-byte region starting at \texttt{s} to \texttt{c}.
+\item
+  \texttt{void\ *memcpy(void\ *dest,\ const\ void\ *src,\ size\_t\ n)}
+  copies \texttt{n} bytes from \texttt{src} to \texttt{dst}, returning
+  \texttt{dst}.
+\item
+  You can use the \texttt{memcheck} tool provided by \texttt{valgrind}
+  to check for memory leaks.
+\end{itemize}
+
+\paragraph{Assertions}\label{assertions}
+
+\texttt{assert.h} provides \texttt{assert(logical\_expression)}.
+
+\paragraph{Headers}\label{headers}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+
+\item
+  All headers should be surrounded by include guards,
+  \texttt{\#ifndef\ THIS\_H}, \texttt{\#define\ THIS\_H}.
+\end{enumerate}
+
+Note: In general, every \texttt{.c} file should have an associated
+\texttt{.h} file.
+
+\paragraph{Makefile}\label{makefile}
+
+Example:
+
+\begin{verbatim}
+# Set the flags for the C compiler
+CFLAGS = -Wall -pedantic -std=c99
+
+# Build rule for final executable
+sum: add.o
+
+# Build rules for the .o files
+sum.o: add.h
+add.o: add.h
+
+# Rule to clean generated files
+clean: rm -f sum sum.o add.o
+
+# Tell make that 'clean' is not a real file
+.PHONY: clean
+\end{verbatim}
+
+\paragraph{More Variables}\label{more-variables}
+
+\begin{itemize}
+
+\item
+  \texttt{static} (local): value is retained.
+\item
+  \texttt{static} (top level): only seen within this file.
+\item
+  \texttt{extern} variables: defined in header, can be used in multiple
+  files.
+\item
+  Global variables: try to avoid them.
+\end{itemize}
+
+\paragraph{File Input}\label{file-input}
+
+\begin{itemize}
+
+\item
+  Use \texttt{FILE\ fopen(const\ char\ *path,\ const\ char\ *mode)}.
+\item
+  Modes are \texttt{r} to read from start, \texttt{w} to write from
+  start, \texttt{a} to append.
+\item
+  Need to check file could be opened (not NULL).
+\item
+  Use \texttt{int\ feof(FILE\ *stream)} to check if end of file has been
+  reached (NULL).
+\item
+  Use \texttt{int\ fclose(FILE\ *fp)} to close file.
+\item
+  Need to check it doesn't fail.
+\end{itemize}
+
+Reading a file:
+
+\begin{itemize}
+
+\item
+  \texttt{int\ fscanf(FILE\ *stream,\ const\ char\ *format,\ ...)}.
+\item
+  \texttt{char\ *fgets(char\ *s,\ int\ size,\ FILE\ *stream)}.
+\end{itemize}
+
+Writing to a file:
+
+\begin{itemize}
+
+\item
+  \texttt{int\ fprintf(FILE\ *stream,\ const\ char\ *format,\ ...)}.
+\item
+  \texttt{int\ fputs(const\ char\ *s,\ FILE\ *stream)}.
+\end{itemize}
+
+Binary data:
+
+\begin{itemize}
+
+\item
+  Use the mode \texttt{b}.
+\item
+  \texttt{size\_t\ fread(void\ *ptr,\ size\_t\ size,\ size\_t\ nmemb,\ FILE\ *stream)}
+\item
+  \texttt{size\_t\ fwrite(const\ void\ *ptr,\ size\_t\ size,\ size\_t\ nmemb,\ FILE\ *stream)}
+\item
+  \texttt{ptr} is the address to read or write, \texttt{nmemb} is the
+  number of elements, \texttt{size} is the number of bytes for each
+  element.
+\item
+  Need to check returned value is the number of elements.
+\end{itemize}
+
+Error checking:
+
+You can also use \texttt{int\ ferror(FILE\ *stream)}.
+
+Printing errors:
+
+\begin{itemize}
+
+\item
+  Use \texttt{perror(char\ *msg)} when printing non user defined errors.
+\item
+  Otherwise, use \texttt{fprintf(stderr,\ char\ *msg)}.
+\end{itemize}
+
+\paragraph{Structs}\label{structs}
+
+Example:
+
+\begin{verbatim}
+/**
+ * @brief A struct that hold the co-ordinates of a 2D vertex.
+ */
+typedef struct {
+  /** The x co-ordinate */
+  float x;
+  /** The y co-ordinate */
+  float y;
+} vertex;
+\end{verbatim}
+
+\begin{itemize}
+
+\item
+  Use \texttt{.} to refer to a struct component.
+\item
+  Use \texttt{-\textgreater{}} to refer to a struct component from a
+  pointer to a struct.
+\end{itemize}
+
+Use \texttt{typedef} to declare an alias for an existing type.
+
+Use a \texttt{union} where requirements to store components are mutually
+exclusive.
+
+\paragraph{Constants}\label{constants}
+
+Three approaches:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+
+\item
+  Use a marco using \texttt{\#define}.
+\item
+  Define a global \texttt{static\ const} variable (not a true constant).
+\item
+  Use an unnamed \texttt{enum}.
+\end{enumerate}
+
+\paragraph{Strings}\label{strings}
+
+Use \texttt{string.h} to get:
+
+\begin{itemize}
+
+\item
+  \texttt{size\_t\ strlen(const\ char\ *s)}.
+\item
+  \texttt{char\ *strncat(char\ *dest,\ const\ char\ *src,\ size\_t\ n)}.
+\item
+  \texttt{int\ strncmp(const\ char\ *s1,\ const\ char\ *s2,\ size\_t\ n)}.
+\item
+  \texttt{char\ *strncpy(char\ *dest,\ const\ char\ *src,\ size\_t\ n)}.
+\end{itemize}
+
+\paragraph{Tips for Lexis Tests}\label{tips-for-lexis-tests}
+
+Make sure you check for all errors and initialise variables immediately. In particular:
+\begin{itemize}
+\item All functions with a pointer as an argument should check that the given pointer is not NULL.
+\item Any memory that you malloc must be checked not NULL and should be initialised immediately to 0.
+\end{itemize}
+
+\end{document}
