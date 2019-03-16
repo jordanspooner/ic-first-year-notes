@@ -716,7 +716,7 @@ for write lock and unlock.
 \item Use semaphores:
 
 \begin{enumerate}
-\item Create new using \texttt{Sephamore(int permits, bool fair)}. 
+\item Create new using \texttt{Semaphore(int permits, bool fair)}.
 \item \texttt{aquire()} to take a permit, waiting if necessary. 
 \end{enumerate}
 \item Use atomic classes. E.g. \texttt{new AtomicBoolean(x)}, \texttt{new
